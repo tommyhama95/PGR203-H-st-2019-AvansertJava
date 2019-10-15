@@ -1,8 +1,8 @@
-# <Skriv tittel på prosjektet>
+# JDBC For Dummies
 
-[![Build Status](https://travis-ci.com/Westerdals/prosjektnavn.svg?token=Sj4fcBr8hVerjvQWkoAz&branch=master)](https://travis-ci.com/Westerdals/prosjektnavn)
+[![Build Status](https://travis-ci.com/Westerdals/pgr203-assignment-3-SeventhDisaster.svg?token=ANpvyaXvsPqVgppAsgx4&branch=master)](https://travis-ci.com/Westerdals/pgr203-assignment-3-SeventhDisaster)
 
-<En kort forklaring på hva dette prosjektet inneholder>
+We are dummies #TODO - Write stuff
 
 ## Usage
 
