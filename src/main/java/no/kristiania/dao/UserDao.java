@@ -5,51 +5,49 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class UserDao {
-
-  private DataSource datasource;
+public class UserDao extends AbstractDao<String> {
 
   public UserDao(DataSource datasource) {
-    this.datasource = datasource;
+    super(datasource);
+  }
+
+  @Override
+  protected void insertObject(String userName, PreparedStatement statement) throws SQLException {
+    statement.setString(1, userName);
+  }
+
+  @Override
+  protected String readObject(ResultSet rs) throws SQLException {
+    return rs.getString("name");
   }
 
   //Inserts a value into a column
   public void insert(String userName) {
-    try (Connection conn = datasource.getConnection()) {
-      PreparedStatement statement = conn.prepareStatement("INSERT INTO users (name) VALUES (?)");
-      statement.setString(1, userName);
-      statement.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
+    insert(userName, "INSERT INTO users (name) VALUES (?)");
   }
 
   //This method returns all values in a certain column
-  public List<String> listAll(String columnName) throws SQLException {
-    List<String> result = new ArrayList<>();
-    try(Connection connection = datasource.getConnection()){
-      try(PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM users"
-      )) {
-        try(ResultSet rs = statement.executeQuery()){
-          while(rs.next()){
-            result.add(rs.getString(columnName));
-          }
-          return result;
-        }
-      }
-    }
+  public List<String> listAll() throws SQLException {
+    return listAll("SELECT * FROM users");
   }
+
+
+
+
+
+
+
+
+
+
+
 
   public static void main(String[] args) throws IOException {
     Scanner scanner = new Scanner(System.in);
@@ -70,5 +68,4 @@ public class UserDao {
     System.out.println("= You created the user: " + userInput + " =");
 
   }
-
 }

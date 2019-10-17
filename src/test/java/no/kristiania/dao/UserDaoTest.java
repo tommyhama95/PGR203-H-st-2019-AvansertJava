@@ -17,6 +17,6 @@ public class UserDaoTest {
     );
     UserDao dao = new UserDao(datasource);
     dao.insert("Tommy");
-    assertThat(dao.listAll("name")).contains("Tommy");
+    assertThat(dao.listAll()).contains("Tommy");
   }
 }

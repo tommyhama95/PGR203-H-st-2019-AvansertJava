@@ -1,6 +1,5 @@
 package no.kristiania.dao;
 
-import no.kristiania.dao.ProjectDao.ProjectDao;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +16,12 @@ public class ProjectDaoTest {
         datasource.getConnection().createStatement().executeUpdate(
           "CREATE TABLE projects (projectName VARCHAR(300))"
         );
-        ProjectDao dao = new ProjectDao();
-        dao.insertProject("Make Soup");
-        assertThat(dao.listProjects("projectName")).contains("Make Soup");
+
+        Project project = new Project();
+        project.setName("JDBC");
+        ProjectDao dao = new ProjectDao(datasource);
+        dao.insert(project);
+        assertThat(dao.listAll()).contains(project);
 
     }
 }
