@@ -24,7 +24,7 @@ public abstract class AbstractDao<T> {
 
       ResultSet generatedkeys = statement.getGeneratedKeys();
       generatedkeys.next();
-      return generatedkeys.getLong(1);
+      return generatedkeys.getLong("id");
     }
   }
 
