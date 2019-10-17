@@ -9,14 +9,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserDaoTest {
   @Test
-  void shouldReturnTaskList() throws SQLException {
+  void shouldGetUserFromQuery() throws SQLException {
     JdbcDataSource datasource = new JdbcDataSource();
     datasource.setUrl("jdbc:h2:mem:testDataBase");
     datasource.getConnection().createStatement().executeUpdate(
-            "CREATE TABLE users (name varchar(100), id SERIAL NOT NULL PRIMARY KEY)"
+            "CREATE TABLE users (name varchar(150), email varchar(150), id SERIAL NOT NULL PRIMARY KEY)"
     );
+    User user = new User();
+    user.setName("Ole");
+    user.setEmail("ole.nordmann@norsk.no");
     UserDao dao = new UserDao(datasource);
-    dao.insert("Tommy");
-    assertThat(dao.listAll()).contains("Tommy");
+    dao.insert(user);
+    assertThat(dao.listAll()).contains(user);
   }
 }

@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class TaskManager {
 
     private final PGSimpleDataSource datasource = new PGSimpleDataSource();
+    private final Scanner scanner = new Scanner(System.in);
 
     public TaskManager() throws IOException {
         Properties properties = new Properties();
@@ -27,14 +28,50 @@ public class TaskManager {
     }
 
     private void run() throws SQLException {
-        Scanner scanner = new Scanner(System.in);
-        UserDao userDao = new UserDao(datasource);
-
-        System.out.println("== Please type the name of a user you want to create ==");
+        System.out.println("== What do you want to do? ['user' | 'project'] ==");
         String userInput = scanner.nextLine();
 
-        userDao.insert(userInput);
-        System.out.println("= You created the user: " + userInput + " =");
+        switch(userInput){
+            case "user":
+                handleUser();
+                break;
+            case "project":
+                handleProject();
+                break;
+            default:
+                System.err.println("== No valid selection made ==");
+
+        }
+    }
+
+    private void handleUser() throws SQLException {
+        UserDao userDao = new UserDao(datasource);
+        System.out.println("== Do you want to create a user? ['Y' | 'N'] ==");
+        switch(scanner.nextLine()){
+            case "Y":
+                createUser(userDao);
+                break;
+            case "N":
+                System.out.println("== Aborting ==");
+                break;
+            default:
+                System.err.println("== No valid selection: Aborting ==");
+        }
+
+    }
+
+    private void createUser(UserDao userDao) throws SQLException {
+        User newUser = new User();
+        System.out.println("== Please enter the new user's name: ==");
+        newUser.setName(scanner.nextLine());
+        System.out.println("== Please enter the new user's e-mail address ==");
+        newUser.setEmail(scanner.nextLine());
+        userDao.insert(newUser); //Insert new user into DAO
+        System.out.println("!= New user has been created: "+ newUser.getName() +" | " + newUser.getEmail() + " =!");
+    }
+
+    private void handleProject(){
+        System.err.println("Derp");
     }
 
 }

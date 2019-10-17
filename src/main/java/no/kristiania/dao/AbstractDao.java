@@ -16,15 +16,15 @@ public abstract class AbstractDao<T> {
   }
 
   //Inserts a value into a column
-  public long insert(T userName, String sql) throws SQLException{
+  public long insert(T object, String sql) throws SQLException{
     try (Connection conn = datasource.getConnection()) {
       PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-      insertObject(userName, statement);
+      insertObject(object, statement);
       statement.executeUpdate();
 
       ResultSet generatedkeys = statement.getGeneratedKeys();
       generatedkeys.next();
-      return generatedkeys.getLong("id");
+      return generatedkeys.getLong("id"); //TODO: Remove if remains unused later
     }
   }
 
