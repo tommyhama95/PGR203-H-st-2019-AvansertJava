@@ -20,6 +20,7 @@ public abstract class AbstractDao<T> {
     try (Connection conn = datasource.getConnection()) {
       PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       insertObject(object, statement);
+      System.out.println(object);
       statement.executeUpdate();
 
       ResultSet generatedkeys = statement.getGeneratedKeys();

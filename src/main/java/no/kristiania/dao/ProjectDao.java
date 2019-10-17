@@ -26,8 +26,8 @@ public class ProjectDao extends AbstractDao<Project> {
     }
 
     //Inserts a value into a column
-    public void insert(Project name) throws SQLException{
-      insert(name, "INSERT INTO projects (name) VALUES (?)");
+    public long insert(Project name) throws SQLException{
+        return insert(name, "INSERT INTO projects (name) VALUES (?)");
     }
 
     //This method returns all values in a certain column

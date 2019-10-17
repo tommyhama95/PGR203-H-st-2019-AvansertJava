@@ -6,6 +6,17 @@ public class User {
   private String name;
   private String email;
 
+  public User() {}
+
+  public User(String name) {
+    this.name = name;
+  }
+
+  public User(String name, String email) {
+    this(name);
+    this.email = email;
+  }
+
   public void setName(String name) {
     this.name = name;
   }

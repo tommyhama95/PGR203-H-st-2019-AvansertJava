@@ -27,8 +27,8 @@ public class UserDao extends AbstractDao<User> {
   }
 
   //Inserts a value into a column
-  public void insert(User user) throws SQLException{
-    insert(user, "INSERT INTO users (name, email) VALUES (?, ?)");
+  public long insert(User user) throws SQLException{
+    return insert(user, "INSERT INTO users (name, email) VALUES (?, ?)");
   }
 
   //This method returns all values in a certain column
