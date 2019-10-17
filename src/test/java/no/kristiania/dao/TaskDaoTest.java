@@ -15,9 +15,8 @@ public class TaskDaoTest {
     datasource.getConnection().createStatement().executeUpdate(
             "CREATE TABLE tasks (name varchar(100))"
     );
-    //TODO: set up h2 database for test
     TaskDao dao = new TaskDao(datasource);
     dao.insert("Make a Database");
-    assertThat(dao.listAll()).contains("Make a Database");
+    assertThat(dao.listAll("name")).contains("Make a Database");
   }
 }

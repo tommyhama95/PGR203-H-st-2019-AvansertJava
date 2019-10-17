@@ -11,16 +11,14 @@ import java.util.List;
 
 public class TaskDao {
 
-  private List<String> taskList = new ArrayList<>();
   private DataSource datasource;
 
   public TaskDao(DataSource datasource) {
     this.datasource = datasource;
   }
 
+  //Inserts a value into a column
   public void insert(String taskName) {
-    taskList.add(taskName);
-
     try (Connection conn = datasource.getConnection()) {
       PreparedStatement statement = conn.prepareStatement("INSERT INTO tasks (name) VALUES (?)");
       statement.setString(1, taskName);
