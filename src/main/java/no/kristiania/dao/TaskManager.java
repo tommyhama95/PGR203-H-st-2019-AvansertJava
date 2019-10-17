@@ -47,7 +47,7 @@ public class TaskManager {
     private void handleUser() throws SQLException {
         UserDao userDao = new UserDao(datasource);
         System.out.println("== Do you want to create a user? ['Y' | 'N'] ==");
-        switch(scanner.nextLine()){
+        switch(scanner.nextLine().toUpperCase()){
             case "Y":
                 createUser(userDao);
                 break;

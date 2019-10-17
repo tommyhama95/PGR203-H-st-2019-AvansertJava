@@ -15,7 +15,7 @@ public abstract class AbstractDao<T> {
     this.datasource = datasource;
   }
 
-  //Inserts a value into a column
+  //Inserts a value into a column (Method is overridden in child classes)
   public long insert(T object, String sql) throws SQLException{
     try (Connection conn = datasource.getConnection()) {
       PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
