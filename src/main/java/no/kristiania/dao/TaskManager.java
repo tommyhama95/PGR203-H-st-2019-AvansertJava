@@ -1,5 +1,6 @@
 package no.kristiania.dao;
 
+import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.FileNotFoundException;
@@ -21,6 +22,8 @@ public class TaskManager {
         datasource.setUrl(properties.getProperty("datasource.url"));
         datasource.setUser(properties.getProperty("datasource.username"));
         datasource.setPassword(properties.getProperty("datasource.password"));
+
+        Flyway.configure().dataSource(datasource).load().migrate();
     }
 
     public static void main(String[] args) throws IOException, SQLException {

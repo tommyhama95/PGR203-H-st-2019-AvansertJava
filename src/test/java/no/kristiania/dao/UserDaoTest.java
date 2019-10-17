@@ -1,5 +1,6 @@
 package no.kristiania.dao;
 
+import org.flywaydb.core.Flyway;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +12,10 @@ public class UserDaoTest {
   @Test
   void shouldGetUserFromQuery() throws SQLException {
     JdbcDataSource datasource = new JdbcDataSource();
-    datasource.setUrl("jdbc:h2:mem:testDataBase");
-    datasource.getConnection().createStatement().executeUpdate(
-            "CREATE TABLE users (name varchar(150), email varchar(150), id SERIAL NOT NULL PRIMARY KEY)"
-    );
+    datasource.setUrl("jdbc:h2:mem:testDataBase;DB_CLOSE_DELAY=-1");
+
+    Flyway.configure().dataSource(datasource).load().migrate();
+
     User user = new User();
     user.setName("Ole");
     user.setEmail("ole.nordmann@norsk.no");

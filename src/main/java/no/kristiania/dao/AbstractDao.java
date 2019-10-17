@@ -20,11 +20,13 @@ public abstract class AbstractDao<T> {
     try (Connection conn = datasource.getConnection()) {
       PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       insertObject(object, statement);
-      System.out.println(object);
       statement.executeUpdate();
 
       ResultSet generatedkeys = statement.getGeneratedKeys();
       generatedkeys.next();
+      if(object instanceof ProjectUser){
+        return 0; //Do not attempt to get ID on ProjectUser
+      }
       return generatedkeys.getLong("id"); //TODO: Remove if remains unused later
     }
   }
