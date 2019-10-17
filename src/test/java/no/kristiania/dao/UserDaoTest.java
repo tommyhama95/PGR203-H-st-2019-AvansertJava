@@ -7,16 +7,16 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TaskDaoTest {
+public class UserDaoTest {
   @Test
   void shouldReturnTaskList() throws SQLException {
     JdbcDataSource datasource = new JdbcDataSource();
     datasource.setUrl("jdbc:h2:mem:testDataBase");
     datasource.getConnection().createStatement().executeUpdate(
-            "CREATE TABLE tasks (name varchar(100))"
+            "CREATE TABLE users (name varchar(100))"
     );
-    TaskDao dao = new TaskDao(datasource);
-    dao.insert("Make a Database");
-    assertThat(dao.listAll("name")).contains("Make a Database");
+    UserDao dao = new UserDao(datasource);
+    dao.insert("Tommy");
+    assertThat(dao.listAll("name")).contains("Tommy");
   }
 }

@@ -2,9 +2,7 @@ package no.kristiania.dao;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
-import javax.sql.ConnectionEvent;
 import javax.sql.DataSource;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,20 +12,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
-public class TaskDao {
+public class UserDao {
 
   private DataSource datasource;
 
-  public TaskDao(DataSource datasource) {
+  public UserDao(DataSource datasource) {
     this.datasource = datasource;
   }
 
   //Inserts a value into a column
-  public void insert(String taskName) {
+  public void insert(String userName) {
     try (Connection conn = datasource.getConnection()) {
-      PreparedStatement statement = conn.prepareStatement("INSERT INTO tasks (name) VALUES (?)");
-      statement.setString(1, taskName);
+      PreparedStatement statement = conn.prepareStatement("INSERT INTO users (name) VALUES (?)");
+      statement.setString(1, userName);
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -40,7 +39,7 @@ public class TaskDao {
     List<String> result = new ArrayList<>();
     try(Connection connection = datasource.getConnection()){
       try(PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM tasks"
+              "SELECT * FROM users"
       )) {
         try(ResultSet rs = statement.executeQuery()){
           while(rs.next()){
@@ -53,6 +52,8 @@ public class TaskDao {
   }
 
   public static void main(String[] args) throws IOException {
+    Scanner scanner = new Scanner(System.in);
+
     Properties properties = new Properties();
     properties.load(new FileReader("task-manager.properties"));
 
@@ -60,8 +61,13 @@ public class TaskDao {
     datasource.setUrl("jdbc:postgresql://localhost:5432/taskmanager");
     datasource.setUser("tomas"); //Reference to databases year one hehe
     datasource.setPassword(properties.getProperty("datasource.password"));
-    TaskDao dao = new TaskDao(datasource);
-    dao.insert("test");
+    UserDao dao = new UserDao(datasource);
+
+    System.out.println("== Please type the name of a user you want to create ==");
+    String userInput = scanner.nextLine();
+
+    dao.insert(userInput);
+    System.out.println("= You created the user: " + userInput + " =");
 
   }
 
