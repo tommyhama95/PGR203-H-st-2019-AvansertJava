@@ -13,7 +13,7 @@ public class UserDaoTest {
     JdbcDataSource datasource = new JdbcDataSource();
     datasource.setUrl("jdbc:h2:mem:testDataBase");
     datasource.getConnection().createStatement().executeUpdate(
-            "CREATE TABLE users (name varchar(100))"
+            "CREATE TABLE users (name varchar(100), id SERIAL NOT NULL PRIMARY KEY)"
     );
     UserDao dao = new UserDao(datasource);
     dao.insert("Tommy");

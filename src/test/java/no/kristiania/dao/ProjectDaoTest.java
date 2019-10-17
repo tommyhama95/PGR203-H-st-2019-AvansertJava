@@ -14,7 +14,7 @@ public class ProjectDaoTest {
         JdbcDataSource datasource = new JdbcDataSource();
         datasource.setUrl("jdbc:h2:mem:testDataBase");
         datasource.getConnection().createStatement().executeUpdate(
-          "CREATE TABLE projects (projectName VARCHAR(300))"
+          "CREATE TABLE projects (name VARCHAR(300), project_id SERIAL NOT NULL PRIMARY KEY)"
         );
 
         Project project = new Project();

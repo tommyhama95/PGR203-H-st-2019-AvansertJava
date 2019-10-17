@@ -29,7 +29,7 @@ public class UserDao extends AbstractDao<String> {
   }
 
   //Inserts a value into a column
-  public void insert(String userName) {
+  public void insert(String userName) throws SQLException{
     insert(userName, "INSERT INTO users (name) VALUES (?)");
   }
 
@@ -49,7 +49,7 @@ public class UserDao extends AbstractDao<String> {
 
 
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, SQLException{
     Scanner scanner = new Scanner(System.in);
 
     Properties properties = new Properties();

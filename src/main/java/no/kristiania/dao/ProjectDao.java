@@ -21,17 +21,17 @@ public class ProjectDao extends AbstractDao<Project> {
     @Override
     protected Project readObject(ResultSet rs) throws SQLException {
         Project project = new Project();
-        project.setName(rs.getString(1));
+        project.setName(rs.getString("name"));
         return project;
     }
 
     //Inserts a value into a column
-    public void insert(Project userName) {
-      insert(userName, "INSERT INTO users (name) VALUES (?)");
+    public void insert(Project name) throws SQLException{
+      insert(name, "INSERT INTO projects (name) VALUES (?)");
     }
 
     //This method returns all values in a certain column
     public List<Project> listAll() throws SQLException {
-      return listAll("SELECT * FROM users");
+      return listAll("SELECT * FROM projects");
     }
 }
