@@ -23,14 +23,11 @@ public class ProjectUserDaoTest {
 
         Flyway.configure().dataSource(dataSource).load().migrate();
 
-        Project pObject = new Project();
-        pObject.setName("Coffee");
+        Project pObject = new Project("Coffee");
         long pID = projectDao.insert(pObject);
-        System.out.println(projectDao.listAll());
 
         User uObject = new User("Tommy", "No@sniff.yes");
         long uID = userDao.insert(uObject);
-        System.out.println(userDao.listAll());
 
 
         ProjectUser pu = new ProjectUser();

@@ -27,7 +27,7 @@ public abstract class AbstractDao<T> {
       if(object instanceof ProjectUser){
         return 0; //Do not attempt to get ID on ProjectUser
       }
-      return generatedkeys.getLong("id"); //TODO: Remove if remains unused later
+      return generatedkeys.getLong("id");
     }
   }
 

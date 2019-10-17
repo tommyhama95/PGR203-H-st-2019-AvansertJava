@@ -12,6 +12,18 @@ import java.util.Scanner;
 
 public class TaskManager {
 
+    /*
+    TODO: Vis alle users i ProjectUsers tabellen "ListAllProjectMembers()"
+    TODO: Mulighet til å legge in eksisterende brukere til et prosjekt "AddUserToProject(User,Project)"
+    TODO: Skrive ut hele ProjectUsers tabellen "ListAll()" in ProjectUsersDao
+    TODO: - - -
+    TODO:
+    TODO: Extras!
+    TODO:
+    TODO: - - -
+    TODO: Maven Package og ".jar"
+     */
+
     private final PGSimpleDataSource datasource = new PGSimpleDataSource();
     private final Scanner scanner = new Scanner(System.in);
 
