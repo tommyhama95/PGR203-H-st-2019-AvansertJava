@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserDaoTest {
   @Test
-  void shouldGetUserFromQuery() throws SQLException {
+  void shouldListOutUsers() throws SQLException {
     JdbcDataSource datasource = new JdbcDataSource();
     datasource.setUrl("jdbc:h2:mem:testDataBase;DB_CLOSE_DELAY=-1");
 
@@ -20,7 +20,7 @@ public class UserDaoTest {
     user.setName("Ole");
     user.setEmail("ole.nordmann@norsk.no");
     UserDao dao = new UserDao(datasource);
-    dao.insert(user);
+    user.setId(dao.insert(user));
     assertThat(dao.listAll()).contains(user);
   }
 }

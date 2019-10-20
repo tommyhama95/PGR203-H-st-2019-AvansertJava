@@ -20,7 +20,7 @@ public class ProjectDaoTest {
         Project project = new Project();
         project.setName("JDBC");
         ProjectDao dao = new ProjectDao(datasource);
-        dao.insert(project);
+        project.setId(dao.insert(project));
         assertThat(dao.listAll()).contains(project);
 
     }
