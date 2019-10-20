@@ -22,15 +22,19 @@ public class ProjectUserDao extends AbstractDao<ProjectUser>{
         return listAll("SELECT * FROM project_users");
     }
 
-    public List<ProjectUser> listMembersOf(long inputpara) throws SQLException{
-        return listAllWithStatement(inputpara,  "SELECT * FROM project_users WHERE project_id = (?)");
+    public List<ProjectUser> listMembersOf(long projectId) throws SQLException{
+        return listAllWithStatement(projectId,  "SELECT * FROM project_users WHERE project_id = ?");
     }
 
-    public List<ProjectUser> listAllWithStatement(long projectId, String sql) throws SQLException {
+    public List<ProjectUser> listProjectsWith(long userId) throws SQLException {
+        return listAllWithStatement(userId, "SELECT * FROM project_users WHERE user_id = ?");
+    }
+
+    public List<ProjectUser> listAllWithStatement(long idValue, String sql) throws SQLException {
         List<ProjectUser> result = new ArrayList<>();
         try(Connection connection = datasource.getConnection()){
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setLong(1, projectId);
+                statement.setLong(1, idValue);
                 try(ResultSet rs = statement.executeQuery()){
                     while(rs.next()){
                         result.add(readObject(rs));

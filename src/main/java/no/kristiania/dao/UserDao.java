@@ -23,6 +23,7 @@ public class UserDao extends AbstractDao<User> {
     User user = new User();
     user.setName(rs.getString("name"));
     user.setEmail(rs.getString("email"));
+    user.setId((rs.getLong("id")));
     return user;
   }
 
