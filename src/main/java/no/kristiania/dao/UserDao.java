@@ -36,4 +36,5 @@ public class UserDao extends AbstractDao<User> {
     return listAll("SELECT * FROM users");
   }
 
+
 }

@@ -48,5 +48,6 @@ public abstract class AbstractDao<T> {
     }
   }
 
+
   protected abstract T readObject(ResultSet rs) throws SQLException;
 }
