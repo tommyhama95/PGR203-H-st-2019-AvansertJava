@@ -1,16 +1,12 @@
 package no.kristiania.dao;
 
 import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.logging.Log;
-import org.flywaydb.core.api.logging.LogCreator;
-import org.flywaydb.core.api.logging.LogFactory;
 import org.postgresql.ds.PGSimpleDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -32,7 +28,6 @@ public class TaskManager {
         datasource.setUser(properties.getProperty("datasource.username"));
         datasource.setPassword(properties.getProperty("datasource.password"));
 
-        LoggerSettings();
         Flyway.configure().dataSource(datasource).load().migrate();
 
         this.uDao = new UserDao(datasource);
@@ -42,23 +37,25 @@ public class TaskManager {
 
     //Runs the interface in terminal to ask user to edit or print database
     public static void main(String[] args) throws IOException, SQLException {
-        while(true) {new TaskManager().userInterfaceTerminal();}
+        new TaskManager().userInterfaceTerminal();
     }
 
     //User chooses between user or project DB editing/listing
     private void userInterfaceTerminal() throws SQLException {
-        System.out.println("== What do you want to do? ['user' | 'project'] ==");
-        String userInput = scanner.nextLine();
+        while(true) {
+            System.out.println("== What do you want to do? ['user' | 'project'] ==");
+            String userInput = scanner.nextLine();
 
-        switch(userInput){
-            case "user":
-                handleUser();
-                break;
-            case "project":
-                handleProject();
-                break;
-            default:
-                System.err.println(errorMessage);
+            switch (userInput) {
+                case "user":
+                    handleUser();
+                    break;
+                case "project":
+                    handleProject();
+                    break;
+                default:
+                    System.err.println(errorMessage);
+            }
         }
     }
 
@@ -74,7 +71,11 @@ public class TaskManager {
                 break;
             case "listuserprojects":
                 System.out.println("== Type the ID of the user: ==");
-                System.out.println(puDao.listProjectsWith(Long.parseLong(scanner.nextLine())));
+                List<ProjectUser> result = puDao.listProjectsWith(Long.parseLong(scanner.nextLine()));
+                if(result.isEmpty()) {
+                    System.out.println("This user is not assigned to any projects!");
+                }
+                System.out.println(result);
                 break;
             default:
                 System.err.println(errorMessage);
@@ -162,39 +163,6 @@ public class TaskManager {
                 System.out.println(errorMessage);
         }
         puDao.insert(newProjectOwner);
-    }
-
-    /***************************************************
-        Custom logger settings for the output
-        inside of the terminal when running main.
-     (Keeps the INFO boxes away and print when wanted)
-     **************************************************/
-    private void LoggerSettings() {
-        LogFactory.setLogCreator(new LogCreator() {
-            @Override
-            public Log createLogger(Class<?> aClass) {
-                Logger logger = LoggerFactory.getLogger(aClass);
-                return new Log() {
-                    @Override
-                    public boolean isDebugEnabled() { return false; }
-
-                    @Override
-                    public void debug(String s) { }
-
-                    @Override
-                    public void info(String s) { }
-
-                    @Override
-                    public void warn(String s) { }
-
-                    @Override
-                    public void error(String s) { }
-
-                    @Override
-                    public void error(String s, Exception e) { logger.error("Error: " + e); }
-                };
-            }
-        });
     }
 
 }

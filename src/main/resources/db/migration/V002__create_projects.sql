@@ -1,6 +1,6 @@
 CREATE TABLE projects (
     id SERIAL NOT NULL PRIMARY KEY NOT NULL,
-    name VARCHAR(150) NOT NULL
+    name VARCHAR(150) NOT NULL DEFAULT 'Undefined'
 );
 /*
 INSERT INTO projects (name)
