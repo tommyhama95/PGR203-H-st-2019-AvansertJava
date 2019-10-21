@@ -28,6 +28,7 @@ public class Project {
     this.id = id;
   }
 
+  //Show how the project object is returned in String form
   @Override
   public String toString() {
     return "Project{" +

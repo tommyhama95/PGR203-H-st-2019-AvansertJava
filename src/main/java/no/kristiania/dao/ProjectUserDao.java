@@ -14,22 +14,27 @@ public class ProjectUserDao extends AbstractDao<ProjectUser>{
         super(datasource);
     }
 
+    //Calls abstract method for inserting new object for postgres database
     public void insert(ProjectUser pu) throws SQLException{
         insert(pu, "INSERT INTO project_users (project_id, user_id) VALUES (?, ?)");
     }
 
+    //Calls abstract method for listing out table values
     public List<ProjectUser> listAll() throws SQLException{
         return listAll("SELECT * FROM project_users");
     }
 
+    //Calls method in same class to make the ResultSet of this query
     public List<ProjectUser> listMembersOf(long projectId) throws SQLException{
         return listAllWithStatement(projectId,  "SELECT * FROM project_users WHERE project_id = ?");
     }
 
+    //Calls method in same class to make the ResultSet of this query
     public List<ProjectUser> listProjectsWith(long userId) throws SQLException {
         return listAllWithStatement(userId, "SELECT * FROM project_users WHERE user_id = ?");
     }
 
+    //Makes ResultSet of query with one parameter
     public List<ProjectUser> listAllWithStatement(long idValue, String sql) throws SQLException {
         List<ProjectUser> result = new ArrayList<>();
         try(Connection connection = datasource.getConnection()){

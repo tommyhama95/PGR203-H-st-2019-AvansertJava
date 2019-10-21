@@ -1,7 +1,12 @@
 package no.kristiania.dao;
 
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.logging.Log;
+import org.flywaydb.core.api.logging.LogCreator;
+import org.flywaydb.core.api.logging.LogFactory;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,24 +16,13 @@ import java.util.Scanner;
 
 public class TaskManager {
 
-    /*
-    TODO: Vis alle users i ProjectUsers tabellen "ListAllProjectMembers()"
-    TODO: Mulighet til å legge in eksisterende brukere til et prosjekt "AddUserToProject(User,Project)"
-    TODO: Skrive ut hele ProjectUsers tabellen "ListAll()" in ProjectUsersDao
-    TODO: - - -
-    TODO:
-    TODO: Extras!
-    TODO:
-    TODO: - - -
-    TODO: Maven Package og ".jar"
-     */
-
     private final PGSimpleDataSource datasource = new PGSimpleDataSource();
     private final Scanner scanner = new Scanner(System.in);
 
     private final UserDao uDao;
     private final ProjectDao pDao;
     private final ProjectUserDao puDao;
+    private final String errorMessage = "== No valid selection: Aborting ==";
 
     public TaskManager() throws IOException {
         Properties properties = new Properties();
@@ -38,6 +32,7 @@ public class TaskManager {
         datasource.setUser(properties.getProperty("datasource.username"));
         datasource.setPassword(properties.getProperty("datasource.password"));
 
+        LoggerSettings();
         Flyway.configure().dataSource(datasource).load().migrate();
 
         this.uDao = new UserDao(datasource);
@@ -45,14 +40,15 @@ public class TaskManager {
         this.puDao = new ProjectUserDao(datasource);
     }
 
+    //Runs the interface in terminal to ask user to edit or print database
     public static void main(String[] args) throws IOException, SQLException {
-        new TaskManager().run();
+        while(true) {new TaskManager().userInterfaceTerminal();}
     }
 
-    private void run() throws SQLException {
+    //User chooses between user or project DB editing/listing
+    private void userInterfaceTerminal() throws SQLException {
         System.out.println("== What do you want to do? ['user' | 'project'] ==");
         String userInput = scanner.nextLine();
-
 
         switch(userInput){
             case "user":
@@ -62,11 +58,11 @@ public class TaskManager {
                 handleProject();
                 break;
             default:
-                System.err.println("== No valid selection made ==");
-
+                System.err.println(errorMessage);
         }
     }
 
+    //If user was used this will run
     private void handleUser() throws SQLException {
         System.out.println("== USER: What do you want to do: ['createuser' | 'listusers' | 'listuserprojects'] ==");
         switch(scanner.nextLine().toLowerCase()){
@@ -81,11 +77,12 @@ public class TaskManager {
                 System.out.println(puDao.listProjectsWith(Long.parseLong(scanner.nextLine())));
                 break;
             default:
-                System.err.println("== No valid selection: Aborting ==");
+                System.err.println(errorMessage);
         }
 
     }
 
+    //If user wants to create a new user
     private User createUser() throws SQLException {
         User newUser = new User();
         System.out.println("== Please enter the new user's name: ==");
@@ -99,6 +96,7 @@ public class TaskManager {
         return newUser;
     }
 
+    //If user wants to create or edit project table
     private void handleProject() throws SQLException {
         System.out.println("== PROJECT: What do you want to do: [ 'newproject' | 'listprojects' | 'listprojectmembers' | 'addusertoproject' ]");
         switch(scanner.nextLine().toLowerCase()){
@@ -116,7 +114,7 @@ public class TaskManager {
                 addUserToProject();
                 break;
             default:
-                System.out.println("== Not a valid argument: Aborting ==");
+                System.out.println(errorMessage);
         }
     }
 
@@ -135,6 +133,7 @@ public class TaskManager {
         puDao.insert(newProjectUser);
     }
 
+    //If user wants to create new Project
     private void createProject() throws SQLException {
         Project newProject = new Project();
         System.out.println("== PROJECT: Give a name to the new project: ==");
@@ -152,7 +151,6 @@ public class TaskManager {
                 newProjectOwner.setUserID(ownerId);
                 System.out.println("== User: " + ownerId +
                         " has been set as owner of " + newProject);
-
                 break;
             case "newuser":
                 User newUser = createUser();
@@ -161,11 +159,42 @@ public class TaskManager {
                         " has been set as owner of " + newProject);
                 break;
             default:
-                System.out.println("== No valid selection made: Aborting");
+                System.out.println(errorMessage);
         }
-
         puDao.insert(newProjectOwner);
+    }
 
+    /***************************************************
+        Custom logger settings for the output
+        inside of the terminal when running main.
+     (Keeps the INFO boxes away and print when wanted)
+     **************************************************/
+    private void LoggerSettings() {
+        LogFactory.setLogCreator(new LogCreator() {
+            @Override
+            public Log createLogger(Class<?> aClass) {
+                Logger logger = LoggerFactory.getLogger(aClass);
+                return new Log() {
+                    @Override
+                    public boolean isDebugEnabled() { return false; }
+
+                    @Override
+                    public void debug(String s) { }
+
+                    @Override
+                    public void info(String s) { }
+
+                    @Override
+                    public void warn(String s) { }
+
+                    @Override
+                    public void error(String s) { }
+
+                    @Override
+                    public void error(String s, Exception e) { logger.error("Error: " + e); }
+                };
+            }
+        });
     }
 
 }

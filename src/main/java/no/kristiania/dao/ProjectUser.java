@@ -24,6 +24,7 @@ public class ProjectUser {
         return userID;
     }
 
+    //Show how Project_user object is returned in String form
     @Override
     public String toString() {
         return "ProjectUser{" +
