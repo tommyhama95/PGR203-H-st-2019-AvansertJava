@@ -17,7 +17,7 @@ The database should be called `taskmanager`
  
  ## Design (valgfritt)
  
-![Design](./doc/design.png)
+![Design](./doc/javaAbrid3.png)
 
  ## Implementation notes
  

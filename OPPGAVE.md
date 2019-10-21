@@ -39,7 +39,7 @@ Dersom dere vil ta oppgaven videre for å være forberedt til eksamen kan dere *
 * [x] `README.md` inneholder en korrekt link til Travis CI
 * [x] `mvn package` bygger en executable jar-fil
 * [x] `java -jar target/...jar` (etter `mvn package`) starter opp en webserver
-* [ ] `README.md` beskriver prosjektet, hvordan man bygger det og hvordan man kjører det 
+* [x] `README.md` beskriver prosjektet, hvordan man bygger det og hvordan man kjører det 
 * [x] Programmet leser `dataSource.url`, `dataSource.username` og `dataSource.password` fra `task-manager.properties` for å connecte til databasen
 * [x] Programmet bruker Flywaydb for å sette opp databaseskjema
 * [x] Programmet kan liste prosjektdeltagere fra databasen
@@ -57,7 +57,7 @@ Dersom dere vil ta oppgaven videre for å være forberedt til eksamen kan dere *
 * [x] `.gitignore` hindrer `target/`, `.idea` og `*.iml` fra å sjekkes inn ved uhell
 * [x] Navn på pakker, klasser og metoder skal følge vanlig Java-konvensjon når det gjelder små og store bokstaver
 * [x] Indentering skal følge vanlig Java-konvensjon
-* [ ] `README.md` inneholder link til en diagram som viser datamodellen
+* [x] `README.md` inneholder link til en diagram som viser datamodellen
 * [ ] Programmet kan opprette og liste prosjektoppgaver fra databasen
 * [ ] Programmet kan vise prosjektdeltagere fra databasen over http
 * [ ] Programmet kan opprette nye prosjektdeltagere i databasen over http
