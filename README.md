@@ -1,8 +1,15 @@
-# JDBC For Dummies
+# JDBC For Dummies+
 
 [![Build Status](https://travis-ci.com/Westerdals/pgr203-assignment-3-SeventhDisaster.svg?token=ANpvyaXvsPqVgppAsgx4&branch=master)](https://travis-ci.com/Westerdals/pgr203-assignment-3-SeventhDisaster)
 
-We are dummies #TODO - Write stuff
+This is a project that utilizes JDBC to establish a connection to a database using postgresql.
+Tests are run through h2 databases, and all the tables are migrated using flyway.
+
+The project is packaged utilizing the maven-shade plugin and can be run by following the below instructions.
+
+This project was made as a pair-programming exercise by: Krister Emanuelsen (SeventhDisaster) and Tommy Hamarsnes (tommyhama95) 
+
+The database is as of now structured as follows: a table of users, a table of projects, and a many-to-many connection table between the two others called ProjectUser
 
 ## Usage
 This project is built on `JDK 11.0.4`
