@@ -9,11 +9,9 @@ public class User {
 
 
   public User() {}
-
   public User(String name) {
     this.name = name;
   }
-
   public User(String name, String email) {
     this(name);
     this.email = email;
@@ -22,7 +20,6 @@ public class User {
   public void setName(String name) {
     this.name = name;
   }
-
   public String getName() {
     return name;
   }
@@ -30,17 +27,15 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
-
   public String getEmail() {
     return email;
   }
 
-  public long getId() {
-    return id;
-  }
-
   public void setId(long id) {
     this.id = id;
+  }
+  public long getId() {
+    return id;
   }
 
   @Override

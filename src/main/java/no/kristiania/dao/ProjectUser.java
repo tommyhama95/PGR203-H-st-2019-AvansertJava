@@ -11,7 +11,6 @@ public class ProjectUser {
     public void setProjectID(long projectID) {
         this.projectID = projectID;
     }
-
     public long getProjectID() {
         return projectID;
     }
@@ -19,7 +18,6 @@ public class ProjectUser {
     public void setUserID(long userID) {
         this.userID = userID;
     }
-
     public long getUserID() {
         return userID;
     }

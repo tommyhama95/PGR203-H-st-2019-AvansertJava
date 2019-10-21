@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class TaskManager {
 
-    private final PGSimpleDataSource datasource = new PGSimpleDataSource();
+    private final PGSimpleDataSource dataSource = new PGSimpleDataSource();
     private final Scanner scanner = new Scanner(System.in);
 
     private final UserDao uDao;
@@ -24,15 +24,15 @@ public class TaskManager {
         Properties properties = new Properties();
         properties.load(new FileReader("task-manager.properties"));
 
-        datasource.setUrl(properties.getProperty("datasource.url"));
-        datasource.setUser(properties.getProperty("datasource.username"));
-        datasource.setPassword(properties.getProperty("datasource.password"));
+        dataSource.setUrl(properties.getProperty("datasource.url"));
+        dataSource.setUser(properties.getProperty("datasource.username"));
+        dataSource.setPassword(properties.getProperty("datasource.password"));
 
-        Flyway.configure().dataSource(datasource).load().migrate();
+        Flyway.configure().dataSource(dataSource).load().migrate();
 
-        this.uDao = new UserDao(datasource);
-        this.pDao = new ProjectDao(datasource);
-        this.puDao = new ProjectUserDao(datasource);
+        this.uDao = new UserDao(dataSource);
+        this.pDao = new ProjectDao(dataSource);
+        this.puDao = new ProjectUserDao(dataSource);
     }
 
     //Runs the interface in terminal to ask user to edit or print database
@@ -56,12 +56,13 @@ public class TaskManager {
                 default:
                     System.err.println(errorMessage);
             }
+            System.out.println("\n!===== PROCESS FINISHED: Starting new process... =====!\n\n");
         }
     }
 
     //If user was used this will run
     private void handleUser() throws SQLException {
-        System.out.println("== USER: What do you want to do: ['createuser' | 'listusers' | 'listuserprojects'] ==");
+        System.out.println("\n== USER: What do you want to do: ['createuser' | 'listusers' | 'listuserprojects'] ==");
         switch(scanner.nextLine().toLowerCase()){
             case "createuser":
                 createUser();
@@ -70,10 +71,10 @@ public class TaskManager {
                 System.out.println(uDao.listAll());
                 break;
             case "listuserprojects":
-                System.out.println("== Type the ID of the user: ==");
+                System.out.println("\n== Type the ID of the user: ==");
                 List<ProjectUser> result = puDao.listProjectsWith(Long.parseLong(scanner.nextLine()));
                 if(result.isEmpty()) {
-                    System.out.println("This user is not assigned to any projects!");
+                    System.out.println("\nThis user is not assigned to any projects!");
                 }
                 System.out.println(result);
                 break;
@@ -86,12 +87,12 @@ public class TaskManager {
     //If user wants to create a new user
     private User createUser() throws SQLException {
         User newUser = new User();
-        System.out.println("== Please enter the new user's name: ==");
+        System.out.println("\n== Please enter the new user's name: ==");
         newUser.setName(scanner.nextLine());
-        System.out.println("== Please enter the new user's e-mail address ==");
+        System.out.println("\n== Please enter the new user's e-mail address ==");
         newUser.setEmail(scanner.nextLine());
         newUser.setId(uDao.insert(newUser));
-        System.out.println("!= New user has been created: " +
+        System.out.println("\n!= New user has been created: " +
                 newUser.getName() +" | " + newUser.getEmail() +
                 " with ID: " + newUser.getId() + " =!");
         return newUser;
@@ -99,7 +100,7 @@ public class TaskManager {
 
     //If user wants to create or edit project table
     private void handleProject() throws SQLException {
-        System.out.println("== PROJECT: What do you want to do: [ 'newproject' | 'listprojects' | 'listprojectmembers' | 'addusertoproject' ]");
+        System.out.println("\n== PROJECT: What do you want to do: [ 'newproject' | 'listprojects' | 'listprojectmembers' | 'addusertoproject' ]");
         switch(scanner.nextLine().toLowerCase()){
             case "newproject":
                 createProject();
@@ -108,7 +109,7 @@ public class TaskManager {
                 System.out.println(pDao.listAll());
                 break;
             case "listprojectmembers":
-                System.out.println("== Type the ID of the project; ==");
+                System.out.println("\n== Type the ID of the project; ==");
                 System.out.println(puDao.listMembersOf(Long.parseLong(scanner.nextLine())));
                 break;
             case "addusertoproject":
@@ -121,10 +122,10 @@ public class TaskManager {
 
     //Expects you to know user and project ID.
     private void addUserToProject() throws SQLException {
-        System.out.println("== Input the ID of a project you want to add a member to: ==");
+        System.out.println("\n== Input the ID of a project you want to add a member to: ==");
         long projectId = Long.parseLong(scanner.nextLine());
 
-        System.out.println("== Input the ID of a user you want to add to project: " + projectId + " ==");
+        System.out.println("\n== Input the ID of a user you want to add to project: " + projectId + " ==");
         long userId = Long.parseLong(scanner.nextLine());
 
         ProjectUser newProjectUser = new ProjectUser();
@@ -137,26 +138,27 @@ public class TaskManager {
     //If user wants to create new Project
     private void createProject() throws SQLException {
         Project newProject = new Project();
-        System.out.println("== PROJECT: Give a name to the new project: ==");
+        System.out.println("\n== PROJECT: Give a name to the new project: ==");
         newProject.setName(scanner.nextLine());
         newProject.setId(pDao.insert(newProject));
-        System.out.println("== Project name has been set to + " + newProject.getName() +
+        System.out.println("\n== Project name has been set to + " + newProject.getName() +
                 " with ID: " + newProject.getId());
-        System.out.println("== Please assign an owner to the project. [ exists | newuser ]==");
+        System.out.println("\n== Please assign an owner to the project. [ exists | newuser ]==");
         ProjectUser newProjectOwner = new ProjectUser();
         newProjectOwner.setProjectID(newProject.getId());
 
         switch (scanner.nextLine()){
             case "exists":
+                System.out.println("\n== Input the ID of the user ==");
                 long ownerId = Long.parseLong(scanner.nextLine());
                 newProjectOwner.setUserID(ownerId);
-                System.out.println("== User: " + ownerId +
+                System.out.println("\n== User: " + ownerId +
                         " has been set as owner of " + newProject);
                 break;
             case "newuser":
                 User newUser = createUser();
                 newProjectOwner.setUserID(newUser.getId());
-                System.out.println("== User: " + newUser.getName() +
+                System.out.println("\n== User: " + newUser.getName() +
                         " has been set as owner of " + newProject);
                 break;
             default:

@@ -7,7 +7,6 @@ public class Project {
   private long id;
 
   public Project() {}
-
   public Project(String name) {
     this.name = name;
   }
@@ -15,15 +14,12 @@ public class Project {
   public void setName(String name) {
     this.name = name;
   }
-
   public String getName() {
     return name;
   }
-
   public long getId() {
     return id;
   }
-
   public void setId(long id) {
     this.id = id;
   }
