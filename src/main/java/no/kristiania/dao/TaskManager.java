@@ -28,7 +28,9 @@ public class TaskManager {
         dataSource.setUser(properties.getProperty("datasource.username"));
         dataSource.setPassword(properties.getProperty("datasource.password"));
 
-        Flyway.configure().dataSource(dataSource).load().migrate();
+        Flyway flyway = Flyway.configure().dataSource(dataSource).load();
+        flyway.clean();
+        flyway.migrate();
 
         this.uDao = new UserDao(dataSource);
         this.pDao = new ProjectDao(dataSource);
