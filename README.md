@@ -22,7 +22,7 @@ The database should be called `taskmanager`
 4. This version of the program does not currently have tasks implemented.
 5. This version of the program does not currently have any HTTP connectivity.
  
- ## Design (valgfritt)
+ ## Design
  
 ![Design](./doc/javaAbrid3.png)
 
@@ -34,4 +34,5 @@ We specifically did not manage to implement `JOIN` queries for our database. The
 
 ## Link to review
 
-* link to issue you registered in other group's github repository
+We had a look at iaffs' and amish1188's code and reviewed it here:
+* https://github.com/Westerdals/pgr203-assignment-3-iaffs/issues
