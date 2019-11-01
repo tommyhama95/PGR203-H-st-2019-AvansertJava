@@ -29,4 +29,13 @@ public class HttpClientTest {
     client.executeRequest();
     assertEquals("http://www.example.com/",client.getResponseHeader("Location"));
   }
+
+  @Test
+  void shouldReturnBodyLength() throws IOException {
+    HttpClient client = new HttpClient("urlecho.appspot.com", 80, "/echo?body=Hello%20World");
+    client.executeRequest();
+    assertEquals("Hello World", client.getBody());
+
+  }
+
 }
