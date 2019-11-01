@@ -8,7 +8,7 @@ public class HttpClient {
   private String host;
   private int port;
   private String requestTarget;
-  private HttpClientRespone clientResponse;
+  private HttpClientResponse clientResponse;
 
 
   public HttpClient(String host, int port, String requestTarget) {
@@ -32,7 +32,7 @@ public class HttpClient {
       response.append((char)c);
     }
 
-    clientResponse = new HttpClientRespone(response.toString());
+    clientResponse = new HttpClientResponse(response.toString());
 
 
   }
@@ -41,7 +41,11 @@ public class HttpClient {
     return clientResponse.getStatusCode();
   }
 
-  public String getResponseHeader(String location) {
+  public String getResponseHeader(String key) {
+     return clientResponse.getResponseHeader(key);
+  }
+
+  public String getBody() {
     return null;
   }
 }
