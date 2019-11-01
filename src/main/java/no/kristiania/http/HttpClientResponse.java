@@ -24,7 +24,6 @@ public class HttpClientResponse {
         this.statusCode = Integer.parseInt(requestLines[0].split(" ")[1]);
 
         int i;
-
         //Parse Response Headers
         int colonPos;
         for(i = 1; (colonPos = requestLines[i].indexOf(":")) != -1; i++) {
@@ -41,9 +40,7 @@ public class HttpClientResponse {
                 body.append("\n");
             }
         }
-        System.out.println(body.toString());
         this.body = body.toString();
-
     }
 
     public int getStatusCode() {
@@ -56,5 +53,9 @@ public class HttpClientResponse {
 
     public String getResponseBody() {
         return body;
+    }
+
+    public String getResponse() {
+        return response;
     }
 }
