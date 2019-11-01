@@ -46,6 +46,6 @@ public class HttpClient {
   }
 
   public String getBody() {
-    return null;
+    return clientResponse.getResponseBody();
   }
 }
