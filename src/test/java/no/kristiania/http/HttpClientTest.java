@@ -22,4 +22,11 @@ public class HttpClientTest {
     assertEquals(404, client.getStatusCode());
 
   }
+
+  @Test
+  void shouldReturnResponseHeaders() throws IOException{
+    HttpClient client = new HttpClient("urlecho.appspot.com", 80, "/echo?status=302&Location=http://www.example.com/");
+    client.executeRequest();
+    assertEquals("http://www.example.com/",client.getResponseHeader("Location"));
+  }
 }

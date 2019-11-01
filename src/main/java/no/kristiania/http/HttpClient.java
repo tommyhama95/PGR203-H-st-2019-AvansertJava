@@ -1,13 +1,14 @@
 package no.kristiania.http;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class HttpClient {
   private String host;
   private int port;
   private String requestTarget;
-  private HttpClientRespone clientRespone;
+  private HttpClientRespone clientResponse;
 
 
   public HttpClient(String host, int port, String requestTarget) {
@@ -18,25 +19,29 @@ public class HttpClient {
 
   public void executeRequest() throws IOException {
     Socket socket = new Socket(host, port);
-    socket.getOutputStream().write(("GET " + requestTarget +" HTTP/1.1\r\n").getBytes());
-    socket.getOutputStream().write(("Host: " + host +"\r\n").getBytes());
-    socket.getOutputStream().write(("Connection: close\r\n").getBytes());
-    socket.getOutputStream().write(("\r\n").getBytes());
-    socket.getOutputStream().flush();
+    OutputStream out = socket.getOutputStream();
+    out.write(("GET " + requestTarget +" HTTP/1.1\r\n").getBytes());
+    out.write(("Host: " + host +"\r\n").getBytes());
+    out.write(("Connection: close\r\n").getBytes());
+    out.write(("\r\n").getBytes());
+    out.flush();
 
     StringBuilder response = new StringBuilder();
     int c;
     while((c = socket.getInputStream().read()) != -1){
       response.append((char)c);
     }
-    System.out.println(response.toString());
 
-    clientRespone = new HttpClientRespone(response.toString());
+    clientResponse = new HttpClientRespone(response.toString());
 
 
   }
 
   public int getStatusCode() {
-    return clientRespone.getStatusCode();
+    return clientResponse.getStatusCode();
+  }
+
+  public String getResponseHeader(String location) {
+    return null;
   }
 }
