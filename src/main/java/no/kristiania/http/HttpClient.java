@@ -29,6 +29,7 @@ public class HttpClient {
     StringBuilder response = new StringBuilder();
     int c;
     while((c = socket.getInputStream().read()) != -1){
+      System.out.print((char)c);
       response.append((char)c);
     }
 

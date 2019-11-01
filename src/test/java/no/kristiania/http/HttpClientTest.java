@@ -20,7 +20,6 @@ public class HttpClientTest {
     HttpClient client = new HttpClient("urlecho.appspot.com",80,"/echo?status=404");
     client.executeRequest();
     assertEquals(404, client.getStatusCode());
-
   }
 
   @Test

@@ -15,8 +15,7 @@ public class HttpServerTest {
 
   @BeforeEach
   void initialize() throws IOException {
-    server = new HttpServer(0);
-    server.start();
+    server = startServer();
     localport = server.getLocalport();
   }
 
@@ -26,4 +25,20 @@ public class HttpServerTest {
     client.executeRequest();
     assertEquals(200,client.getStatusCode());
   }
+
+  //TODO: write test for more server parsing
+  //TODO: Take a break, enjoy gaming
+
+  HttpServer startServer() throws IOException {
+    HttpServer server = new HttpServer(0);
+    new Thread(() -> {
+      try{
+        server.start();
+      } catch (IOException e){
+        e.printStackTrace();
+      }
+    }).start();
+    return server;
+  }
+
 }
