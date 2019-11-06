@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,19 +37,24 @@ public class HttpServer {
         String line;
         while(!(line = readLine(socket)).isEmpty()){
             request.append(line);
-            System.out.print(line);
             request.append("\r\n");
         }
 
-        System.out.println(request.toString());
+        System.out.println(request.toString()); //TODO: Clean
 
         Map<String, String> targetHeaders = parseRequest(request.toString());
 
         OutputStream out = socket.getOutputStream();
-        out.write(("HTTP/1.1 " + targetHeaders.get("status") + " OK\r\n").getBytes());
-        out.write("Content-Type: text/html\r\n".getBytes());
-        out.write("Content-Length: 4\r\n".getBytes());
-        out.write("Connection: close\r\n".getBytes());
+        respondToClient(targetHeaders, out);
+    }
+
+    private void respondToClient(Map<String, String> targetHeaders, OutputStream out) throws IOException {
+        int statusCode = Integer.parseInt(targetHeaders.getOrDefault("status","200"));
+        String body = targetHeaders.getOrDefault("body", "None");
+        out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
+        out.write(("Content-Type: text/html\r\n").getBytes());
+        out.write(("Content-Length: " + body.length() + "\r\n").getBytes());
+        out.write(("Connection: close\r\n").getBytes());
         Iterator it = targetHeaders.entrySet().iterator();
         while(it.hasNext()) {
             Map.Entry targetPair = (Map.Entry)it.next();
@@ -56,27 +63,10 @@ public class HttpServer {
             }
             it.remove();
         }
-        out.write("\r\n".getBytes());
-        out.write("None".getBytes());
+        out.write(("\r\n").getBytes());
+        out.write((URLDecoder.decode(body, StandardCharsets.UTF_8)).getBytes());
         out.close();
         out.flush();
-    }
-
-    private Map<String, String> parseRequest(String request) {
-        String[] requestLines = request.split("\r\n");
-        String requestTarget = requestLines[0].split(" ")[1];
-        Map<String, String> targetHeaders = new HashMap<>();
-        int questionPos = requestTarget.indexOf("?");
-        if(questionPos != -1) {
-            String[] targets = requestTarget.substring(questionPos+1).trim().split("&");
-            for(String target : targets) {
-                int equalsPos = target.indexOf("=");
-                String targetHeader = target.substring(0, equalsPos).trim();
-                String targetValue = target.substring(equalsPos+1).trim();
-                targetHeaders.put(targetHeader, targetValue);
-            }
-        }
-        return targetHeaders;
     }
 
     private String readLine(Socket socket) throws IOException {
@@ -95,6 +85,23 @@ public class HttpServer {
         }
         return line.toString();
     }
+
+  private Map<String, String> parseRequest(String request) {
+    String[] requestLines = request.split("\r\n");
+    String requestTarget = requestLines[0].split(" ")[1];
+    Map<String, String> targetHeaders = new HashMap<>();
+    int questionPos = requestTarget.indexOf("?");
+    if(questionPos != -1) {
+      String[] targets = requestTarget.substring(questionPos+1).trim().split("&");
+      for(String target : targets) {
+        int equalsPos = target.indexOf("=");
+        String targetHeader = target.substring(0, equalsPos).trim();
+        String targetValue = target.substring(equalsPos + 1).trim();
+        targetHeaders.put(targetHeader, targetValue);
+      }
+    }
+    return targetHeaders;
+  }
 
     public int getLocalport() {
         return localport;
