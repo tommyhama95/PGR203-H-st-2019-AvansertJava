@@ -23,7 +23,7 @@ public class HttpServerTest {
     void shouldRespondWithStatus200() throws IOException {
         client = new HttpClient("localhost", localport,"/echo?status=200");
         client.executeRequest();
-        assertEquals(200,client.getStatusCode());
+        assertEquals(200, client.getStatusCode());
     }
 
     @Test
@@ -31,7 +31,15 @@ public class HttpServerTest {
         client = new HttpClient("localhost", localport, "/echo?status=302&Location=https://www.example.com");
         client.executeRequest();
         assertEquals(302, client.getStatusCode());
-        assertEquals("https://www.example.com",client.getResponseHeader("Location"));
+        assertEquals("https://www.example.com", client.getResponseHeader("Location"));
+    }
+
+    @Test
+    void shouldReturnBody() throws  IOException {
+        client = new HttpClient("localhost", localport,  "/echo?body=Hello%20World!");
+        client.executeRequest();
+        assertEquals(200, client.getStatusCode());
+        assertEquals("Hello World!", client.getBody());
     }
 
     HttpServer startServer() throws IOException {
