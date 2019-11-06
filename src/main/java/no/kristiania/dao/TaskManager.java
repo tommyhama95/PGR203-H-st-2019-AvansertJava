@@ -24,9 +24,9 @@ public class TaskManager {
         Properties properties = new Properties();
         properties.load(new FileReader("task-manager.properties"));
 
-        dataSource.setUrl(properties.getProperty("datasource.url"));
-        dataSource.setUser(properties.getProperty("datasource.username"));
-        dataSource.setPassword(properties.getProperty("datasource.password"));
+        dataSource.setUrl(properties.getProperty("dataSource.url"));
+        dataSource.setUser(properties.getProperty("dataSource.username"));
+        dataSource.setPassword(properties.getProperty("dataSource.password"));
 
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
         flyway.clean();
