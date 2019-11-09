@@ -15,10 +15,27 @@ public class HttpServer {
     private final String fileLocation;
 
 
+    private HttpController defaultController = new  HttpController(){
+        @Override
+        public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+            respondToFileRequest(requestTarget, out);
+        }
+    };
+
+    private Map<String, HttpController> controllers = new HashMap<>();
+
+
     public HttpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         this.localport = serverSocket.getLocalPort();
         this.fileLocation = "src/main/resources";
+
+        controllers.put("/echo", new HttpController() {
+            @Override
+            public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+                respondToEchoRequest(query, out);
+            }
+        });
     }
 
     public static void main(String[] args) throws IOException {
@@ -45,45 +62,17 @@ public class HttpServer {
 
             String[] requestLines = request.toString().split("\r\n");
             String requestTarget = requestLines[0].split(" ")[1];
+            int questionPos = requestTarget.indexOf('?');
+            String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos);
 
             OutputStream out = socket.getOutputStream();
+            Map<String, String> query = parseEchoRequest(requestTarget);
             if(requestTarget.length() > 1) {
-                if (requestTarget.substring(0, 6).equals("/echo?")) {
-                    Map<String, String> targetHeaders = parseEchoRequest(requestTarget);
-                    respondToEchoRequest(targetHeaders, out);
-                } else {
-                    respondToFileRequest(requestTarget, out);
-                }
-            } else {
-                respondToFileRequest("/index.html", out);
+                controllers
+                        .getOrDefault(requestPath, defaultController)
+                        .handle(requestTarget, query, out);
             }
         }
-    }
-
-    private void respondToFileRequest(String requestTarget, OutputStream out) throws IOException {
-        try {
-            File file = new File(fileLocation + requestTarget);
-            if (!(file.exists())) {
-                out.write(("HTTP/1.1 404 " + HttpStatusCodes.statusCodeList.get(404) + "\r\n").getBytes());
-                out.write(("\r\n").getBytes());
-                out.write(("404 - Not Found").getBytes());
-            } else {
-                String fileExtension = requestTarget.substring(requestTarget.lastIndexOf('.')).trim();
-                String contentType = MimeTypes.mimeTypeList.get(fileExtension);
-
-                out.write(("HTTP/1.1 200 OK\r\n").getBytes());
-                out.write(("Content-Type: " + contentType + "\r\n").getBytes());
-                out.write(("Content-Length: " + file.length() + "\r\n").getBytes());
-                out.write(("Connection: close\r\n").getBytes());
-                out.write(("\r\n").getBytes());
-
-                new FileInputStream(file).transferTo(out);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        out.flush();
-        out.close();
     }
 
 
@@ -122,6 +111,7 @@ public class HttpServer {
     private void respondToEchoRequest(Map<String, String> targetHeaders, OutputStream out) throws IOException {
         int statusCode = Integer.parseInt(targetHeaders.getOrDefault("status","200"));
         String body = targetHeaders.getOrDefault("body", "None");
+        System.out.println("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n");
         out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
         out.write(("Content-Type: text/html\r\n").getBytes());
         out.write(("Content-Length: " + body.length() + "\r\n").getBytes());
@@ -136,8 +126,34 @@ public class HttpServer {
         }
         out.write(("\r\n").getBytes());
         out.write((URLDecoder.decode(body, StandardCharsets.UTF_8)).getBytes());
-        out.close();
         out.flush();
+        out.close();
+    }
+
+    private void respondToFileRequest(String requestTarget, OutputStream out) throws IOException {
+        try {
+            File file = new File(fileLocation + requestTarget);
+            if (!(file.exists())) {
+                out.write(("HTTP/1.1 404 " + HttpStatusCodes.statusCodeList.get(404) + "\r\n").getBytes());
+                out.write(("\r\n").getBytes());
+                out.write(("404 - Not Found").getBytes());
+            } else {
+                String fileExtension = requestTarget.substring(requestTarget.lastIndexOf('.')).trim();
+                String contentType = MimeTypes.mimeTypeList.get(fileExtension);
+
+                out.write(("HTTP/1.1 200 OK\r\n").getBytes());
+                out.write(("Content-Type: " + contentType + "\r\n").getBytes());
+                out.write(("Content-Length: " + file.length() + "\r\n").getBytes());
+                out.write(("Connection: close\r\n").getBytes());
+                out.write(("\r\n").getBytes());
+
+                new FileInputStream(file).transferTo(out);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        out.flush();
+        out.close();
     }
 
     public int getLocalport() {

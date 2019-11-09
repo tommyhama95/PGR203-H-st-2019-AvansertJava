@@ -34,8 +34,6 @@ public class HttpClient {
         }
 
         clientResponse = new HttpClientResponse(response.toString());
-
-
     }
 
     public int getStatusCode() {
