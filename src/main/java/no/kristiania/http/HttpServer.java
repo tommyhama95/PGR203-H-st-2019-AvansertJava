@@ -1,9 +1,6 @@
 package no.kristiania.http;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLDecoder;
@@ -35,36 +32,50 @@ public class HttpServer {
 
     private void run() throws IOException {
         System.out.println("Waiting on port: "+ serverSocket.getLocalPort());
-        Socket socket = serverSocket.accept();
 
-        StringBuilder request = new StringBuilder();
-        String line;
-        while(!(line = readLine(socket)).isEmpty()){
-            request.append(line);
-            request.append("\r\n");
-        }
+        while(true) {
+            Socket socket = serverSocket.accept();
 
-        String[] requestLines = request.toString().split("\r\n");
-        String requestTarget = requestLines[0].split(" ")[1];
+            StringBuilder request = new StringBuilder();
+            String line;
+            while (!(line = readLine(socket)).isEmpty()) {
+                request.append(line);
+                request.append("\r\n");
+            }
 
-        if(requestTarget.substring(0, 6).equals("/echo?")) {
-            Map<String, String> targetHeaders = parseEchoRequest(requestTarget);
+            String[] requestLines = request.toString().split("\r\n");
+            String requestTarget = requestLines[0].split(" ")[1];
+
             OutputStream out = socket.getOutputStream();
-            respondToEchoRequest(targetHeaders, out);
-        } else {
-            File file = new File(fileLocation + requestTarget);
-            OutputStream out = socket.getOutputStream();
-            out.write(("HTTP/1.1 200 OK\r\n").getBytes());
-            out.write(("Content-Type: text/plain\r\n").getBytes());
-            out.write(("Content-Length: " + file.length() + "\r\n").getBytes());
-            out.write(("Connection: close\r\n").getBytes());
-            out.write(("\r\n").getBytes());
+            if (requestTarget.substring(0, 6).equals("/echo?")) {
+                Map<String, String> targetHeaders = parseEchoRequest(requestTarget);
+                respondToEchoRequest(targetHeaders, out);
+            } else {
+                try {
+                    File file = new File(fileLocation + requestTarget);
+                    if (!(file.exists())) {
+                        out.write(("HTTP/1.1 404 " + HttpStatusCodes.statusCodeList.get(404) + "\r\n").getBytes());
+                        out.write(("\r\n").getBytes());
+                        out.write(("404 - Not Found").getBytes());
+                    } else {
+                        String fileExtension = requestTarget.substring(requestTarget.lastIndexOf('.')).trim();
+                        String contentType = MimeTypes.mimeTypeList.get(fileExtension);
 
-            new FileInputStream(file).transferTo(out);
-            out.flush();
-            out.close();
+                        out.write(("HTTP/1.1 200 OK\r\n").getBytes());
+                        out.write(("Content-Type: " + contentType + "\r\n").getBytes());
+                        out.write(("Content-Length: " + file.length() + "\r\n").getBytes());
+                        out.write(("Connection: close\r\n").getBytes());
+                        out.write(("\r\n").getBytes());
+
+                        new FileInputStream(file).transferTo(out);
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                out.flush();
+                out.close();
+            }
         }
-
     }
 
     private String readLine(Socket socket) throws IOException {
