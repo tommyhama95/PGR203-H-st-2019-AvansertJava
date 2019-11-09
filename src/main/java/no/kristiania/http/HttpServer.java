@@ -1,5 +1,7 @@
 package no.kristiania.http;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -13,11 +15,13 @@ import java.util.Map;
 public class HttpServer {
     private final int localport;
     private final ServerSocket serverSocket;
+    private final String fileLocation;
 
 
     public HttpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         this.localport = serverSocket.getLocalPort();
+        this.fileLocation = "src/main/resources";
     }
 
     public static void main(String[] args) throws IOException {
@@ -42,31 +46,30 @@ public class HttpServer {
 
         System.out.println(request.toString()); //TODO: Clean
 
-        Map<String, String> targetHeaders = parseRequest(request.toString());
+        String[] requestLines = request.toString().split("\r\n");
+        String requestTarget = requestLines[0].split(" ")[1];
 
-        OutputStream out = socket.getOutputStream();
-        respondToClient(targetHeaders, out);
-    }
+        if(requestTarget.substring(0, 6).equals("/echo?")) {
+            Map<String, String> targetHeaders = parseEchoRequest(requestTarget);
+            OutputStream out = socket.getOutputStream();
+            respondToEchoRequest(targetHeaders, out);
+        } else {
+            File file = new File(fileLocation + requestTarget);
+            OutputStream out = socket.getOutputStream();
+            out.write(("HTTP/1.1 200 OK\r\n").getBytes());
+            out.write(("Content-Type: text/plain\r\n").getBytes());
+            out.write(("Content-Length: " + file.length() + "\r\n").getBytes());
+            out.write(("Connection: close\r\n").getBytes());
+            out.write(("\r\n").getBytes());
 
-    private void respondToClient(Map<String, String> targetHeaders, OutputStream out) throws IOException {
-        int statusCode = Integer.parseInt(targetHeaders.getOrDefault("status","200"));
-        String body = targetHeaders.getOrDefault("body", "None");
-        out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
-        out.write(("Content-Type: text/html\r\n").getBytes());
-        out.write(("Content-Length: " + body.length() + "\r\n").getBytes());
-        out.write(("Connection: close\r\n").getBytes());
-        Iterator it = targetHeaders.entrySet().iterator();
-        while(it.hasNext()) {
-            Map.Entry targetPair = (Map.Entry)it.next();
-            if(!(targetPair.getKey().equals("status")) && !(targetPair.getKey().equals("body"))) {
-                out.write((targetPair.getKey() + ": " + targetPair.getValue() + "\r\n").getBytes());
-            }
-            it.remove();
+            new FileInputStream(file).transferTo(out);
+            out.flush();
+            out.close();
+
         }
-        out.write(("\r\n").getBytes());
-        out.write((URLDecoder.decode(body, StandardCharsets.UTF_8)).getBytes());
-        out.close();
-        out.flush();
+
+
+
     }
 
     private String readLine(Socket socket) throws IOException {
@@ -86,9 +89,7 @@ public class HttpServer {
         return line.toString();
     }
 
-  private Map<String, String> parseRequest(String request) {
-    String[] requestLines = request.split("\r\n");
-    String requestTarget = requestLines[0].split(" ")[1];
+  private Map<String, String> parseEchoRequest(String requestTarget) {
     Map<String, String> targetHeaders = new HashMap<>();
     int questionPos = requestTarget.indexOf("?");
     if(questionPos != -1) {
@@ -102,6 +103,27 @@ public class HttpServer {
     }
     return targetHeaders;
   }
+
+    private void respondToEchoRequest(Map<String, String> targetHeaders, OutputStream out) throws IOException {
+        int statusCode = Integer.parseInt(targetHeaders.getOrDefault("status","200"));
+        String body = targetHeaders.getOrDefault("body", "None");
+        out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
+        out.write(("Content-Type: text/html\r\n").getBytes());
+        out.write(("Content-Length: " + body.length() + "\r\n").getBytes());
+        out.write(("Connection: close\r\n").getBytes());
+        Iterator it = targetHeaders.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry targetPair = (Map.Entry)it.next();
+            if(!(targetPair.getKey().equals("status")) && !(targetPair.getKey().equals("body"))) {
+                out.write((targetPair.getKey() + ": " + targetPair.getValue() + "\r\n").getBytes());
+            }
+            it.remove();
+        }
+        out.write(("\r\n").getBytes());
+        out.write((URLDecoder.decode(body, StandardCharsets.UTF_8)).getBytes());
+        out.close();
+        out.flush();
+    }
 
     public int getLocalport() {
         return localport;
