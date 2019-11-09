@@ -8,7 +8,6 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HttpServerTest {
-
     HttpClient client;
     HttpServer server;
     private int localport;

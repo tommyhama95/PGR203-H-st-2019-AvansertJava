@@ -44,8 +44,6 @@ public class HttpServer {
             request.append("\r\n");
         }
 
-        System.out.println(request.toString()); //TODO: Clean
-
         String[] requestLines = request.toString().split("\r\n");
         String requestTarget = requestLines[0].split(" ")[1];
 
@@ -65,10 +63,7 @@ public class HttpServer {
             new FileInputStream(file).transferTo(out);
             out.flush();
             out.close();
-
         }
-
-
 
     }
 
