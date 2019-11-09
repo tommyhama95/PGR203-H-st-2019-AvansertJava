@@ -42,7 +42,13 @@ public class HttpServerTest {
         assertEquals("Hello World!", client.getBody());
     }
 
-    //TODO: File Parsing
+    @Test
+    void shouldReturnFile() throws IOException {
+        client = new HttpClient("localhost", localport, "/sample.txt");
+        client.executeRequest();
+        assertEquals(200, client.getStatusCode());
+        assertEquals("Hello World!", client.getBody());
+    }
 
     HttpServer startServer() throws IOException {
         HttpServer server = new HttpServer(0);
