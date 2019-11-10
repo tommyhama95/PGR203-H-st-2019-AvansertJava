@@ -1,5 +1,7 @@
 package no.kristiania.dao;
 
+import java.util.Objects;
+
 public class Task {
     private String name;
     private Object id;
@@ -37,4 +39,31 @@ public class Task {
     public long getProjectID() {
         return projectID;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", status='" + status + '\'' +
+                ", projectID=" + projectID +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return projectID == task.projectID &&
+                Objects.equals(name, task.name) &&
+                Objects.equals(id, task.id) &&
+                Objects.equals(status, task.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, status, projectID);
+    }
 }
+

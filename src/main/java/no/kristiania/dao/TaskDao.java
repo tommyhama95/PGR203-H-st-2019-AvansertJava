@@ -13,20 +13,27 @@ public class TaskDao extends AbstractDao<Task>{
     }
 
     @Override
-    protected void insertObject(Task obj, PreparedStatement statement) throws SQLException {
-
+    protected void insertObject(Task task, PreparedStatement statement) throws SQLException {
+        statement.setString(1, task.getName());
+        statement.setString(2, task.getStatus());
+        statement.setLong(3, task.getProjectID());
     }
 
     @Override
     protected Task readObject(ResultSet rs) throws SQLException {
-        return null;
+        Task task = new Task();
+        task.setId(rs.getLong("id"));
+        task.setName(rs.getString("name"));
+        task.setStatus(rs.getString("status"));
+        task.setProjectID(rs.getLong("project_id"));
+        return task;
     }
 
-    public Object insert(Task task) {
-        return null;
+    public long insert(Task task) throws SQLException {
+        return insert(task, "INSERT INTO tasks (name, status, project_id) VALUES (?, ?, ?)");
     }
 
-    public List<Task> listAll() {
-        return null;
+    public List<Task> listAll() throws SQLException {
+        return listAll("SELECT * FROM Tasks");
     }
 }

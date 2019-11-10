@@ -31,8 +31,8 @@ public class TaskDaoTest {
 
     public Task sampleTask() throws SQLException {
         Task task = new Task();
-        task.setName(selectRandom(new String[]{}));
-        task.setStatus(selectRandom(new String[]{}));
+        task.setName(selectRandom(new String[]{"Ask Johannes", "Somehting", "Drink water"}));
+        task.setStatus(selectRandom(new String[]{"To-Do", "In Progress", "Done"}));
         task.setProjectID(projectDao.insert(new Project("Sample")));
         return task;
     }
