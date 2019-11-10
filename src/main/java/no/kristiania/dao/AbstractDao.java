@@ -24,8 +24,8 @@ public abstract class AbstractDao<T> {
 
             ResultSet generatedkeys = statement.getGeneratedKeys();
             generatedkeys.next();
-            if(object instanceof ProjectUser){
-                return 0; //Do not attempt to get ID on ProjectUser
+            if(object instanceof ProjectMember){
+                return 0; //Do not attempt to get ID on ProjectMember
             }
             return generatedkeys.getLong("id");
         }

@@ -8,15 +8,18 @@
 <body>
 <h1>Project view</h1>
 
-<div id="projectList"></div>
+<div id="projectMembers"></div>
 
+<div>
+    <a href="newWorker.html">Add new project member</a>
+</div>
 </body>
 <script>
-    fetch("/api/projects")
+    fetch("/projectMembers")
         .then(function(response) {
             return response.text();
         }).then(function(text) {
-        document.getElementById("projectList").innerHTML = text;
+        document.getElementById("projectMembers").innerHTML = text;
     });
 </script>
 </html>

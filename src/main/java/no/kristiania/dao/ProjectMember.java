@@ -2,7 +2,7 @@ package no.kristiania.dao;
 
 import java.util.Objects;
 
-public class ProjectUser {
+public class ProjectMember {
 
 
     private long projectID;
@@ -25,7 +25,7 @@ public class ProjectUser {
     //Show how Project_user object is returned in String form
     @Override
     public String toString() {
-        return "ProjectUser{" +
+        return "ProjectMember{" +
                 "projectID=" + projectID +
                 ", userID=" + userID +
                 '}';
@@ -35,7 +35,7 @@ public class ProjectUser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProjectUser that = (ProjectUser) o;
+        ProjectMember that = (ProjectMember) o;
         return projectID == that.projectID &&
                 userID == that.userID;
     }

@@ -3,8 +3,8 @@ package no.kristiania.http;
 import java.util.HashMap;
 import java.util.Map;
 
-class HttpStatusCodes {
-    static Map<Integer,String> statusCodeList = new HashMap<>();
+public class HttpStatusCodes {
+    public static Map<Integer,String> statusCodeList = new HashMap<>();
 
     static {
         statusCodeList.put(100, "Continue");

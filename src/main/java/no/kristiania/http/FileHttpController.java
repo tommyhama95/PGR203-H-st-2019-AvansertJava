@@ -14,11 +14,7 @@ class FileHttpController implements HttpController {
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
         try {
             File file = new File(httpServer.getFileLocation() + requestTarget);
-            if (!(file.exists())) {
-                out.write(("HTTP/1.1 404 " + HttpStatusCodes.statusCodeList.get(404) + "\r\n").getBytes());
-                out.write(("\r\n").getBytes());
-                out.write(("404 - Not Found").getBytes());
-            } else {
+            if (file.exists()) {
                 String fileExtension = requestTarget.substring(requestTarget.lastIndexOf('.')).trim();
                 String contentType = MimeTypes.mimeTypeList.get(fileExtension);
 
@@ -29,6 +25,10 @@ class FileHttpController implements HttpController {
                 out.write(("\r\n").getBytes());
 
                 new FileInputStream(file).transferTo(out);
+            } else {
+                out.write(("HTTP/1.1 404 " + HttpStatusCodes.statusCodeList.get(404) + "\r\n").getBytes());
+                out.write(("\r\n").getBytes());
+                out.write(("404 - Not Found").getBytes());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

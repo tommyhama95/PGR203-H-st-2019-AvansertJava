@@ -3,10 +3,7 @@ package no.kristiania.http;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class HttpServer {
@@ -55,12 +52,13 @@ public class HttpServer {
             int questionPos = requestTarget.indexOf('?');
             String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos);
 
-            OutputStream out = socket.getOutputStream();
             Map<String, String> query = parseEchoRequest(requestTarget, questionPos);
             if(requestTarget.length() > 1) {
                 controllers
                         .getOrDefault(requestPath, defaultController)
-                        .handle(requestTarget, query, out);
+                        .handle(requestTarget, query, socket.getOutputStream());
+            } else {
+                defaultController.handle("/index.html", query, socket.getOutputStream());
             }
         }
     }
@@ -107,5 +105,9 @@ public class HttpServer {
 
     public void setFileLocation(String fileLocation) {
         this.fileLocation = fileLocation;
+    }
+
+    public void addController(String requestPath, HttpController controller) {
+        controllers.put(requestPath, controller);
     }
 }

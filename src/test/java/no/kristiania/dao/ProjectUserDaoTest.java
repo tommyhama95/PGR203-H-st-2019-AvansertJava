@@ -14,7 +14,7 @@ public class ProjectUserDaoTest {
     void shouldListProjectUsers() throws SQLException {
         JdbcDataSource dataSource = new JdbcDataSource();
 
-        ProjectUserDao puDao = new ProjectUserDao(dataSource);
+        ProjectMemberDao puDao = new ProjectMemberDao(dataSource);
         ProjectDao projectDao = new ProjectDao(dataSource);
         UserDao userDao = new UserDao(dataSource);
 
@@ -29,7 +29,7 @@ public class ProjectUserDaoTest {
         long uID = userDao.insert(uObject);
 
 
-        ProjectUser pu = new ProjectUser();
+        ProjectMember pu = new ProjectMember();
         pu.setProjectID(pID);
         pu.setUserID(uID);
 

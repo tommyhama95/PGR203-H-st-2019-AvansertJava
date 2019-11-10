@@ -17,7 +17,7 @@ public class TaskManager {
 
     private final UserDao uDao;
     private final ProjectDao pDao;
-    private final ProjectUserDao puDao;
+    private final ProjectMemberDao puDao;
     private final String errorMessage = "== No valid selection: Aborting ==";
 
     public TaskManager() throws IOException {
@@ -34,7 +34,7 @@ public class TaskManager {
 
         this.uDao = new UserDao(dataSource);
         this.pDao = new ProjectDao(dataSource);
-        this.puDao = new ProjectUserDao(dataSource);
+        this.puDao = new ProjectMemberDao(dataSource);
     }
 
     //Runs the interface in terminal to ask user to edit or print database
@@ -74,7 +74,7 @@ public class TaskManager {
                 break;
             case "listuserprojects":
                 System.out.println("\n== Type the ID of the user: ==");
-                List<ProjectUser> result = puDao.listProjectsWith(Long.parseLong(scanner.nextLine()));
+                List<ProjectMember> result = puDao.listProjectsWith(Long.parseLong(scanner.nextLine()));
                 if(result.isEmpty()) {
                     System.out.println("\nThis user is not assigned to any projects!");
                 }
@@ -130,7 +130,7 @@ public class TaskManager {
         System.out.println("\n== Input the ID of a user you want to add to project: " + projectId + " ==");
         long userId = Long.parseLong(scanner.nextLine());
 
-        ProjectUser newProjectUser = new ProjectUser();
+        ProjectMember newProjectUser = new ProjectMember();
         newProjectUser.setProjectID(projectId);
         newProjectUser.setUserID(userId);
 
@@ -146,7 +146,7 @@ public class TaskManager {
         System.out.println("\n== Project name has been set to + " + newProject.getName() +
                 " with ID: " + newProject.getId());
         System.out.println("\n== Please assign an owner to the project. [ exists | newuser ]==");
-        ProjectUser newProjectOwner = new ProjectUser();
+        ProjectMember newProjectOwner = new ProjectMember();
         newProjectOwner.setProjectID(newProject.getId());
 
         switch (scanner.nextLine()){
