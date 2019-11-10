@@ -20,5 +20,7 @@ class ProjectsControllerTest {
         assertThat(controller.getBody())
                 .contains(String.format("<li id='%s'><a>%s</a></li>", project1.getId(), project1.getName()))
                 .contains(String.format("<li id='%s'><a>%s</a></li>", project2.getId(), project2.getName()));
+
+        //TODO: Give LI tags href attributes for links later
     }
 }

@@ -16,6 +16,14 @@ public class ProjectDaoTest {
     Random random = new Random();
     private ProjectDao dao;
 
+    static JdbcDataSource createDataSource() {
+        JdbcDataSource dataSource = new JdbcDataSource();
+        dataSource.setUrl("jdbc:h2:mem:testDataBase;DB_CLOSE_DELAY=-1");
+        Flyway.configure().dataSource(dataSource).load().migrate();
+        return dataSource;
+    }
+
+
     public Project sampleProject() throws SQLException {
         Project project = new Project();
         project.setName(selectRandom(new String[]{"Sansa","Soup","Lemonmaking","MUFFIN"}));
@@ -31,18 +39,10 @@ public class ProjectDaoTest {
 
     @Test
     void shouldListOutProjects() throws SQLException {
-        Project project = new Project();
-        project.setName("JDBC");
+        Project project = sampleProject();
         project.setId(dao.insert(project));
 
         assertThat(dao.listAll()).contains(project);
-    }
-
-    static JdbcDataSource createDataSource() {
-        JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setUrl("jdbc:h2:mem:testDataBase;DB_CLOSE_DELAY=-1");
-        Flyway.configure().dataSource(dataSource).load().migrate();
-        return dataSource;
     }
 
     private String selectRandom(String[] alternatives) {
