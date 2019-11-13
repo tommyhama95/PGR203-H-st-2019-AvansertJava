@@ -4,9 +4,17 @@ import java.util.Objects;
 
 public class Task {
     private String name;
-    private Object id;
+    private long id;
     private String status;
     private long projectID;
+
+    public Task() {}
+
+    public Task(String name, String status, long projectID) {
+        this.name = name;
+        this.status = status;
+        this.projectID = projectID;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -16,11 +24,11 @@ public class Task {
         return name;
     }
 
-    public void setId(Object id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Object getId() {
+    public long getId() {
         return id;
     }
 

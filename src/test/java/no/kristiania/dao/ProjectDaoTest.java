@@ -5,7 +5,6 @@ import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Random;
 

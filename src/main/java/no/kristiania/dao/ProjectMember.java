@@ -8,6 +8,13 @@ public class ProjectMember {
     private long projectID;
     private long userID;
 
+    public  ProjectMember(){}
+
+    public ProjectMember(long userID, long projectID) {
+        this.projectID = projectID;
+        this.userID = userID;
+    }
+
     public void setProjectID(long projectID) {
         this.projectID = projectID;
     }
