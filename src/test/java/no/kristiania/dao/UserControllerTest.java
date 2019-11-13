@@ -15,7 +15,7 @@ public class UserControllerTest {
         UserDao dao = new UserDao(new DaoTest().createDataSource());
         daoTestInstance.setUp();
 
-        UserController controller = new UserController(dao);
+        UsersController controller = new UsersController(dao);
         User user1 = daoTestInstance.sampleUser();
         User user2 = daoTestInstance.sampleUser();
 

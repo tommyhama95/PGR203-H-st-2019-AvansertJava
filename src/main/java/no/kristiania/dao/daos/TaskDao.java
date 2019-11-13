@@ -1,15 +1,15 @@
 package no.kristiania.dao.daos;
 
 import no.kristiania.dao.objects.Task;
-import org.h2.jdbcx.JdbcDataSource;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class TaskDao extends AbstractDao<Task>{
-    public TaskDao(JdbcDataSource dataSource) {
+    public TaskDao(DataSource dataSource) {
         super(dataSource);
     }
 

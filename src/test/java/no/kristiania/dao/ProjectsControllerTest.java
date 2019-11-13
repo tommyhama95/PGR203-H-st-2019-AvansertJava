@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ProjectsControllerTest {
+public class ProjectsControllerTest {
     @Test
     void shouldReturnProjectsFromDatabase() throws SQLException {
         DaoTest daoTestInstance = new DaoTest();

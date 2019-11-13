@@ -6,17 +6,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Project view</h1>
+<h1>Task view</h1>
 
-<ul id="projectList"></ul>
+<div>
+    <ul id="tasks"></ul>
+</div>
 
 </body>
 <script>
-    fetch("/api/projects")
+    fetch("/api/tasks")
         .then(function(response) {
             return response.text();
         }).then(function(text) {
-        document.getElementById("projectList").innerHTML = text;
+        document.getElementById("tasks").innerHTML = text;
     });
 </script>
 </html>

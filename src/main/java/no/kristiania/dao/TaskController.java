@@ -1,6 +1,6 @@
 package no.kristiania.dao;
 
-import no.kristiania.dao.daos.ProjectDao;
+import no.kristiania.dao.daos.TaskDao;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpStatusCodes;
 
@@ -13,10 +13,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProjectsController implements HttpController {
-    private final ProjectDao dao;
+public class TaskController implements HttpController {
+    private final TaskDao dao;
 
-    public ProjectsController(ProjectDao dao) {
+    public TaskController(TaskDao dao) {
         this.dao = dao;
     }
 
@@ -55,7 +55,7 @@ public class ProjectsController implements HttpController {
 
     String getBody() throws SQLException {
         return dao.listAll().stream()
-                .map(p -> String.format("<li id='%s'><a>%s</a></li>", p.getId(), p.getName()))
+                .map(t -> String.format("<li id='%s'><a>%s</a></li>", t.getId(), t.getName()))
                 .collect(Collectors.joining(""));
     }
 }

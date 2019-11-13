@@ -1,6 +1,8 @@
 package no.kristiania.dao;
 
 import no.kristiania.dao.daos.ProjectDao;
+import no.kristiania.dao.daos.TaskDao;
+import no.kristiania.dao.daos.UserDao;
 import no.kristiania.http.HttpServer;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -25,12 +27,14 @@ public class TaskManagerServer {
         dataSource.setPassword(properties.getProperty("dataSource.password"));
 
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
-        flyway.clean();
+
         flyway.migrate();
 
         server = new HttpServer(port);
         server.setFileLocation("src/main/resources");
         server.addController("/api/projects", new ProjectsController(new ProjectDao(dataSource)));
+        server.addController("/api/users", new UsersController(new UserDao(dataSource)));
+        server.addController("/api/tasks", new TaskController(new TaskDao(dataSource)));
     }
 
     public static void main(String[] args) throws IOException {
