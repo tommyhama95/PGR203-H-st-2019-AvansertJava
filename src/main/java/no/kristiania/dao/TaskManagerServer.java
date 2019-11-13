@@ -27,18 +27,25 @@ public class TaskManagerServer {
         dataSource.setPassword(properties.getProperty("dataSource.password"));
 
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
-
         flyway.migrate();
 
         server = new HttpServer(port);
         server.setFileLocation("src/main/resources");
         server.addController("/api/projects", new ProjectsController(new ProjectDao(dataSource)));
-        server.addController("/api/users", new UsersController(new UserDao(dataSource)));
         server.addController("/api/tasks", new TaskController(new TaskDao(dataSource)));
+        server.addController("/api/users", new UsersController(new UserDao(dataSource)));
         server.addController("/api/projectMembers",
                 new ProjectMembersController(
                         new ProjectMemberDao(dataSource),
                         new UserDao(dataSource)));
+        server.addController("/api/taskMembers",
+                new TaskMembersController(
+                        new TaskMemberDao(dataSource),
+                        new TaskDao(dataSource),
+                        new ProjectMemberDao(dataSource),
+                        new ProjectDao(dataSource),
+                        new UserDao(dataSource)
+                ));
     }
 
     public static void main(String[] args) throws IOException {

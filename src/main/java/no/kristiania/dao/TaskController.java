@@ -1,6 +1,8 @@
 package no.kristiania.dao;
 
 import no.kristiania.dao.daos.TaskDao;
+import no.kristiania.dao.daos.TaskMemberDao;
+import no.kristiania.dao.objects.TaskMember;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpStatusCodes;
 
@@ -14,14 +16,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TaskController implements HttpController {
-    private final TaskDao dao;
+    private final TaskDao tDao;
+    private String urlQuery;
 
-    public TaskController(TaskDao dao) {
-        this.dao = dao;
+    public TaskController(TaskDao tDao) {
+        this.tDao = tDao;
     }
 
     @Override
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+        urlQuery = requestTarget.substring(requestTarget.indexOf('?')+1);
         try {
             int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
             String body = query.getOrDefault("body", getBody());
@@ -54,8 +58,9 @@ public class TaskController implements HttpController {
     }
 
     String getBody() throws SQLException {
-        return dao.listAll().stream()
-                .map(t -> String.format("<li id='%s'><a>%s</a></li>", t.getId(), t.getName()))
+        long projectId = Long.parseLong(urlQuery.substring(urlQuery.indexOf('=')+1));
+        return tDao.listTasksOfProject(projectId).stream()
+                .map(t -> String.format("<li id='%s'><a href='task.html?projectid=%s&taskid=%s'>%s</a></li>", t.getId(), t.getProjectID(), t.getId(), t.getName()))
                 .collect(Collectors.joining(""));
     }
 }

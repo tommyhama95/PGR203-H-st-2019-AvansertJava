@@ -1,6 +1,6 @@
 package no.kristiania.dao;
 
-import no.kristiania.dao.daos.ProjectDao;
+import no.kristiania.dao.daos.*;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpStatusCodes;
 
@@ -13,15 +13,26 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProjectsController implements HttpController {
-    private final ProjectDao dao;
+public class TaskMembersController implements HttpController {
 
-    public ProjectsController(ProjectDao dao) {
-        this.dao = dao;
+    private TaskMemberDao tmDao;
+    private TaskDao tDao;
+    private UserDao uDao;
+    private ProjectDao pDao;
+    private ProjectMemberDao pmDao;
+    private String urlQuery;
+
+    public TaskMembersController(TaskMemberDao tmDao, TaskDao tDao, ProjectMemberDao pmDao, ProjectDao pDao, UserDao uDao) {
+        this.tDao = tDao;
+        this.pmDao = pmDao;
+        this.pDao = pDao;
+        this.uDao = uDao;
+        this.tmDao = tmDao;
     }
 
     @Override
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+        urlQuery = requestTarget.substring(requestTarget.indexOf('?')+1);
         try {
             int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
             String body = query.getOrDefault("body", getBody());
@@ -53,9 +64,20 @@ public class ProjectsController implements HttpController {
         }
     }
 
-    String getBody() throws SQLException {
-        return dao.listAll().stream()
-                .map(p -> String.format("<li id='%s'><a href=project.html?projectid=%s>%s</a></li>", p.getId(), p.getId(), p.getName()))
+    public String getBody() throws SQLException {
+        String[] urlQueries = urlQuery.substring(urlQuery.indexOf('?')+1).split("&");
+        long projectId = Long.parseLong(urlQueries[0].substring(urlQueries[0].indexOf('=')+1)); //TODO: Maybe use later for visuals
+        long taskId = Long.parseLong(urlQueries[1].substring(urlQueries[1].indexOf('=')+1));
+        return tmDao.listMembersOfTask(taskId).stream()
+                .map(tm -> {
+                    try {
+                        return String.format("<li id=%s>%s</li>", tm.getuID(), uDao.getUserById(tm.getuID()).getName());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        return "Internal Server Error - 500";
+                    }
+                })
                 .collect(Collectors.joining(""));
     }
+
 }

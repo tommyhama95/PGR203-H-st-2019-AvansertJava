@@ -22,6 +22,10 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
         return listAll("SELECT * FROM task_members");
     }
 
+    public List<TaskMember> listMembersOfTask(long id) throws SQLException {
+        return listAllWithStatement(id, "SELECT * FROM task_members WHERE task_id = (?)");
+    }
+
     @Override
     protected void insertObject(TaskMember obj, PreparedStatement statement) throws SQLException {
         statement.setLong(1,obj.gettID());
@@ -37,4 +41,5 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
         taskMember.setpId(rs.getLong(3));
         return taskMember;
     }
+
 }

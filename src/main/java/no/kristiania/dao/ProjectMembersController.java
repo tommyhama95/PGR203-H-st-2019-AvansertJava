@@ -2,6 +2,7 @@ package no.kristiania.dao;
 
 import no.kristiania.dao.daos.ProjectDao;
 import no.kristiania.dao.daos.ProjectMemberDao;
+import no.kristiania.dao.daos.TaskDao;
 import no.kristiania.dao.daos.UserDao;
 import no.kristiania.dao.objects.User;
 import no.kristiania.http.HttpController;
@@ -61,7 +62,7 @@ public class ProjectMembersController implements HttpController {
         }
     }
 
-    String getBody() throws SQLException {
+    public String getBody() throws SQLException {
         System.out.println(urlQuery);
         long projectID = Long.parseLong(urlQuery.substring(urlQuery.indexOf('=')+1));
         return pmDao.listMembersOf(projectID).stream()

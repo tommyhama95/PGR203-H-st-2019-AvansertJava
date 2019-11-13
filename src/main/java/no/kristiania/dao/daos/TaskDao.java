@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskDao extends AbstractDao<Task>{
@@ -36,5 +37,9 @@ public class TaskDao extends AbstractDao<Task>{
 
     public List<Task> listAll() throws SQLException {
         return listAll("SELECT * FROM Tasks");
+    }
+
+    public List<Task> listTasksOfProject(long projectId) throws SQLException {
+        return listAllWithStatement(projectId, "SELECT * FROM tasks WHERE project_id = (?)");
     }
 }

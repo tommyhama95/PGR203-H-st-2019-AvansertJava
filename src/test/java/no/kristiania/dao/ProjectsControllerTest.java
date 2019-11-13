@@ -20,7 +20,7 @@ public class ProjectsControllerTest {
         Project project2 = daoTestInstance.sampleProject();
 
         assertThat(controller.getBody())
-                .contains(String.format("<li id='%s'><a href=project.html?id=%s>%s</a></li>", project1.getId(), project1.getId(), project1.getName()))
-                .contains(String.format("<li id='%s'><a href=project.html?id=%s>%s</a></li>", project2.getId(), project2.getId(), project2.getName()));
+                .contains(String.format("<li id='%s'><a href=project.html?projectid=%s>%s</a></li>", project1.getId(), project1.getId(), project1.getName()))
+                .contains(String.format("<li id='%s'><a href=project.html?projectid=%s>%s</a></li>", project2.getId(), project2.getId(), project2.getName()));
     }
 }
