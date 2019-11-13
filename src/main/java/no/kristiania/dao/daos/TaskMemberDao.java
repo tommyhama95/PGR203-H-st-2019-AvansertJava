@@ -1,4 +1,6 @@
-package no.kristiania.dao;
+package no.kristiania.dao.daos;
+
+import no.kristiania.dao.objects.TaskMember;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
     }
 
     public long insert(TaskMember taskMember) throws SQLException {
-       return insert(taskMember, "INSERT INTO task_members (task_id, user_id) VALUES (?, ?)");
+       return insert(taskMember, "INSERT INTO task_members (task_id, user_id, project_id) VALUES (?, ?, ?)");
     }
 
     public List<TaskMember> listAll() throws SQLException {
@@ -24,6 +26,7 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
     protected void insertObject(TaskMember obj, PreparedStatement statement) throws SQLException {
         statement.setLong(1,obj.gettID());
         statement.setLong(2,obj.getuID());
+        statement.setLong(3,obj.getpId());
     }
 
     @Override
@@ -31,6 +34,7 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
         TaskMember taskMember = new TaskMember();
         taskMember.settID(rs.getLong(1));
         taskMember.setuID(rs.getLong(2));
+        taskMember.setpId(rs.getLong(3));
         return taskMember;
     }
 }

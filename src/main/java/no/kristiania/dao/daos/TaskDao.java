@@ -1,5 +1,6 @@
-package no.kristiania.dao;
+package no.kristiania.dao.daos;
 
+import no.kristiania.dao.objects.Task;
 import org.h2.jdbcx.JdbcDataSource;
 
 import java.sql.PreparedStatement;

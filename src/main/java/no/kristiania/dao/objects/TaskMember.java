@@ -1,4 +1,4 @@
-package no.kristiania.dao;
+package no.kristiania.dao.objects;
 
 import java.util.Objects;
 
@@ -7,13 +7,15 @@ public class TaskMember {
 
     private long tID;
     private long uID;
+    private long pId;
 
     public TaskMember() {
     }
 
-    public TaskMember(long tID, long uID) {
+    public TaskMember(long tID, long uID, long pID) {
         this.tID = tID;
         this.uID = uID;
+        this.pId = pID;
     }
 
     public long getuID() {
@@ -30,6 +32,14 @@ public class TaskMember {
 
     public void settID(long tID) {
         this.tID = tID;
+    }
+
+    public long getpId() {
+        return pId;
+    }
+
+    public void setpId(long pId) {
+        this.pId = pId;
     }
 
     @Override

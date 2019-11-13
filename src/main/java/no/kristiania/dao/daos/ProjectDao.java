@@ -1,4 +1,6 @@
-package no.kristiania.dao;
+package no.kristiania.dao.daos;
+
+import no.kristiania.dao.objects.Project;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;

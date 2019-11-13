@@ -1,5 +1,11 @@
 package no.kristiania.dao;
 
+import no.kristiania.dao.daos.ProjectDao;
+import no.kristiania.dao.daos.ProjectMemberDao;
+import no.kristiania.dao.daos.UserDao;
+import no.kristiania.dao.objects.Project;
+import no.kristiania.dao.objects.ProjectMember;
+import no.kristiania.dao.objects.User;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 

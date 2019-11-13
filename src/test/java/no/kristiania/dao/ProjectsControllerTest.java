@@ -1,5 +1,7 @@
 package no.kristiania.dao;
 
+import no.kristiania.dao.daos.ProjectDao;
+import no.kristiania.dao.objects.Project;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -9,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProjectsControllerTest {
     @Test
     void shouldReturnProjectsFromDatabase() throws SQLException {
-        ProjectDaoTest daoTestInstance = new ProjectDaoTest();
-        ProjectDao dao = new ProjectDao(ProjectDaoTest.createDataSource());
+        DaoTest daoTestInstance = new DaoTest();
+        ProjectDao dao = new ProjectDao(new DaoTest().createDataSource());
         daoTestInstance.setUp();
 
         ProjectsController controller = new ProjectsController(dao);

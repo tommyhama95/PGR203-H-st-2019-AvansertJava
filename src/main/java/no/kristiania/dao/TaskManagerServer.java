@@ -1,5 +1,6 @@
 package no.kristiania.dao;
 
+import no.kristiania.dao.daos.ProjectDao;
 import no.kristiania.http.HttpServer;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;

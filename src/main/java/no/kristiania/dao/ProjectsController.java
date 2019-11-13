@@ -1,5 +1,6 @@
 package no.kristiania.dao;
 
+import no.kristiania.dao.daos.ProjectDao;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpStatusCodes;
 
