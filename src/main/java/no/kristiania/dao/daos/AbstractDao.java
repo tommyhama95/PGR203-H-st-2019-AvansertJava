@@ -34,6 +34,22 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    //Makes ResultSet of query with one parameter
+    public List<T> listAllWithStatement(long idValue, String sql) throws SQLException {
+        List<T> result = new ArrayList<>();
+        try(Connection connection = datasource.getConnection()){
+            try(PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setLong(1, idValue);
+                try(ResultSet rs = statement.executeQuery()){
+                    while(rs.next()){
+                        result.add(readObject(rs));
+                    }
+                    return result;
+                }
+            }
+        }
+    }
+
     protected abstract void insertObject(T obj, PreparedStatement statement) throws SQLException;
 
     //This method returns all values in a certain column

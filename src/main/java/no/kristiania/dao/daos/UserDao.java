@@ -39,5 +39,8 @@ public class UserDao extends AbstractDao<User> {
         return listAll("SELECT * FROM users");
     }
 
+    public User getUserById(long id) throws SQLException {
+        return listAllWithStatement(id, "SELECT * FROM users WHERE id = (?)").get(0);
+    }
 
 }

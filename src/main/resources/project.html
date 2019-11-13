@@ -9,6 +9,7 @@
 <h1>Project view</h1>
 
 <div>
+    <h3>Members of this project:</h3>
     <ul id="projectMembers"></ul>
 </div>
 
@@ -17,7 +18,10 @@
 </div>
 </body>
 <script>
-    fetch("/projectMembers")
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectID = urlParams.get('id');
+
+    fetch("/api/projectMembers?id=" + projectID)
         .then(function(response) {
             return response.text();
         }).then(function(text) {

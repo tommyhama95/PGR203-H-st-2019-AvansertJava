@@ -1,14 +1,14 @@
 package no.kristiania.dao;
 
-import no.kristiania.dao.daos.ProjectDao;
-import no.kristiania.dao.daos.TaskDao;
-import no.kristiania.dao.daos.UserDao;
+import no.kristiania.dao.daos.*;
 import no.kristiania.http.HttpServer;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class TaskManagerServer {
@@ -35,6 +35,10 @@ public class TaskManagerServer {
         server.addController("/api/projects", new ProjectsController(new ProjectDao(dataSource)));
         server.addController("/api/users", new UsersController(new UserDao(dataSource)));
         server.addController("/api/tasks", new TaskController(new TaskDao(dataSource)));
+        server.addController("/api/projectMembers",
+                new ProjectMembersController(
+                        new ProjectMemberDao(dataSource),
+                        new UserDao(dataSource)));
     }
 
     public static void main(String[] args) throws IOException {

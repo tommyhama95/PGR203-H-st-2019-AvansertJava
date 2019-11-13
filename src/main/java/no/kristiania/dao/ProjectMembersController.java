@@ -1,6 +1,9 @@
 package no.kristiania.dao;
 
 import no.kristiania.dao.daos.ProjectDao;
+import no.kristiania.dao.daos.ProjectMemberDao;
+import no.kristiania.dao.daos.UserDao;
+import no.kristiania.dao.objects.User;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpStatusCodes;
 
@@ -13,15 +16,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProjectsController implements HttpController {
-    private final ProjectDao dao;
+public class ProjectMembersController implements HttpController {
+    private ProjectMemberDao pmDao;
+    private ProjectDao pDao;
+    private UserDao uDao;
+    private String urlQuery;
 
-    public ProjectsController(ProjectDao dao) {
-        this.dao = dao;
+    public ProjectMembersController(ProjectMemberDao projectMemberDao, UserDao userDao) {
+        this.pmDao = projectMemberDao;
+        this.uDao = userDao;
     }
 
     @Override
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+        urlQuery = requestTarget.substring(requestTarget.indexOf('?')+1);
         try {
             int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
             String body = query.getOrDefault("body", getBody());
@@ -54,8 +62,17 @@ public class ProjectsController implements HttpController {
     }
 
     String getBody() throws SQLException {
-        return dao.listAll().stream()
-                .map(p -> String.format("<li id='%s'><a href=project.html?id=%s>%s</a></li>", p.getId(), p.getId(), p.getName()))
+        System.out.println(urlQuery);
+        long projectID = Long.parseLong(urlQuery.substring(urlQuery.indexOf('=')+1));
+        return pmDao.listMembersOf(projectID).stream()
+                .map(p -> {
+                    try {
+                        return String.format("<li id='%s'>%s</li>", p.getProjectID() + "-" + p.getUserID(), uDao.getUserById(p.getUserID()).getName());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        return null; //TODO: Sketchy..
+                    }
+                })
                 .collect(Collectors.joining(""));
     }
 }

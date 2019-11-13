@@ -13,9 +13,14 @@ class FileHttpController implements HttpController {
     @Override
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
         try {
-            File file = new File(httpServer.getFileLocation() + requestTarget);
+            String requestPath = requestTarget;
+            int questionPos = requestTarget.indexOf('?');
+            if(questionPos != -1){
+                requestPath = requestTarget.substring(0,questionPos);
+            }
+            File file = new File(httpServer.getFileLocation() + requestPath);
             if (file.exists()) {
-                String fileExtension = requestTarget.substring(requestTarget.lastIndexOf('.')).trim();
+                String fileExtension = requestPath.substring(requestPath.lastIndexOf('.')).trim();
                 String contentType = MimeTypes.mimeTypeList.get(fileExtension);
 
                 out.write(("HTTP/1.1 200 OK\r\n").getBytes());

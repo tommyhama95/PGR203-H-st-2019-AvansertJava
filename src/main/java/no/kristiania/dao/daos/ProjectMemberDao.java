@@ -36,22 +36,6 @@ public class ProjectMemberDao extends AbstractDao<ProjectMember>{
         return listAllWithStatement(userId, "SELECT * FROM project_members WHERE user_id = ?");
     }
 
-    //Makes ResultSet of query with one parameter
-    public List<ProjectMember> listAllWithStatement(long idValue, String sql) throws SQLException {
-        List<ProjectMember> result = new ArrayList<>();
-        try(Connection connection = datasource.getConnection()){
-            try(PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setLong(1, idValue);
-                try(ResultSet rs = statement.executeQuery()){
-                    while(rs.next()){
-                        result.add(readObject(rs));
-                    }
-                    return result;
-                }
-            }
-        }
-    }
-
     @Override
     protected void insertObject(ProjectMember obj, PreparedStatement statement) throws SQLException {
         statement.setLong(1, obj.getProjectID());
