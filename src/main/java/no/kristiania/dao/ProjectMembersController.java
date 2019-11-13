@@ -65,12 +65,13 @@ public class ProjectMembersController implements HttpController {
         System.out.println(urlQuery);
         long projectID = Long.parseLong(urlQuery.substring(urlQuery.indexOf('=')+1));
         return pmDao.listMembersOf(projectID).stream()
-                .map(p -> {
+                .map(pm -> {
                     try {
-                        return String.format("<li id='%s'>%s</li>", p.getProjectID() + "-" + p.getUserID(), uDao.getUserById(p.getUserID()).getName());
+                        return String.format("<li id='%s'>%s</li>", pm.getProjectID() +
+                                "-" + pm.getUserID(), uDao.getUserById(pm.getUserID()).getName());
                     } catch (SQLException e) {
                         e.printStackTrace();
-                        return null; //TODO: Sketchy..
+                        return "Internal Server Error - 500";
                     }
                 })
                 .collect(Collectors.joining(""));
