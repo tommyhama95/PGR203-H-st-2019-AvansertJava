@@ -30,7 +30,7 @@ public class TaskMemberDaoTest {
     void shouldListAllTaskMembers() throws SQLException {
         long uID = uDao.insert(new User("Olav", "Something@test.nk"));
         long pID = pDao.insert(new Project("Finish java"));
-        ProjectMember pm = new ProjectMember(uID, pID);
+        pmDao.insert(new ProjectMember(uID, pID));
         long tID = tDao.insert(new Task("Finish Task", "In progress", pID));
         TaskMember taskMember = new TaskMember(tID, uID);
         tmDao.insert(taskMember);

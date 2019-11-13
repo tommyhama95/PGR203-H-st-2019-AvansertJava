@@ -18,7 +18,9 @@ public class ProjectDaoTest {
     static JdbcDataSource createDataSource() {
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setUrl("jdbc:h2:mem:testDataBase;DB_CLOSE_DELAY=-1");
-        Flyway.configure().dataSource(dataSource).load().migrate();
+        Flyway flyway = Flyway.configure().dataSource(dataSource).load();
+        flyway.clean();
+        flyway.migrate();
         return dataSource;
     }
 
