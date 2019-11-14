@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HttpServerTest {
@@ -15,7 +16,7 @@ public class HttpServerTest {
     @BeforeEach
     void initialize() throws IOException {
         server = startServer();
-        localport = server.getLocalport();
+        localport = server.getLocalPort();
     }
 
     @Test
@@ -47,6 +48,17 @@ public class HttpServerTest {
         client.executeRequest();
         assertEquals(200, client.getStatusCode());
         assertEquals("Hello World!", client.getBody());
+    }
+
+    @Test
+    void shouldReturnPostParameter() throws IOException {
+        String formBody = "content-type=text/html&body=foobar";
+        client = new HttpClient("localhost", localport, "/echo?" + formBody);
+        client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        client.setBody(formBody);
+        HttpResponse response = client.executeRequest();
+        assertThat(response.getHeaderValue("Content-Type")).isEqualTo("text/html");
+        assertThat(response.getBody()).isEqualTo("foobar");
     }
 
     HttpServer startServer() throws IOException {

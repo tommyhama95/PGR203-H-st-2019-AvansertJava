@@ -3,12 +3,16 @@ package no.kristiania.http;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HttpClient {
     private String host;
     private int port;
     private String requestTarget;
-    private HttpClientResponse clientResponse;
+    private HttpResponse clientResponse;
+    private String body;
+    private Map<String, String> headers = new HashMap<>();
 
 
     public HttpClient(String host, int port, String requestTarget) {
@@ -17,7 +21,7 @@ public class HttpClient {
         this.requestTarget = requestTarget;
     }
 
-    public void executeRequest() throws IOException {
+    public HttpResponse executeRequest() throws IOException {
         Socket socket = new Socket(host, port);
         OutputStream out = socket.getOutputStream();
         out.write(("GET " + requestTarget +" HTTP/1.1\r\n").getBytes());
@@ -26,14 +30,7 @@ public class HttpClient {
         out.write(("\r\n").getBytes());
         out.flush();
 
-        StringBuilder response = new StringBuilder();
-        int c;
-        while((c = socket.getInputStream().read()) != -1){
-            System.out.print((char)c);
-            response.append((char)c);
-        }
-
-        clientResponse = new HttpClientResponse(response.toString());
+        return clientResponse = new HttpResponse(socket);
     }
 
     public int getStatusCode() {
@@ -41,10 +38,18 @@ public class HttpClient {
     }
 
     public String getResponseHeader(String key) {
-        return clientResponse.getResponseHeader(key);
+        return clientResponse.getHeaderValue(key);
     }
 
     public String getBody() {
-        return clientResponse.getResponseBody();
+        return clientResponse.getBody();
+    }
+
+    public void setRequestHeader(String headerName, String headerValue) {
+         this.headers.put(headerName, headerValue);
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }
