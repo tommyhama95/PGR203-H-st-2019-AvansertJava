@@ -2,6 +2,7 @@ package no.kristiania.dao;
 
 import no.kristiania.dao.daos.ProjectDao;
 import no.kristiania.dao.objects.Project;
+import no.kristiania.http.controllers.ProjectsController;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

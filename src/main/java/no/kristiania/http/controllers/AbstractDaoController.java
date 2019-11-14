@@ -1,7 +1,5 @@
-package no.kristiania.dao;
+package no.kristiania.http.controllers;
 
-import no.kristiania.dao.daos.*;
-import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpStatusCodes;
 
 import java.io.IOException;
@@ -11,24 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class TaskMembersController implements HttpController {
-
-    private TaskMemberDao tmDao;
-    private TaskDao tDao;
-    private UserDao uDao;
-    private ProjectDao pDao;
-    private ProjectMemberDao pmDao;
+abstract class AbstractDaoController implements HttpController {
     private String urlQuery;
-
-    public TaskMembersController(TaskMemberDao tmDao, TaskDao tDao, ProjectMemberDao pmDao, ProjectDao pDao, UserDao uDao) {
-        this.tDao = tDao;
-        this.pmDao = pmDao;
-        this.pDao = pDao;
-        this.uDao = uDao;
-        this.tmDao = tmDao;
-    }
 
     @Override
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
@@ -64,20 +47,11 @@ public class TaskMembersController implements HttpController {
         }
     }
 
-    public String getBody() throws SQLException {
-        String[] urlQueries = urlQuery.substring(urlQuery.indexOf('?')+1).split("&");
-        long projectId = Long.parseLong(urlQueries[0].substring(urlQueries[0].indexOf('=')+1)); //TODO: Maybe use later for visuals
-        long taskId = Long.parseLong(urlQueries[1].substring(urlQueries[1].indexOf('=')+1));
-        return tmDao.listMembersOfTask(taskId).stream()
-                .map(tm -> {
-                    try {
-                        return String.format("<li id=%s>%s</li>", tm.getuID(), uDao.getUserById(tm.getuID()).getName());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        return "Internal Server Error - 500";
-                    }
-                })
-                .collect(Collectors.joining(""));
-    }
+    protected String getUrlQuery(){
+        return this.urlQuery;
+    };
+
+    protected abstract String getBody() throws SQLException;
+
 
 }

@@ -2,13 +2,12 @@ package no.kristiania.dao;
 
 import no.kristiania.dao.daos.*;
 import no.kristiania.http.HttpServer;
+import no.kristiania.http.controllers.*;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 public class TaskManagerServer {
@@ -41,9 +40,6 @@ public class TaskManagerServer {
         server.addController("/api/taskMembers",
                 new TaskMembersController(
                         new TaskMemberDao(dataSource),
-                        new TaskDao(dataSource),
-                        new ProjectMemberDao(dataSource),
-                        new ProjectDao(dataSource),
                         new UserDao(dataSource)
                 ));
     }

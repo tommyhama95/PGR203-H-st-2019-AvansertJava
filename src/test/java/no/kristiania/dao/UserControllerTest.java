@@ -2,6 +2,7 @@ package no.kristiania.dao;
 
 import no.kristiania.dao.daos.UserDao;
 import no.kristiania.dao.objects.User;
+import no.kristiania.http.controllers.UsersController;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

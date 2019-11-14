@@ -1,5 +1,9 @@
 package no.kristiania.http;
 
+import no.kristiania.http.controllers.EchoHttpController;
+import no.kristiania.http.controllers.FileHttpController;
+import no.kristiania.http.controllers.HttpController;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;

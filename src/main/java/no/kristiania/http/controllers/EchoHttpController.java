@@ -1,4 +1,6 @@
-package no.kristiania.http;
+package no.kristiania.http.controllers;
+
+import no.kristiania.http.HttpStatusCodes;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
 
-class EchoHttpController implements HttpController {
+public class EchoHttpController implements HttpController {
     @Override
     public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
         int statusCode = Integer.parseInt(query.getOrDefault("status","200"));

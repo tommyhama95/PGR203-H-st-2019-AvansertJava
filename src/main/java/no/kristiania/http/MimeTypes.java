@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MimeTypes {
-    static Map<String,String> mimeTypeList = new HashMap<>();
+    public static Map<String,String> mimeTypeList = new HashMap<>();
 
     static {
         mimeTypeList.put(".acc", "audio/acc");

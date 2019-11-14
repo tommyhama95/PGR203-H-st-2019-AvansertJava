@@ -1,9 +1,13 @@
-package no.kristiania.http;
+package no.kristiania.http.controllers;
+
+import no.kristiania.http.HttpServer;
+import no.kristiania.http.HttpStatusCodes;
+import no.kristiania.http.MimeTypes;
 
 import java.io.*;
 import java.util.Map;
 
-class FileHttpController implements HttpController {
+public class FileHttpController implements HttpController {
     private HttpServer httpServer;
 
     public FileHttpController(HttpServer httpServer) {

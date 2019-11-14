@@ -25,7 +25,6 @@
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('projectid');
-    const taskId = urlParams.get('taskid');
 
 
     fetch("/api/projectMembers?projectid=" + projectId)
@@ -35,7 +34,7 @@
         document.getElementById("projectMembers").innerHTML = text;
     });
 
-    fetch("/api/tasks?taskid=" + projectId)
+    fetch("/api/tasks?projectid=" + projectId)
         .then(function(response) {
             return response.text();
         }).then(function(text) {
