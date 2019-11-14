@@ -1,3 +1,46 @@
 body {
-    background-color: lime;
+    background-color: #343434;
+}
+
+* {
+    color: #fcfcfc;
+    font-family: sans-serif;
+}
+
+a{
+    color: rgb(150,150,255);
+    transition: .2s ease;
+}
+
+a:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+a:active{
+    cursor: pointer;
+    transform: scale(.9);
+}
+
+input{
+    color: #343434; !important;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 50%;
+}
+
+button{
+    border: none;
+    background-color: rgb(110,155,110);
+    transition: .1s ease;
+}
+
+button:hover{
+    transform: scale(1.2);
+    background-color: rgb(140,190,140);
+}
+
+button:active{
+    transform: scale(.9);
+    background-color: rgb(90,150,90);
 }
