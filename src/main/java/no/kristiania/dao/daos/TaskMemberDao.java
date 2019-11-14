@@ -28,17 +28,17 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
 
     @Override
     protected void insertObject(TaskMember obj, PreparedStatement statement) throws SQLException {
-        statement.setLong(1,obj.gettID());
-        statement.setLong(2,obj.getuID());
-        statement.setLong(3,obj.getpId());
+        statement.setLong(1,obj.getTaskId());
+        statement.setLong(2,obj.getUserId());
+        statement.setLong(3,obj.getProjectId());
     }
 
     @Override
     protected TaskMember readObject(ResultSet rs) throws SQLException {
         TaskMember taskMember = new TaskMember();
-        taskMember.settID(rs.getLong(1));
-        taskMember.setuID(rs.getLong(2));
-        taskMember.setpId(rs.getLong(3));
+        taskMember.setTaskId(rs.getLong(1));
+        taskMember.setUserId(rs.getLong(2));
+        taskMember.setProjectId(rs.getLong(3));
         return taskMember;
     }
 

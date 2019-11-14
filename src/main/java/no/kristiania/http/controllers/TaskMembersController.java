@@ -23,7 +23,7 @@ public class TaskMembersController extends AbstractDaoController {
         return tmDao.listMembersOfTask(taskId).stream()
                 .map(tm -> {
                     try {
-                        return String.format("<li id=%s>%s</li>", tm.getuID(), uDao.getUserById(tm.getuID()).getName());
+                        return String.format("<li id=%s>%s</li>", tm.getUserId(), uDao.getUserById(tm.getUserId()).getName());
                     } catch (SQLException e) {
                         e.printStackTrace();
                         return "Internal Server Error - 500";

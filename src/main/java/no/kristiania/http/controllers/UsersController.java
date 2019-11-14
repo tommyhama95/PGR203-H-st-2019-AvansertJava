@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 
 public class UsersController extends AbstractDaoController {
 
-    private final UserDao dao;
+    private final UserDao uDao;
 
-    public UsersController(UserDao dao) {
-        this.dao = dao;
+    public UsersController(UserDao uDao) {
+        this.uDao = uDao;
     }
 
     public String getBody() throws SQLException {
-        return dao.listAll().stream()
+        return uDao.listAll().stream()
                 .map(u -> String.format("<li id='%s'><a>%s</a></li>", u.getId(), u.getName()))
                 .collect(Collectors.joining(""));
     }

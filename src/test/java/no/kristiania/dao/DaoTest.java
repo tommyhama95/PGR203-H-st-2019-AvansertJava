@@ -51,8 +51,8 @@ public class DaoTest {
         long uID = uDao.insert(new User("TestUser", "Test@testing.no"));
 
         ProjectMember projectMember = new ProjectMember();
-        projectMember.setProjectID(pID);
-        projectMember.setUserID(uID);
+        projectMember.setProjectId(pID);
+        projectMember.setUserId(uID);
         pmDao.insert(projectMember);
 
         assertThat(pmDao.listAll()).contains(projectMember);
@@ -73,7 +73,7 @@ public class DaoTest {
         pmDao.insert(new ProjectMember(uID, pID));
         long tID = tDao.insert(new Task("Finish Task", "In progress", pID));
 
-        TaskMember taskMember = new TaskMember(tID, uID, pID);
+        TaskMember taskMember = new TaskMember(tID, pID, uID);
         tmDao.insert(taskMember);
 
         assertThat(tmDao.listAll()).contains(taskMember);
@@ -114,7 +114,7 @@ public class DaoTest {
         Task task = new Task();
         task.setName(selectRandom(new String[]{"Ask Johannes", "Somehting", "Drink water"}));
         task.setStatus(selectRandom(new String[]{"To-Do", "In Progress", "Done"}));
-        task.setProjectID(pDao.insert(sampleProject()));
+        task.setProjectId(pDao.insert(sampleProject()));
         task.setId(tDao.insert(task));
         return task;
     }

@@ -3,11 +3,9 @@ package no.kristiania.dao.daos;
 import no.kristiania.dao.objects.ProjectMember;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectMemberDao extends AbstractDao<ProjectMember>{
@@ -38,15 +36,15 @@ public class ProjectMemberDao extends AbstractDao<ProjectMember>{
 
     @Override
     protected void insertObject(ProjectMember obj, PreparedStatement statement) throws SQLException {
-        statement.setLong(1, obj.getProjectID());
-        statement.setLong(2, obj.getUserID());
+        statement.setLong(1, obj.getProjectId());
+        statement.setLong(2, obj.getUserId());
     }
 
     @Override
     protected ProjectMember readObject(ResultSet rs) throws SQLException {
         ProjectMember pu = new ProjectMember();
-        pu.setProjectID(rs.getLong("project_id"));
-        pu.setUserID(rs.getLong("user_id"));
+        pu.setProjectId(rs.getLong("project_id"));
+        pu.setUserId(rs.getLong("user_id"));
         return pu;
     }
 }

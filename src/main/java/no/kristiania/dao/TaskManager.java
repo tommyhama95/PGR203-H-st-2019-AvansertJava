@@ -137,8 +137,8 @@ public class TaskManager {
         long userId = Long.parseLong(scanner.nextLine());
 
         ProjectMember newProjectUser = new ProjectMember();
-        newProjectUser.setProjectID(projectId);
-        newProjectUser.setUserID(userId);
+        newProjectUser.setProjectId(projectId);
+        newProjectUser.setUserId(userId);
 
         puDao.insert(newProjectUser);
     }
@@ -153,19 +153,19 @@ public class TaskManager {
                 " with ID: " + newProject.getId());
         System.out.println("\n== Please assign an owner to the project. [ exists | newuser ]==");
         ProjectMember newProjectOwner = new ProjectMember();
-        newProjectOwner.setProjectID(newProject.getId());
+        newProjectOwner.setProjectId(newProject.getId());
 
         switch (scanner.nextLine()){
             case "exists":
                 System.out.println("\n== Input the ID of the user ==");
                 long ownerId = Long.parseLong(scanner.nextLine());
-                newProjectOwner.setUserID(ownerId);
+                newProjectOwner.setUserId(ownerId);
                 System.out.println("\n== User: " + ownerId +
                         " has been set as owner of " + newProject);
                 break;
             case "newuser":
                 User newUser = createUser();
-                newProjectOwner.setUserID(newUser.getId());
+                newProjectOwner.setUserId(newUser.getId());
                 System.out.println("\n== User: " + newUser.getName() +
                         " has been set as owner of " + newProject);
                 break;

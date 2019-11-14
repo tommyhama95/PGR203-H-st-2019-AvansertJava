@@ -5,48 +5,49 @@ import java.util.Objects;
 public class TaskMember {
 
 
-    private long tID;
-    private long uID;
-    private long pId;
+    private long taskId;
+    private long userId;
+    private long projectId;
 
     public TaskMember() {
     }
 
-    public TaskMember(long tID, long uID, long pID) {
-        this.tID = tID;
-        this.uID = uID;
-        this.pId = pID;
+    public TaskMember(long taskId, long projectId, long userId) {
+        this.taskId = taskId;
+        this.projectId = projectId;
+        this.userId = userId;
     }
 
-    public long getuID() {
-        return uID;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setuID(long uID) {
-        this.uID = uID;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long gettID() {
-        return tID;
+    public long getTaskId() {
+        return taskId;
     }
 
-    public void settID(long tID) {
-        this.tID = tID;
+    public void setTaskId(long taskId) {
+        this.taskId = taskId;
     }
 
-    public long getpId() {
-        return pId;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setpId(long pId) {
-        this.pId = pId;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
     @Override
     public String toString() {
         return "TaskMember{" +
-                "tID=" + tID +
-                ", uID=" + uID +
+                "taskId=" + taskId +
+                ", userId=" + userId +
+                ", projectId=" + projectId +
                 '}';
     }
 
@@ -55,13 +56,13 @@ public class TaskMember {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskMember that = (TaskMember) o;
-        return tID == that.tID &&
-                uID == that.uID;
+        return taskId == that.taskId &&
+                userId == that.userId &&
+                projectId == that.projectId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tID, uID);
+        return Objects.hash(taskId, userId, projectId);
     }
-
 }

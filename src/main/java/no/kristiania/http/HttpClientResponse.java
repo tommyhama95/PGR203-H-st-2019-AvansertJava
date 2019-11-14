@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class HttpClientResponse {
 
-
     private Map<String, String> headers = new HashMap<>();
     private final String response;
     private int statusCode;

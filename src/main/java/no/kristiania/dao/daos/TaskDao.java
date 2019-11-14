@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class TaskDao extends AbstractDao<Task>{
@@ -18,7 +17,7 @@ public class TaskDao extends AbstractDao<Task>{
     protected void insertObject(Task task, PreparedStatement statement) throws SQLException {
         statement.setString(1, task.getName());
         statement.setString(2, task.getStatus());
-        statement.setLong(3, task.getProjectID());
+        statement.setLong(3, task.getProjectId());
     }
 
     @Override
@@ -27,7 +26,7 @@ public class TaskDao extends AbstractDao<Task>{
         task.setId(rs.getLong("id"));
         task.setName(rs.getString("name"));
         task.setStatus(rs.getString("status"));
-        task.setProjectID(rs.getLong("project_id"));
+        task.setProjectId(rs.getLong("project_id"));
         return task;
     }
 

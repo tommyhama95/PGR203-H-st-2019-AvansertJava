@@ -5,36 +5,37 @@ import java.util.Objects;
 public class ProjectMember {
 
 
-    private long projectID;
-    private long userID;
+    private long projectId;
+    private long userId;
 
     public  ProjectMember(){}
 
-    public ProjectMember(long userID, long projectID) {
-        this.projectID = projectID;
-        this.userID = userID;
+    public ProjectMember(long userId, long projectId) {
+        this.projectId = projectId;
+        this.userId = userId;
     }
 
-    public void setProjectID(long projectID) {
-        this.projectID = projectID;
+    public void setProjectId(long projectID) {
+        this.projectId = projectID;
     }
-    public long getProjectID() {
-        return projectID;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setUserId(long userID) {
+        this.userId = userID;
     }
-    public long getUserID() {
-        return userID;
+    public long getUserId() {
+        return userId;
     }
 
     //Show how Project_user object is returned in String form
+
     @Override
     public String toString() {
         return "ProjectMember{" +
-                "projectID=" + projectID +
-                ", userID=" + userID +
+                "projectId=" + projectId +
+                ", userId=" + userId +
                 '}';
     }
 
@@ -43,12 +44,12 @@ public class ProjectMember {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectMember that = (ProjectMember) o;
-        return projectID == that.projectID &&
-                userID == that.userID;
+        return projectId == that.projectId &&
+                userId == that.userId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectID, userID);
+        return Objects.hash(projectId, userId);
     }
 }

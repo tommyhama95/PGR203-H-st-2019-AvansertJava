@@ -15,6 +15,10 @@ public class EchoHttpController implements HttpController {
         int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
         String body = query.getOrDefault("body", "None");
         System.out.println("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n");
+        respondWithParams(query, out, statusCode, body);
+    }
+
+    public void respondWithParams(Map<String, String> query, OutputStream out, int statusCode, String body) throws IOException {
         out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
         out.write(("Content-Type: text/html\r\n").getBytes());
         out.write(("Content-Length: " + body.length() + "\r\n").getBytes());

@@ -6,14 +6,14 @@ public class Task {
     private String name;
     private long id;
     private String status;
-    private long projectID;
+    private long projectId;
 
     public Task() {}
 
-    public Task(String name, String status, long projectID) {
+    public Task(String name, String status, long projectId) {
         this.name = name;
         this.status = status;
-        this.projectID = projectID;
+        this.projectId = projectId;
     }
 
     public void setName(String name) {
@@ -40,12 +40,12 @@ public class Task {
         return status;
     }
 
-    public void setProjectID(long projectID) {
-        this.projectID = projectID;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
-    public long getProjectID() {
-        return projectID;
+    public long getProjectId() {
+        return projectId;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Task {
                 "name='" + name + '\'' +
                 ", id=" + id +
                 ", status='" + status + '\'' +
-                ", projectID=" + projectID +
+                ", projectId=" + projectId +
                 '}';
     }
 
@@ -63,15 +63,15 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return projectID == task.projectID &&
+        return id == task.id &&
+                projectId == task.projectId &&
                 Objects.equals(name, task.name) &&
-                Objects.equals(id, task.id) &&
                 Objects.equals(status, task.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id, status, projectID);
+        return Objects.hash(name, id, status, projectId);
     }
 }
 

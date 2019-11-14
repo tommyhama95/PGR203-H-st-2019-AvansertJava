@@ -18,7 +18,7 @@ public class TaskController extends AbstractDaoController {
         System.out.println(urlQuery);
         long projectId = Long.parseLong(urlQuery.substring(urlQuery.indexOf('=')+1));
         return tDao.listTasksOfProject(projectId).stream()
-                .map(t -> String.format("<li id='%s'><a href='task.html?projectid=%s&taskid=%s'>%s</a></li>", t.getId(), t.getProjectID(), t.getId(), t.getName()))
+                .map(t -> String.format("<li id='%s'><a href='task.html?projectid=%s&taskid=%s'>%s</a></li>", t.getId(), t.getProjectId(), t.getId(), t.getName()))
                 .collect(Collectors.joining(""));
     }
 }
