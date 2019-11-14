@@ -22,23 +22,24 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
         return listAll("SELECT * FROM task_members");
     }
 
-    public List<TaskMember> listMembersOfTask(long id) throws SQLException {
-        return listAllWithStatement(id, "SELECT * FROM task_members WHERE task_id = (?)");
+    public List<TaskMember> listMembersOfTask(long taskId) throws SQLException {
+
+        return listAllWithStatement(taskId, "SELECT * FROM task_members WHERE task_id = (?)");
     }
 
     @Override
     protected void insertObject(TaskMember obj, PreparedStatement statement) throws SQLException {
         statement.setLong(1,obj.getTaskId());
-        statement.setLong(2,obj.getUserId());
-        statement.setLong(3,obj.getProjectId());
+        statement.setLong(2,obj.getProjectId());
+        statement.setLong(3,obj.getUserId());
     }
 
     @Override
     protected TaskMember readObject(ResultSet rs) throws SQLException {
         TaskMember taskMember = new TaskMember();
         taskMember.setTaskId(rs.getLong(1));
-        taskMember.setUserId(rs.getLong(2));
-        taskMember.setProjectId(rs.getLong(3));
+        taskMember.setProjectId(rs.getLong(2));
+        taskMember.setUserId(rs.getLong(3));
         return taskMember;
     }
 

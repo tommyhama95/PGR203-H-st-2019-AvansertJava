@@ -15,7 +15,7 @@ public class UsersController extends AbstractDaoController {
 
     public String getBody() throws SQLException {
         return uDao.listAll().stream()
-                .map(u -> String.format("<li id='%s'><a>%s</a></li>", u.getId(), u.getName()))
+                .map(u -> String.format("<li id='%s'>%s</li>", u.getId(), u.getName()))
                 .collect(Collectors.joining(""));
     }
 

@@ -33,7 +33,6 @@ public class HttpResponse extends  HttpMessage{
         String[] messageLines = message.split("\r\n");
         httpMethod = messageLines[0].split(" ")[0];
         statusCode = Integer.parseInt(messageLines[0].split(" ")[1]);
-        System.out.println(statusCode);
 
         int i;
         int colonPos;

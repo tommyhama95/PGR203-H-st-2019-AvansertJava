@@ -3,14 +3,19 @@ package no.kristiania.http;
 import no.kristiania.http.controllers.EchoHttpController;
 import no.kristiania.http.controllers.FileHttpController;
 import no.kristiania.http.controllers.HttpController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.FileNameMap;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpServer {
+    private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
+
     private final int localport;
     private final ServerSocket serverSocket;
     private String fileLocation;
@@ -32,18 +37,19 @@ public class HttpServer {
 
     public void start() throws IOException {
         run();
+        logger.info("Started Server on http://localhost:{}",getLocalPort());
     }
 
     private void run() throws IOException {
-        System.out.println("Waiting on port: "+ serverSocket.getLocalPort());
-
         while(true) {
             Socket socket = serverSocket.accept();
+            String requestLine = HttpMessage.readLine(socket);
+            logger.debug("Handling Client Request: {}", requestLine);
             HttpRequest httpRequest = new HttpRequest(socket);
             httpRequest.parse();
             String body = httpRequest.getBody();
 
-            String requestTarget = httpRequest.getRequestTarget();
+            String requestTarget = requestLine.split(" ")[1];
             String requestAction = requestTarget.split(" ")[0];
             int questionPos = requestTarget.indexOf('?');
             String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos);

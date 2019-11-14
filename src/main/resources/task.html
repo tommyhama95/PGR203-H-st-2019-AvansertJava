@@ -12,11 +12,17 @@
     <ul id="taskMembers"></ul>
 </div>
 
+<div>
+    <a id="back" href="">Back to project</a>
+</div>
+
 </body>
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const taskId = urlParams.get('taskid');
     const projectId = urlParams.get('projectid');
+
+    document.getElementById("back").setAttribute("href","project.html?projectid=" + projectId);
 
     fetch("/api/taskMembers?projectid=" + projectId + "&taskid=" + taskId)
         .then(function(response) {

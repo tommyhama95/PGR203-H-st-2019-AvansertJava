@@ -39,7 +39,7 @@ public class HttpServerTest {
         client = new HttpClient("localhost", localport,  "/echo?body=Hello%20World!");
         client.executeRequest("GET");
         assertEquals(200, client.getStatusCode());
-        assertEquals("Hello World!", client.getBody());
+        assertEquals("Hello World!", client.getResponseBody());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class HttpServerTest {
         client = new HttpClient("localhost", localport, "/sample.txt");
         client.executeRequest("POST");
         assertEquals(200, client.getStatusCode());
-        assertEquals("Hello World!", client.getBody());
+        assertEquals("Hello World!", client.getResponseBody());
     }
 
     @Test

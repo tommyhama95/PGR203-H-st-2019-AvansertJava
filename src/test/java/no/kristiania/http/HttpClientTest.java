@@ -33,14 +33,14 @@ public class HttpClientTest {
     void shouldReturnResponseBody() throws IOException {
         HttpClient client = new HttpClient("urlecho.appspot.com", 80, "/echo?body=Hello%20World");
         client.executeRequest("GET");
-        assertEquals("Hello World", client.getBody());
+        assertEquals("Hello World", client.getResponseBody());
     }
 
     @Test
     void shouldReturnBodyWithLinebreaks() throws IOException {
         HttpClient client = new HttpClient("urlecho.appspot.com", 80, "/echo?body=Line%0D%0ABreak");
         client.executeRequest("GET");
-        assertEquals("Line\nBreak", client.getBody());
+        assertEquals("Line\nBreak", client.getResponseBody());
     }
 
 
