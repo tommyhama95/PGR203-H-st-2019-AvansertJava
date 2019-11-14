@@ -1,5 +1,6 @@
 package no.kristiania.http.controllers;
 
+import no.kristiania.http.HttpRequest;
 import no.kristiania.http.HttpStatusCodes;
 
 import java.io.IOException;
@@ -11,11 +12,14 @@ import java.util.Map;
 
 public class EchoHttpController implements HttpController {
     @Override
-    public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+    public void handle(String requestAction, String requestTarget, Map<String, String> query, String body, OutputStream out) throws IOException {
+        if(requestAction.equals("POST")){
+            query = HttpRequest.parseEchoRequest(body);
+        }
         int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
-        String body = query.getOrDefault("body", "None");
+        String responseBody = query.getOrDefault("body", "None");
         System.out.println("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n");
-        respondWithParams(query, out, statusCode, body);
+        respondWithParams(query, out, statusCode, responseBody);
     }
 
     public void respondWithParams(Map<String, String> query, OutputStream out, int statusCode, String body) throws IOException {

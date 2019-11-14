@@ -22,14 +22,14 @@ public class HttpServerTest {
     @Test
     void shouldRespondWithStatus200() throws IOException {
         client = new HttpClient("localhost", localport,"/echo?status=200");
-        client.executeRequest();
+        client.executeRequest("GET");
         assertEquals(200, client.getStatusCode());
     }
 
     @Test
     void shouldRespondToRedirect() throws IOException {
         client = new HttpClient("localhost", localport, "/echo?status=302&Location=https://www.example.com");
-        client.executeRequest();
+        client.executeRequest("GET");
         assertEquals(302, client.getStatusCode());
         assertEquals("https://www.example.com", client.getResponseHeader("Location"));
     }
@@ -37,7 +37,7 @@ public class HttpServerTest {
     @Test
     void shouldReturnBody() throws  IOException {
         client = new HttpClient("localhost", localport,  "/echo?body=Hello%20World!");
-        client.executeRequest();
+        client.executeRequest("GET");
         assertEquals(200, client.getStatusCode());
         assertEquals("Hello World!", client.getBody());
     }
@@ -45,7 +45,7 @@ public class HttpServerTest {
     @Test
     void shouldReturnFile() throws IOException {
         client = new HttpClient("localhost", localport, "/sample.txt");
-        client.executeRequest();
+        client.executeRequest("POST");
         assertEquals(200, client.getStatusCode());
         assertEquals("Hello World!", client.getBody());
     }
@@ -56,7 +56,7 @@ public class HttpServerTest {
         client = new HttpClient("localhost", localport, "/echo?" + formBody);
         client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         client.setBody(formBody);
-        HttpResponse response = client.executeRequest();
+        HttpResponse response = client.executeRequest("POST");
         assertThat(response.getHeaderValue("Content-Type")).isEqualTo("text/html");
         assertThat(response.getBody()).isEqualTo("foobar");
     }

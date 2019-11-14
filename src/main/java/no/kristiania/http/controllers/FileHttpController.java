@@ -15,7 +15,7 @@ public class FileHttpController implements HttpController {
     }
 
     @Override
-    public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+    public void handle(String requestAction, String requestTarget, Map<String, String> query, String body, OutputStream out) throws IOException {
         try {
             String requestPath = requestTarget;
             int questionPos = requestTarget.indexOf('?');

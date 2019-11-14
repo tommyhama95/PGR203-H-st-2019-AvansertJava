@@ -41,18 +41,20 @@ public class HttpServer {
             Socket socket = serverSocket.accept();
             HttpRequest httpRequest = new HttpRequest(socket);
             httpRequest.parse();
+            String body = httpRequest.getBody();
 
             String requestTarget = httpRequest.getRequestTarget();
+            String requestAction = requestTarget.split(" ")[0];
             int questionPos = requestTarget.indexOf('?');
             String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos);
 
-            Map<String, String> query = httpRequest.parseEchoRequest(requestTarget, questionPos);
+            Map<String, String> query = HttpRequest.parseEchoRequest(requestTarget);
             if(requestTarget.length() > 1) {
                 controllers
                         .getOrDefault(requestPath, defaultController)
-                        .handle(requestTarget, query, socket.getOutputStream());
+                        .handle(requestAction, requestTarget, query, body, socket.getOutputStream());
             } else {
-                defaultController.handle("/index.html", query, socket.getOutputStream());
+                defaultController.handle(requestAction, "/index.html", query, body, socket.getOutputStream());
             }
         }
     }

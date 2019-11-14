@@ -11,21 +11,21 @@ abstract class AbstractDaoController implements HttpController {
     private String urlQuery;
 
     @Override
-    public void handle(String requestTarget, Map<String, String> query, OutputStream out) throws IOException {
+    public void handle(String requestAction, String requestTarget, Map<String, String> query, String body, OutputStream out) throws IOException {
         urlQuery = requestTarget.substring(requestTarget.indexOf('?')+1);
         try {
             int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
-            String body = query.getOrDefault("body", getBody());
-            new EchoHttpController().respondWithParams(query, out, statusCode, body);
+            String responseBody = query.getOrDefault("body", getBody());
+            new EchoHttpController().respondWithParams(query, out, statusCode, responseBody);
         } catch (SQLException e) {
             int statusCode = 500;
-            String body = e.toString();
+            String responseBody = e.toString();
             out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
             out.write(("Content-Type: text/html\r\n").getBytes());
-            out.write(("Content-Length: " + body.length() + "\r\n").getBytes());
+            out.write(("Content-Length: " + responseBody.length() + "\r\n").getBytes());
             out.write(("Connection: close\r\n").getBytes());
             out.write(("\r\n").getBytes());
-            out.write((body).getBytes());
+            out.write((responseBody).getBytes());
         }
     }
 

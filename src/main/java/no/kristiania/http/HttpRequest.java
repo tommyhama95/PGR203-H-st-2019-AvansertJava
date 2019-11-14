@@ -41,8 +41,9 @@ public class HttpRequest extends HttpMessage {
         this.body = bodyContent.toString();
     }
 
-    protected Map<String, String> parseEchoRequest(String requestTarget, int questionPos) {
+    public static Map<String, String> parseEchoRequest(String requestTarget) {
         Map<String, String> targetHeaders = new HashMap<>();
+        int questionPos = requestTarget.indexOf('?');
         if(questionPos != -1) {
             String[] targets = requestTarget.substring(questionPos+1).trim().split("&");
             for(String target : targets) {

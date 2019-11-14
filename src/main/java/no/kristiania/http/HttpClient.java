@@ -13,6 +13,7 @@ public class HttpClient {
     private HttpResponse clientResponse;
     private String body;
     private Map<String, String> headers = new HashMap<>();
+    private String httpMethod;
 
 
     public HttpClient(String host, int port, String requestTarget) {
@@ -21,10 +22,11 @@ public class HttpClient {
         this.requestTarget = requestTarget;
     }
 
-    public HttpResponse executeRequest() throws IOException {
+    public HttpResponse executeRequest(final String httpMethod) throws IOException {
         Socket socket = new Socket(host, port);
         OutputStream out = socket.getOutputStream();
-        out.write(("GET " + requestTarget +" HTTP/1.1\r\n").getBytes());
+
+        out.write((httpMethod + " " + requestTarget +" HTTP/1.1\r\n").getBytes());
         out.write(("Host: " + host +"\r\n").getBytes());
         out.write(("Connection: close\r\n").getBytes());
         out.write(("\r\n").getBytes());
