@@ -15,10 +15,13 @@ public class TaskController extends AbstractDaoController {
 
     public String getBody() throws SQLException {
         String urlQuery = super.getUrlQuery();
-        System.out.println(urlQuery);
         long projectId = Long.parseLong(urlQuery.substring(urlQuery.indexOf('=')+1));
         return tDao.listTasksOfProject(projectId).stream()
                 .map(t -> String.format("<li id='%s'><a href='task.html?projectid=%s&taskid=%s'>%s</a></li>", t.getId(), t.getProjectId(), t.getId(), t.getName()))
                 .collect(Collectors.joining(""));
+    }
+
+    public void setUrlQuery(String urlQuery){
+        super.setUrlQuery(urlQuery);
     }
 }

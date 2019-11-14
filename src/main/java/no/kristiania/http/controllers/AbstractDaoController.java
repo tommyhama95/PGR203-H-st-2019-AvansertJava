@@ -33,6 +33,10 @@ abstract class AbstractDaoController implements HttpController {
         return this.urlQuery;
     };
 
+    protected void setUrlQuery(String urlQuery) {
+        this.urlQuery = urlQuery;
+    }
+
     protected abstract String getBody() throws SQLException;
 
 

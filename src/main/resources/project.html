@@ -15,7 +15,7 @@
 
 <div>
     <h3>Task of this project</h3>
-    <ul id="tasks"></ul>
+    <ul id="projectTasks"></ul>
 </div>
 
 <div>
@@ -38,7 +38,7 @@
         .then(function(response) {
             return response.text();
         }).then(function(text) {
-        document.getElementById("tasks").innerHTML = text;
+        document.getElementById("projectTasks").innerHTML = text;
     });
 </script>
 </html>

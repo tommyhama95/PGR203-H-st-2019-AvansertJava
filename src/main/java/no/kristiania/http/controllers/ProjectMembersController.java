@@ -30,4 +30,8 @@ public class ProjectMembersController extends AbstractDaoController {
                 })
                 .collect(Collectors.joining(""));
     }
+
+    public void setUrlQuery(String urlQuery){
+        super.setUrlQuery(urlQuery);
+    }
 }

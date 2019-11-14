@@ -61,7 +61,7 @@ public class DaoTest {
 
     @Test
     void shouldListOutTasks() throws SQLException {
-        Task task = sampleTask(); // Generates and inserts a sample task
+        Task task = sampleTask(sampleProject().getId()); // Generates and inserts a sample task
         assertThat(tDao.listAll()).contains(task);
         assertThat(tDao.listAll().get(0)).isEqualToComparingFieldByField(task);
     }
@@ -110,11 +110,11 @@ public class DaoTest {
         return user;
     }
 
-    public Task sampleTask() throws SQLException {
+    public Task sampleTask(long projectId) throws SQLException {
         Task task = new Task();
         task.setName(selectRandom(new String[]{"Ask Johannes", "Somehting", "Drink water"}));
         task.setStatus(selectRandom(new String[]{"To-Do", "In Progress", "Done"}));
-        task.setProjectId(pDao.insert(sampleProject()));
+        task.setProjectId(projectId);
         task.setId(tDao.insert(task));
         return task;
     }
