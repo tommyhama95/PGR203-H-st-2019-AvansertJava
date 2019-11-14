@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add project member | KristianiaProject</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Add project member</h1>
+
+<form method="POST" action="/api/users">
+    <option id="userList"></option>
+    <button>Add user to project</button>
+</form>
+
+<div>
+    <a href="index.html">Return to front page</a>
+</div>
+
+<script>
+    //This should list all users in a <select> tag under option
+    fetch("/api/users")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        document.getElementById("userList").innerHTML = text;
+
+    });
+</script>
+</body>
+</html>
