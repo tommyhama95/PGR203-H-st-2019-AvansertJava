@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new Task | KristianiaProject</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Adding task to project:</h1>
+
+<form method="POST" action="/api/tasks">
+    <label>
+        Task Name: <input type="text" name="taskName" placeholder="Task Name"/>
+    </label>
+    <label>
+        Status: <input type="text" name="taskStatus" placeholder="Task Status"/>
+    </label>
+    <label>
+        Project ID: <input class="readonly" id="formProjectId" type=text name="projectid" value="" readonly/>
+        <!-- Would normally be hidden from user -->
+    </label>
+    <button action="submit">Add this task</button>
+</form>
+
+<p class="warning">PS: Tasks cannot be deleted after creation, unless you delete it from the database!</p>
+<br>
+<div>
+    <a href="index.html">Return to front page</a>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('projectid');
+
+    document.getElementById("formProjectId").value = projectId;
+</script>
+
+</body>
+</html>

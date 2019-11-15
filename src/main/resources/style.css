@@ -30,17 +30,32 @@ input{
 }
 
 button{
+    margin: 2px 5px;
+    padding: 7px 13px;
     border: none;
     background-color: rgb(110,155,110);
     transition: .1s ease;
 }
 
 button:hover{
-    transform: scale(1.2);
+    cursor: pointer;
+    transform: scale(1.1);
     background-color: rgb(140,190,140);
 }
 
 button:active{
     transform: scale(.9);
     background-color: rgb(90,150,90);
+}
+
+.warning{
+    color: red !important;
+}
+
+.readonly{
+    background-color: #a3a3a3;
+}
+
+.readonly:hover{
+    cursor: default;
 }

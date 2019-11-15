@@ -11,17 +11,19 @@
 <div>
     <h3>Members of this project:</h3>
     <ul id="projectMembers"></ul>
+    <div>
+        <a href="addUserToProject.html">Add a new member to this project</a>
+    </div>
 </div>
 
 <div>
-    <h3>Task of this project</h3>
+    <h3>Tasks of this project</h3>
     <ul id="projectTasks"></ul>
+    <div>
+        <a id="addTask">Add a new task to this project</a>
+    </div>
 </div>
-
-<div>
-    <a href="addUserToProject.html">Add a new member to this project</a>
-</div>
-
+<br>
 <div>
     <a href="index.html">Return to Front Page</a>
 </div>
@@ -31,6 +33,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('projectid');
 
+    document.getElementById("addTask").setAttribute("href","addTaskToProject.html?projectid="+projectId);
 
     fetch("/api/projectMembers?projectid=" + projectId)
         .then(function(response) {

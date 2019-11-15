@@ -51,9 +51,8 @@ public class HttpServer {
             String requestTarget = requestLine.split(" ")[1];
             String requestAction = requestLine.split(" ")[0];
             int questionPos = requestTarget.indexOf('?');
-            String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos);
-
-            Map<String, String> query = HttpMessage.getQueryParameters(requestTarget);
+            String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos).trim();
+            Map<String, String> query = HttpMessage.parseQueryString(HttpMessage.getQueryString(requestTarget));
             if(requestTarget.length() > 1) {
                 controllers
                         .getOrDefault(requestPath, defaultController)

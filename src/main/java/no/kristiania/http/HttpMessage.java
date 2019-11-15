@@ -7,14 +7,14 @@ import java.util.Map;
 
 public abstract class HttpMessage {
 
-    public static Map<String, String> getQueryParameters(String requestTarget) {
-        Map<String, String> targetHeaders = new HashMap<>();
+    public static String getQueryString(String requestTarget) {
         int questionPos = requestTarget.indexOf('?');
         String queryString = requestTarget.substring(questionPos+1);
         if(questionPos != -1) {
-            return parseQueryString(queryString);
+            return queryString;
         }
-        return targetHeaders;
+        //Defaults to returning just the requestTarget
+        return requestTarget;
     }
 
     public static Map<String, String> parseQueryString(String queryString) {
@@ -22,9 +22,11 @@ public abstract class HttpMessage {
         String[] properties = queryString.split("&");
         for(String property : properties) {
             int equalsPos = property.indexOf('=');
-            String header = property.substring(0, equalsPos).trim();
-            String value = property.substring(equalsPos + 1).trim();
-            parameters.put(header, value);
+            if(equalsPos != -1){
+                String header = property.substring(0, equalsPos).trim();
+                String value = property.substring(equalsPos + 1).trim();
+                parameters.put(header, value);
+            }
         }
         return parameters;
     }

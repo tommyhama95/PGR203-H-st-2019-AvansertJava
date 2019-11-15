@@ -30,21 +30,9 @@ public class ProjectsController extends AbstractDaoController {
                 project.setName(URLDecoder.decode(query.get("projectName"), StandardCharsets.UTF_8));
                 project.setId(projectDao.insert(project));
             }
-            int status = Integer.parseInt(query.getOrDefault("status","302"));
-            String contentType = query.getOrDefault("content-type","text/html");
-            String responseBody = query.getOrDefault("body", getBody());
-            int contentLength = responseBody.length();
-            out.write(("HTTP/1.1 " + status + " " + HttpStatusCodes.statusCodeList.getOrDefault(status,"OK\r\n")).getBytes());
-            if(status == 302){
-                out.write(("Location: http://localhost:8080/index.html\r\n").getBytes());
-            }
-            out.write(("Content-type: " + contentType + "\r\n").getBytes());
-            out.write(("Content-length: " + contentLength + "\r\n").getBytes());
-            out.write(("Connection: close\r\n").getBytes());
-            out.write(("\r\n").getBytes());
-            out.write((responseBody).getBytes());
+            serverDaoResponse(query, out);
         } catch (SQLException e) {
-            super.serverErrorResponse(out, e);
+            serverErrorResponse(out, e);
         }
     }
 
