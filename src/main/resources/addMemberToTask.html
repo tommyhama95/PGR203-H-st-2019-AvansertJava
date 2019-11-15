@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KristianiaProject</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Choose a member to add to this task</h2>
+
+    <form method="POST" action="/api/taskMember">
+        <label>
+            <select id="members" name="member" placeholder="Choose Member"></select>
+        </label>
+        <label>
+            Task ID: <input class="readonly" id="taskId" type="text" name="taskid" readonly>
+        </label>
+        <button action="submit">Add Member</button>
+    </form>
+    <div>
+        <a id="back">Back to task</a>
+    </div>
+
+</body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get("taskid");
+        const projectId = urlParams.get("projectid");
+
+        document.getElementById("back").setAttribute("href", "task.html?taskid=" +taskId);
+        document.getElementById("taskId").value = taskId;
+
+        fetch("/api/addMemberToTask?projectid="+ projectId +"&taskid=" + taskId)
+            .then(function (response) {
+                return response.text();
+            }).then(function (text) {
+            document.getElementById("members").innerHTML = text;
+        });
+
+    </script>
+</html>

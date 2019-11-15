@@ -22,8 +22,7 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
         return listAll("SELECT * FROM task_members");
     }
 
-    public List<TaskMember> listMembersOfTask(long taskId) throws SQLException {
-
+    public List<TaskMember> listMembersOf(long taskId) throws SQLException {
         return listAllWithStatement(taskId, "SELECT * FROM task_members WHERE task_id = (?)");
     }
 
