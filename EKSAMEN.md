@@ -145,19 +145,19 @@ body {
 
 ### Funksjonalitet
 
-* [ ] Programmet kan liste prosjektdeltagere fra databasen
-* [ ] Programmet lar bruker opprette nye prosjektdeltagere i databasen
-* [ ] Programmet kan opprette og liste prosjektoppgaver fra databasen
+* [x] Programmet kan liste prosjektdeltagere fra databasen
+* [x] Programmet lar bruker opprette nye prosjektdeltagere i databasen
+* [x] Programmet kan opprette og liste prosjektoppgaver fra databasen
 
 
 ## Vedlegg: Mulighet for ekstrapoeng
 
-* [ ] Avansert datamodell (mer enn 3 tabeller)
-* [ ] Avansert funksjonalitet (redigering av prosjektmedlemmer, statuskategorier, prosjekter)
-* [ ] Implementasjon av cookies for å konstruere sesjoner
+* [x] Avansert datamodell (mer enn 3 tabeller)
+* [x] Avansert funksjonalitet (~~redigering av prosjektmedlemmer~~, statuskategorier, prosjekter)
+* [ ] ~~Implementasjon av cookies for å konstruere sesjoner~~?
 * [ ] UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
-* [ ] Rammeverk rundt Http-håndtering (en god HttpMessage class med HttpRequest og HttpResponse subtyper) som gjenspeiler RFC7230
-* [ ] Korrekt håndtering av norske tegn i HTTP
-* [ ] God bruk av DAO-pattern
-* [ ] Link til video med god demonstrasjon av ping-pong programmering
-* [ ] Annet
+* [x] Rammeverk rundt Http-håndtering (en god HttpMessage class med HttpRequest og HttpResponse subtyper) som gjenspeiler RFC7230
+* [x] Korrekt håndtering av norske tegn i HTTP
+* [x] God bruk av DAO-pattern
+* [ ] ~~Link til video med god demonstrasjon av ping-pong programmering~~
+* [x] Annet

@@ -44,20 +44,24 @@ abstract class AbstractDaoController implements HttpController {
         int statusCode = 500;
         String responseBody = e.toString();
         out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
-        out.write(("Content-Type: text/html\r\n").getBytes());
-        out.write(("Content-Length: " + responseBody.length() + "\r\n").getBytes());
-        out.write(("Connection: close\r\n").getBytes());
+        respondWithHeaders(out, responseBody);
         out.write(("\r\n").getBytes());
         out.write((responseBody).getBytes());
     }
 
-    void clientErrorResponse(OutputStream out, String responseBody, int statusCode) throws IOException {
-        out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
+    private void respondWithHeaders(OutputStream out, String responseBody) throws IOException {
         out.write(("Content-Type: text/html\r\n").getBytes());
         out.write(("Content-Length: " + responseBody.length() + "\r\n").getBytes());
         out.write(("Connection: close\r\n").getBytes());
+    }
+
+    void clientErrorResponse(OutputStream out, String responseBody, int statusCode) throws IOException {
+        responseBody += ("\nStatus: " + statusCode + " - " + HttpStatusCodes.statusCodeList.get(statusCode));
+        out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
+        respondWithHeaders(out, responseBody);
         out.write(("\r\n").getBytes());
         out.write((responseBody).getBytes());
+        out.write(("Status: " + statusCode + " - " + HttpStatusCodes.statusCodeList.get(statusCode)).getBytes());
     }
 
     protected String getUrlQuery(){

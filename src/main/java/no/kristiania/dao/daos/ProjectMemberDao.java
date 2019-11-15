@@ -26,12 +26,12 @@ public class ProjectMemberDao extends AbstractDao<ProjectMember>{
 
     //Calls method in same class to make the ResultSet of this query
     public List<ProjectMember> listMembersOf(long projectId) throws SQLException{
-        return listAllWithStatement(projectId,  "SELECT * FROM project_members WHERE project_id = ?");
+        return listAllWithStatement(new long[]{projectId},  "SELECT * FROM project_members WHERE project_id = ?");
     }
 
     //Calls method in same class to make the ResultSet of this query
     public List<ProjectMember> listProjectsWith(long userId) throws SQLException {
-        return listAllWithStatement(userId, "SELECT * FROM project_members WHERE user_id = ?");
+        return listAllWithStatement(new long[]{userId}, "SELECT * FROM project_members WHERE user_id = ?");
     }
 
     @Override

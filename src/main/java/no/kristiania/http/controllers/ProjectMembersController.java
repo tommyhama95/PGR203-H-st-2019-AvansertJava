@@ -54,8 +54,9 @@ public class ProjectMembersController extends AbstractDaoController {
         return projectMemberDao.listMembersOf(projectId).stream()
                 .map(pm -> {
                     try {
-                        return String.format("<li id='%s'>%s</li>", pm.getProjectId() +
-                                "-" + pm.getUserId(), userDao.getUserById(pm.getUserId()).getName());
+                        return String.format("<li id='%s'><a href=filterOn.html?projectid=%s&userid=%s>%s</a></li>",
+                                pm.getProjectId() + "-" + pm.getUserId(),
+                                pm.getProjectId(), pm.getUserId(), userDao.getUserById(pm.getUserId()).getName());
                     } catch (SQLException e) {
                         e.printStackTrace();
                         return "Internal Server Error - 500";

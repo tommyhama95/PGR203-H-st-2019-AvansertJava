@@ -17,8 +17,7 @@ public class EchoHttpController implements HttpController {
             query = HttpMessage.parseQueryString(body);
         }
         int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
-        String responseBody = query.getOrDefault("body", "None");
-        System.out.println("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n");
+        String responseBody = URLDecoder.decode(query.getOrDefault("body", "none"),StandardCharsets.UTF_8);
         respondWithParams(query, out, statusCode, responseBody);
     }
 
@@ -36,7 +35,7 @@ public class EchoHttpController implements HttpController {
             it.remove();
         }
         out.write(("\r\n").getBytes());
-        out.write((URLDecoder.decode(body, StandardCharsets.UTF_8)).getBytes());
+        out.write((body).getBytes());
         out.flush();
         out.close();
     }
