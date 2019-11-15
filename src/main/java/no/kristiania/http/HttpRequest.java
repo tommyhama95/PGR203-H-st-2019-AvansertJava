@@ -34,7 +34,6 @@ public class HttpRequest extends HttpMessage {
         }
 
         this.body = HttpMessage.readBody(headers, socket);
-        System.out.println(body);
     }
 
     public String getHttpMethod() {

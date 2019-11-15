@@ -2,9 +2,7 @@ package no.kristiania.http.controllers;
 
 import no.kristiania.dao.daos.ProjectDao;
 import no.kristiania.dao.objects.Project;
-import no.kristiania.dao.objects.User;
 import no.kristiania.http.HttpMessage;
-import no.kristiania.http.HttpStatusCodes;
 
 import java.io.IOException;
 import java.io.OutputStream;

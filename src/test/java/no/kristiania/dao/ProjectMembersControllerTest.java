@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectMembersControllerTest {
     @Test
-    void shouldReturnProjectMembersFromDatabase() throws SQLException, IOException {
+    void shouldReturnProjectMembersFromDatabase() throws SQLException{
         DaoTest daoTestInstance = new DaoTest();
         JdbcDataSource dataSource = daoTestInstance.createDataSource();
         ProjectMemberDao pmDao = new ProjectMemberDao(dataSource);
@@ -40,7 +40,7 @@ public class ProjectMembersControllerTest {
         pmController.setUrlQuery("projectid=1");
 
         assertThat(pmController.getBody())
-                .contains(String.format("<li id='%s'>%s</li>", member1.getProjectId() +
-                        "-" + member1.getUserId(), uDao.getUserById(member1.getUserId()).getName()));
+                .contains(String.format("<li id='%s'><a href=filterOn.html?projectid=%s&userid=%s>%s</a></li>", member1.getProjectId() +
+                        "-" + member1.getUserId(),projectId, member1.getUserId(), uDao.getUserById(member1.getUserId()).getName()));
     }
 }
