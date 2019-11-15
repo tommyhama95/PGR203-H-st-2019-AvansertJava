@@ -25,6 +25,7 @@ public class ProjectsController extends AbstractDaoController {
     public void handle(String requestAction, String requestTarget, Map<String, String> query, String body, OutputStream out) throws IOException {
         try {
             if(requestAction.equals("POST")){
+                body = URLDecoder.decode(body,StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(body);
                 Project project = new Project();
                 project.setName(URLDecoder.decode(query.get("projectName"), StandardCharsets.UTF_8));

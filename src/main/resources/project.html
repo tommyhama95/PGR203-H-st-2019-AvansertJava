@@ -12,7 +12,7 @@
     <h3>Members of this project:</h3>
     <ul id="projectMembers"></ul>
     <div>
-        <a href="addUserToProject.html">Add a new member to this project</a>
+        <a id="addMember">Add a new member to this project</a>
     </div>
 </div>
 
@@ -34,6 +34,7 @@
     const projectId = urlParams.get('projectid');
 
     document.getElementById("addTask").setAttribute("href","addTaskToProject.html?projectid="+projectId);
+    document.getElementById("addMember").setAttribute("href","addUserToProject.html?projectid="+projectId);
 
     fetch("/api/projectMembers?projectid=" + projectId)
         .then(function(response) {

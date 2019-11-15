@@ -6,6 +6,8 @@ import no.kristiania.http.HttpRequest;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,8 +24,9 @@ public class TaskStatusController extends AbstractDaoController {
         setUrlQuery(HttpMessage.getQueryString(requestTarget));
         try {
             if(requestAction.equals("POST")){
-                setUrlQuery(HttpRequest.getQueryString(body));
+                body = URLDecoder.decode(body, StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(body);
+                setUrlQuery(HttpMessage.getQueryString(body));
                 taskDao.updateTaskStatus(query.get("taskStatus"), Long.parseLong(query.get("taskid")));
             }
             serverDaoResponse(query, out);

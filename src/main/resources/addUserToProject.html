@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add new Projectmember | KristianiaProject</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h1>Adding task to project:</h1>
 
 <form method="POST" action="/api/projectMembers">
     <label>
-        <select id="userlist"></select>
+        <select id="userSelects" name="user"></select>
     </label>
     <label>
         Project ID: <input class="readonly" id="formProjectId" type=text name="projectid" value="" readonly/>
@@ -34,8 +35,7 @@
         .then(function (response) {
             return response.text();
         }).then(function (text) {
-        document.getElementById("userList").innerHTML = text;
-
+        document.getElementById("userSelects").innerHTML = text;
     });
 </script>
 </body>

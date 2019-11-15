@@ -15,7 +15,7 @@ public class UserSelectController extends AbstractDaoController{
 
     public String getBody() throws SQLException {
         return userDao.listAll().stream()
-                .map(u -> String.format("<option id='%s'>%s</option>", u.getId(), u.getName()))
+                .map(u -> String.format("<option id='%s'>%s#%s</option>", u.getId(), u.getName(), u.getId()))
                 .collect(Collectors.joining(""));
     }
 }

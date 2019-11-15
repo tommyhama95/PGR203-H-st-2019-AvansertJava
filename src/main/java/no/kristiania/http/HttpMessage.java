@@ -9,9 +9,8 @@ public abstract class HttpMessage {
 
     public static String getQueryString(String requestTarget) {
         int questionPos = requestTarget.indexOf('?');
-        String queryString = requestTarget.substring(questionPos+1);
         if(questionPos != -1) {
-            return queryString;
+            return requestTarget.substring(questionPos+1);
         }
         //Defaults to returning just the requestTarget
         return requestTarget;

@@ -25,12 +25,13 @@ public class TaskController extends AbstractDaoController {
         setUrlQuery(HttpRequest.getQueryString(requestTarget));
         try {
             if(requestAction.equals("POST")){
-                setUrlQuery(HttpRequest.parseQueryString(body).get("projectid"));
+                body = URLDecoder.decode(body,StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(body);
+                setUrlQuery(query.get("projectid"));
                 Task task = new Task();
-                task.setName(URLDecoder.decode(query.get("taskName"), StandardCharsets.UTF_8));
-                task.setStatus(URLDecoder.decode(query.get("taskStatus"), StandardCharsets.UTF_8));
-                task.setProjectId(Long.parseLong(URLDecoder.decode(query.get("projectid"), StandardCharsets.UTF_8)));
+                task.setName(query.get("taskName"));
+                task.setStatus(query.get("taskStatus"));
+                task.setProjectId(Long.parseLong(query.get("projectid")));
                 task.setId(taskDao.insert(task));
             }
             serverDaoResponse(query, out);
