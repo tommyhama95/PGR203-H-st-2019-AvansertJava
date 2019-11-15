@@ -41,4 +41,8 @@ public class TaskDao extends AbstractDao<Task>{
     public List<Task> listTasksOfProject(long projectId) throws SQLException {
         return listAllWithStatement(projectId, "SELECT * FROM tasks WHERE project_id = (?)");
     }
+
+    public List<Task> getTaskFromId(long taskId) throws SQLException {
+        return listAllWithStatement(taskId, "SELECT * FROM tasks WHERE id = (?)");
+    }
 }

@@ -28,20 +28,20 @@ public class TaskManagerServer {
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
         flyway.migrate();
 
+        ProjectDao projectDao = new ProjectDao(dataSource);
+        TaskDao taskDao = new TaskDao(dataSource);
+        UserDao userDao = new UserDao(dataSource);
+        ProjectMemberDao projectMemberDao = new ProjectMemberDao(dataSource);
+        TaskMemberDao taskMemberDao = new TaskMemberDao(dataSource);
+
         server = new HttpServer(port);
         server.setFileLocation("src/main/resources");
-        server.addController("/api/projects", new ProjectsController(new ProjectDao(dataSource)));
-        server.addController("/api/tasks", new TaskController(new TaskDao(dataSource)));
-        server.addController("/api/users", new UsersController(new UserDao(dataSource)));
-        server.addController("/api/projectMembers",
-                new ProjectMembersController(
-                        new ProjectMemberDao(dataSource),
-                        new UserDao(dataSource)));
-        server.addController("/api/taskMembers",
-                new TaskMembersController(
-                        new TaskMemberDao(dataSource),
-                        new UserDao(dataSource)
-                ));
+        server.addController("/api/projects", new ProjectsController(projectDao));
+        server.addController("/api/tasks", new TaskController(taskDao));
+        server.addController("/api/taskStatus", new TaskStatusController(taskDao));
+        server.addController("/api/users", new UsersController(userDao));
+        server.addController("/api/projectMembers", new ProjectMembersController(projectMemberDao, userDao));
+        server.addController("/api/taskMembers", new TaskMembersController(taskMemberDao, userDao));
     }
 
     public static void main(String[] args) throws IOException {
