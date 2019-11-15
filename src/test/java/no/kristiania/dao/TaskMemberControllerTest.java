@@ -1,6 +1,8 @@
 package no.kristiania.dao;
 
-import no.kristiania.dao.daos.*;
+import no.kristiania.dao.daos.ProjectMemberDao;
+import no.kristiania.dao.daos.TaskDao;
+import no.kristiania.dao.daos.TaskMemberDao;
 import no.kristiania.dao.objects.*;
 import no.kristiania.http.controllers.TaskController;
 import org.h2.jdbcx.JdbcDataSource;

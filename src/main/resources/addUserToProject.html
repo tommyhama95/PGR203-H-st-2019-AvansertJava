@@ -6,25 +6,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Adding task to project:</h1>
+    <h1>Adding task to project:</h1>
 
-<form method="POST" action="/api/projectMembers">
-    <label>
-        <select id="userSelects" name="user"></select>
-    </label>
-    <label>
-        Project ID: <input class="readonly" id="formProjectId" type=text name="projectid" value="" readonly/>
-        <!-- Would normally be hidden from user -->
-    </label>
-    <button action="submit">Add selected user to project</button>
-</form>
+    <form method="POST" action="/api/projectMembers">
+        <label> <select id="userSelects" name="user"></select> </label>
+        <label> Project ID:
+            <input class="readonly" id="formProjectId" type=text name="projectid" value="" readonly/>
+            <!-- Would normally be hidden from user -->
+        </label>
+        <button action="submit">Add selected user to project</button>
+    </form>
 
-<p class="warning">PS: Will crash if user already exists in project</p>
-<br>
-<div>
-    <a href="index.html">Return to front page</a>
-</div>
+    <p class="warning">PS: Will crash if user already exists in project</p>
+    <br>
+    <div>
+        <a href="index.html">Return to front page</a>
+    </div>
 
+</body>
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('projectid');
@@ -38,5 +37,4 @@
         document.getElementById("userSelects").innerHTML = text;
     });
 </script>
-</body>
 </html>

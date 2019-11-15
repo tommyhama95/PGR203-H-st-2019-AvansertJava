@@ -23,10 +23,8 @@ public class TaskControllerTest {
         Task task1 = daoTestInstance.sampleTask(projectId);
         Task task2 = daoTestInstance.sampleTask(projectId);
 
-
         taskController.setUrlQuery("projectid=1");
 
-        //Format Sample: <li id=1><a href task.html?projectid=1&taskid=1>Taskname</a></li>
         assertThat(taskController.getBody())
                 .contains(String.format("<li id='%s'><a href='task.html?projectid=%s&taskid=%s'>%s</a></li>", task1.getId(), task1.getProjectId(), task1.getId(), task1.getName()))
                 .contains(String.format("<li id='%s'><a href='task.html?projectid=%s&taskid=%s'>%s</a></li>", task2.getId(), task2.getProjectId(), task2.getId(), task2.getName()));

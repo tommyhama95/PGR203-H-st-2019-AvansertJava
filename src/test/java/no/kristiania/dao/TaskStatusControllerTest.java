@@ -32,14 +32,11 @@ public class TaskStatusControllerTest {
 
         TaskController taskController = new TaskController(taskDao);
         TaskStatusController tsController = new TaskStatusController(taskDao);
-        tsController.setUrlQuery("taskStatus=NewStatus&taskid=1");
+        tsController.setUrlQuery("taskStatus=NewStatus& taskid=1");
 
         assertThat(tsController.getBody())
                 .contains(String.format("<a id='%s' href=setStatus.html?projectid=%s&taskid=%s>%s</a> <= Click to change", task.getId(), task.getProjectId(), task.getId(), task.getStatus()));
 
     }
-
-
-
 
 }

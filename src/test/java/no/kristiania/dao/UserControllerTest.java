@@ -23,7 +23,5 @@ public class UserControllerTest {
         assertThat(controller.getBody())
                 .contains(String.format("<li id='%s'>%s</li>", user1.getId(), user1.getName()))
                 .contains(String.format("<li id='%s'>%s</li>", user2.getId(), user2.getName()));
-
-        //TODO: Give LI tags href attributes for links later
     }
 }

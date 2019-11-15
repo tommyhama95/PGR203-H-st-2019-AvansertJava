@@ -2,18 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>KristianiaProject</title>
+    <title>Set Status | Kristiania Project</title>
     <link rel="stylesheet" href="style.css"></head>
 <body>
 
     <h3>Change status of the task</h3>
     <form method="POST" action="/api/taskStatus">
-        <label>
-            <input type="text" placeholder="New status" name="taskStatus">
-        </label>
-        <label>
-            <input type="text" id="task" name="taskid" readonly class="readonly">
-        </label>
+        <label> <input type="text" placeholder="New status" name="taskStatus"> </label>
+        <label> <input type="text" id="task" name="taskid" readonly class="readonly"> </label>
         <button action="submit">Save status</button>
     </form>
 
