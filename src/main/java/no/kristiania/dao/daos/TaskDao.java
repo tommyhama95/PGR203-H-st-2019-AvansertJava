@@ -45,4 +45,8 @@ public class TaskDao extends AbstractDao<Task>{
     public List<Task> getTaskFromId(long taskId) throws SQLException {
         return listAllWithStatement(taskId, "SELECT * FROM tasks WHERE id = (?)");
     }
+
+    public void updateTaskStatus(String newStatus, long taskId) throws SQLException{
+        updateValueWithStatement(newStatus, taskId,"UPDATE tasks SET status = (?) WHERE id = (?)");
+    }
 }

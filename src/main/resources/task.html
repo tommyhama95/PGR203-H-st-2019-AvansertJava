@@ -35,7 +35,7 @@
         document.getElementById("taskMembers").innerHTML = text;
     });
 
-    fetch("/api/taskStatus?projectId=" + projectId + "&taskid=" + taskId)
+    fetch("/api/taskStatus?projectid=" + projectId + "&taskid=" + taskId)
         .then(function (response) {
             return response.text();
         }).then(function (text) {

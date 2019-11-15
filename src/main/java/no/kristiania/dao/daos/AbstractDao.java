@@ -50,6 +50,16 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    public void updateValueWithStatement(String newValue, long idValue, String sql) throws SQLException {
+        try(Connection connection = datasource.getConnection()){
+            try(PreparedStatement statement = connection.prepareStatement(sql)){
+                statement.setString(1, newValue);
+                statement.setLong(2, idValue);
+                statement.executeUpdate();
+            }
+        }
+    }
+
     protected abstract void insertObject(T obj, PreparedStatement statement) throws SQLException;
 
     //This method returns all values in a certain column
