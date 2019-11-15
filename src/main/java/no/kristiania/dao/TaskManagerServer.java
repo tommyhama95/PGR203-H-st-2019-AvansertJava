@@ -42,6 +42,15 @@ public class TaskManagerServer {
         server.addController("/api/users", new UsersController(userDao));
         server.addController("/api/projectMembers", new ProjectMembersController(projectMemberDao, userDao));
         server.addController("/api/taskMembers", new TaskMembersController(taskMemberDao, userDao));
+
+        /*TODO:
+        -- Adding new projects
+        -- Adding new tasks
+        -- Changing task status (Freely)
+        -- Assigning members to task (Using options)
+        -- Filtering on individual member tasks
+        -- Assigning members to project (Using options)
+         */
     }
 
     public static void main(String[] args) throws IOException {

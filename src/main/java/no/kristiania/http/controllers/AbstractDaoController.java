@@ -29,15 +29,19 @@ abstract class AbstractDaoController implements HttpController {
             out.write(("\r\n").getBytes());
             out.write((responseBody).getBytes());
         } catch (SQLException e) {
-            int statusCode = 500;
-            String responseBody = e.toString();
-            out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
-            out.write(("Content-Type: text/html\r\n").getBytes());
-            out.write(("Content-Length: " + responseBody.length() + "\r\n").getBytes());
-            out.write(("Connection: close\r\n").getBytes());
-            out.write(("\r\n").getBytes());
-            out.write((responseBody).getBytes());
+            serverErrorResponse(out, e);
         }
+    }
+
+    void serverErrorResponse(OutputStream out, SQLException e) throws IOException {
+        int statusCode = 500;
+        String responseBody = e.toString();
+        out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
+        out.write(("Content-Type: text/html\r\n").getBytes());
+        out.write(("Content-Length: " + responseBody.length() + "\r\n").getBytes());
+        out.write(("Connection: close\r\n").getBytes());
+        out.write(("\r\n").getBytes());
+        out.write((responseBody).getBytes());
     }
 
     protected String getUrlQuery(){

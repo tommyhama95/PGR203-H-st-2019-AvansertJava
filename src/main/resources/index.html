@@ -7,17 +7,22 @@
 </head>
 <body>
 <h1>Project Management System</h1>
-
-<h3>List of projects:</h3>
-<ul id="projectList"></ul>
-
-
-<h3>List of system users</h3>
-<ul id="userList"></ul>
+<div>
+    <h3>List of projects:</h3>
+    <ul id="projectList"></ul>
+    <div>
+        <a href="createProject.html">Create a new project</a>
+    </div>
+</div>
 
 <div>
-    <a href="createUser.html">Create a new user</a>
+    <h3>List of system users</h3>
+    <ul id="userList"></ul>
+    <div>
+        <a href="createUser.html">Create a new user</a>
+    </div>
 </div>
+
 </body>
 <script>
     fetch("/api/projects")
