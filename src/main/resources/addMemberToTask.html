@@ -27,7 +27,7 @@
         const taskId = urlParams.get("taskid");
         const projectId = urlParams.get("projectid");
 
-        document.getElementById("back").setAttribute("href", "task.html?taskid=" +taskId);
+        document.getElementById("back").setAttribute("href", "task.html?projectid=" + projectId +"&taskid=" + taskId);
         document.getElementById("taskId").value = taskId;
 
         fetch("/api/addMemberToTask?projectid="+ projectId +"&taskid=" + taskId)
