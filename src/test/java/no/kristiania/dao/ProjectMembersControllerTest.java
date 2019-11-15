@@ -32,8 +32,6 @@ public class ProjectMembersControllerTest {
         long projectId = project1.getId();
         ProjectMember member1 = new ProjectMember(projectId, user1.getId());
 
-        System.out.println(member1);
-
         pmDao.insert(member1);
 
         ProjectMembersController pmController = new ProjectMembersController(pmDao, uDao);

@@ -14,7 +14,6 @@ public class HttpClient {
     private HttpResponse clientResponse;
     private String body;
     private Map<String, String> headers = new HashMap<>();
-    private String httpMethod;
 
 
     public HttpClient(String host, int port, String requestTarget) {
