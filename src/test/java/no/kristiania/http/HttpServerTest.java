@@ -22,14 +22,14 @@ public class HttpServerTest {
     @Test
     void shouldRespondWithStatus200() throws IOException {
         client = new HttpClient("localhost", localport,"/echo?status=200");
-        client.executeRequest("GET");
+        client.executeRequest();
         assertEquals(200, client.getStatusCode());
     }
 
     @Test
     void shouldRespondToRedirect() throws IOException {
         client = new HttpClient("localhost", localport, "/echo?status=302&Location=https://www.example.com");
-        client.executeRequest("GET");
+        client.executeRequest();
         assertEquals(302, client.getStatusCode());
         assertEquals("https://www.example.com", client.getResponseHeader("Location"));
     }
@@ -37,7 +37,7 @@ public class HttpServerTest {
     @Test
     void shouldReturnBody() throws  IOException {
         client = new HttpClient("localhost", localport,  "/echo?body=Hello%20World!");
-        client.executeRequest("GET");
+        client.executeRequest();
         assertEquals(200, client.getStatusCode());
         assertEquals("Hello World!", client.getResponseBody());
     }
@@ -45,7 +45,7 @@ public class HttpServerTest {
     @Test
     void shouldReturnFile() throws IOException {
         client = new HttpClient("localhost", localport, "/sample.txt");
-        client.executeRequest("POST");
+        client.executeRequest();
         assertEquals(200, client.getStatusCode());
         assertEquals("Hello World!", client.getResponseBody());
     }

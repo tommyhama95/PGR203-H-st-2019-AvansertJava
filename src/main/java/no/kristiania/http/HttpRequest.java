@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest extends HttpMessage {
+    private Socket socket;
     private String httpMethod;
     private String requestTarget;
     private Map<String, String> headers = new HashMap<>();
@@ -13,11 +14,12 @@ public class HttpRequest extends HttpMessage {
     private String message;
 
     public HttpRequest(Socket socket) throws IOException {
+        this.socket = socket;
         this.message = super.read(socket);
     }
 
     @Override
-    public void parse() {
+    public void parse() throws IOException {
         String[] messageLines = message.split("\r\n");
         httpMethod = messageLines[0].split(" ")[0];
         requestTarget = messageLines[0].split(" ")[1];
@@ -31,29 +33,8 @@ public class HttpRequest extends HttpMessage {
             headers.put(headerName, headerValue);
         }
 
-        StringBuilder bodyContent = new StringBuilder();
-        for( i += 1; i < messageLines.length; i++){
-            bodyContent.append(messageLines[i]);
-            if(i != messageLines.length-1){
-                bodyContent.append("\n");
-            }
-        }
-        this.body = bodyContent.toString();
-    }
-
-    public static Map<String, String> parseEchoRequest(String requestTarget) {
-        Map<String, String> targetHeaders = new HashMap<>();
-        int questionPos = requestTarget.indexOf('?');
-        if(questionPos != -1) {
-            String[] targets = requestTarget.substring(questionPos+1).trim().split("&");
-            for(String target : targets) {
-                int equalsPos = target.indexOf('=');
-                String targetHeader = target.substring(0, equalsPos).trim();
-                String targetValue = target.substring(equalsPos + 1).trim();
-                targetHeaders.put(targetHeader, targetValue);
-            }
-        }
-        return targetHeaders;
+        this.body = HttpMessage.readBody(headers, socket);
+        System.out.println(body);
     }
 
     public String getHttpMethod() {

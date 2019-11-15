@@ -25,11 +25,15 @@ public class HttpClient {
         setRequestHeader("Connection", "close");
     }
 
+    public HttpResponse executeRequest() throws IOException {
+        return executeRequest("GET");
+    }
+
     public HttpResponse executeRequest(final String httpMethod) throws IOException {
         Socket socket = new Socket(host, port);
 
         if(body != null){
-            setRequestHeader("Content-length", String.valueOf(body.length()));
+            setRequestHeader("Content-Length", String.valueOf(body.length()));
         }
 
         String headerString = headers.entrySet().stream()
@@ -40,6 +44,9 @@ public class HttpClient {
         out.write((httpMethod + " " + requestTarget +" HTTP/1.1\r\n").getBytes());
         out.write((headerString + "\r\n").getBytes());
         out.write(("\r\n").getBytes());
+        if(httpMethod.equals("POST")){
+            out.write((this.body).getBytes());
+        }
         out.flush();
 
         return clientResponse = new HttpResponse(socket);

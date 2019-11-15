@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.net.FileNameMap;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -50,11 +49,11 @@ public class HttpServer {
             String body = httpRequest.getBody();
 
             String requestTarget = requestLine.split(" ")[1];
-            String requestAction = requestTarget.split(" ")[0];
+            String requestAction = requestLine.split(" ")[0];
             int questionPos = requestTarget.indexOf('?');
             String requestPath = questionPos == -1 ? requestTarget : requestTarget.substring(0, questionPos);
 
-            Map<String, String> query = HttpRequest.parseEchoRequest(requestTarget);
+            Map<String, String> query = HttpMessage.getQueryParameters(requestTarget);
             if(requestTarget.length() > 1) {
                 controllers
                         .getOrDefault(requestPath, defaultController)

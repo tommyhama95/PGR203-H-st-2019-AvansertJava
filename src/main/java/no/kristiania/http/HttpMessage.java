@@ -1,12 +1,35 @@
 package no.kristiania.http;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class HttpMessage {
 
-    public abstract void parse();
+    public static Map<String, String> getQueryParameters(String requestTarget) {
+        Map<String, String> targetHeaders = new HashMap<>();
+        int questionPos = requestTarget.indexOf('?');
+        String queryString = requestTarget.substring(questionPos+1);
+        if(questionPos != -1) {
+            return parseQueryString(queryString);
+        }
+        return targetHeaders;
+    }
+
+    public static Map<String, String> parseQueryString(String queryString) {
+        Map<String, String> parameters = new HashMap<>();
+        String[] properties = queryString.split("&");
+        for(String property : properties) {
+            int equalsPos = property.indexOf('=');
+            String header = property.substring(0, equalsPos).trim();
+            String value = property.substring(equalsPos + 1).trim();
+            parameters.put(header, value);
+        }
+        return parameters;
+    }
+
+    public abstract void parse() throws IOException;
 
     protected String read(Socket socket) throws IOException {
         StringBuilder message = new StringBuilder();
@@ -33,6 +56,18 @@ public abstract class HttpMessage {
             }
         }
         return line.toString();
+    }
+
+    static String readBody(Map<String, String> headers, Socket socket) throws IOException {
+        if(headers.containsKey("Content-Length")) {
+            StringBuilder body = new StringBuilder();
+            for(int i = 0; i < Integer.parseInt(headers.get("Content-Length")); i++) {
+                body.append((char)socket.getInputStream().read());
+            }
+            return body.toString();
+        } else {
+            return null;
+        }
     }
 
 }

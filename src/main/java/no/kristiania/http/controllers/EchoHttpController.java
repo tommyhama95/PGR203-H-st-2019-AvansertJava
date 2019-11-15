@@ -1,6 +1,6 @@
 package no.kristiania.http.controllers;
 
-import no.kristiania.http.HttpRequest;
+import no.kristiania.http.HttpMessage;
 import no.kristiania.http.HttpStatusCodes;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class EchoHttpController implements HttpController {
     @Override
     public void handle(String requestAction, String requestTarget, Map<String, String> query, String body, OutputStream out) throws IOException {
         if(requestAction.equals("POST")){
-            query = HttpRequest.parseEchoRequest(body);
+            query = HttpMessage.parseQueryString(body);
         }
         int statusCode = Integer.parseInt(query.getOrDefault("status","200"));
         String responseBody = query.getOrDefault("body", "None");
