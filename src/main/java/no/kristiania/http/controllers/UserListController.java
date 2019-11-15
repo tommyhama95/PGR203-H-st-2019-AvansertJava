@@ -3,7 +3,6 @@ package no.kristiania.http.controllers;
 import no.kristiania.dao.daos.UserDao;
 import no.kristiania.dao.objects.User;
 import no.kristiania.http.HttpMessage;
-import no.kristiania.http.HttpStatusCodes;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,12 +10,12 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class UsersController extends AbstractDaoController {
+public class UserListController extends AbstractDaoController {
 
-    private final UserDao uDao;
+    private final UserDao userDao;
 
-    public UsersController(UserDao uDao) {
-        this.uDao = uDao;
+    public UserListController(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class UsersController extends AbstractDaoController {
                 User user = new User();
                 user.setName(query.get("userName"));
                 user.setEmail(query.get("userEmail"));
-                user.setId(uDao.insert(user));
+                user.setId(this.userDao.insert(user));
             }
             serverDaoResponse(query, out);
         } catch (SQLException e) {
@@ -37,7 +36,7 @@ public class UsersController extends AbstractDaoController {
 
 
     public String getBody() throws SQLException {
-        return uDao.listAll().stream()
+        return userDao.listAll().stream()
                 .map(u -> String.format("<li id='%s'>%s</li>", u.getId(), u.getName()))
                 .collect(Collectors.joining(""));
     }

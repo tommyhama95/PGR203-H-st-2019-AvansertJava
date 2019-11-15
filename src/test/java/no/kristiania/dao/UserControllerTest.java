@@ -2,7 +2,7 @@ package no.kristiania.dao;
 
 import no.kristiania.dao.daos.UserDao;
 import no.kristiania.dao.objects.User;
-import no.kristiania.http.controllers.UsersController;
+import no.kristiania.http.controllers.UserListController;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public class UserControllerTest {
         UserDao dao = new UserDao(new DaoTest().createDataSource());
         daoTestInstance.setUp();
 
-        UsersController controller = new UsersController(dao);
+        UserListController controller = new UserListController(dao);
         User user1 = daoTestInstance.sampleUser();
         User user2 = daoTestInstance.sampleUser();
 

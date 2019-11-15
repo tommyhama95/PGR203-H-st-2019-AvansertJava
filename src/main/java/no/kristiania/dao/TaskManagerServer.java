@@ -39,17 +39,16 @@ public class TaskManagerServer {
         server.addController("/api/projects", new ProjectsController(projectDao));
         server.addController("/api/tasks", new TaskController(taskDao));
         server.addController("/api/taskStatus", new TaskStatusController(taskDao));
-        server.addController("/api/users", new UsersController(userDao));
+        server.addController("/api/users", new UserListController(userDao));
         server.addController("/api/projectMembers", new ProjectMembersController(projectMemberDao, userDao));
         server.addController("/api/taskMembers", new TaskMembersController(taskMemberDao, userDao));
+        server.addController("/api/userSelect", new UserSelectController(userDao));
 
         /*TODO:
-        -- Adding new projects
-        -- Adding new tasks
-        -- Changing task status (Freely)
         -- Assigning members to task (Using options)
         -- Filtering on individual member tasks
         -- Assigning members to project (Using options)
+        -- Write Tests for all of these
          */
     }
 
