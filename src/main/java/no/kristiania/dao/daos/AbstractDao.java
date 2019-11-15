@@ -35,11 +35,14 @@ public abstract class AbstractDao<T> {
     }
 
     //Makes ResultSet of query with one parameter
-    public List<T> listAllWithStatement(long idValue, String sql) throws SQLException {
+    public List<T> listAllWithStatement(long[] idValue, String sql) throws SQLException {
         List<T> result = new ArrayList<>();
         try(Connection connection = datasource.getConnection()){
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setLong(1, idValue);
+                for (int i = 1; i < idValue.length+1; i++) {
+                    long id = idValue[i-1];
+                    statement.setLong(i, id);
+                }
                 try(ResultSet rs = statement.executeQuery()){
                     while(rs.next()){
                         result.add(readObject(rs));

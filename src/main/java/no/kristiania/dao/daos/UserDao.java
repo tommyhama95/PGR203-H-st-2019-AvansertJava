@@ -40,7 +40,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
     public User getUserById(long id) throws SQLException {
-        return listAllWithStatement(id, "SELECT * FROM users WHERE id = (?)").get(0);
+        return listAllWithStatement(new long[]{id}, "SELECT * FROM users WHERE id = (?)").get(0);
     }
 
 }

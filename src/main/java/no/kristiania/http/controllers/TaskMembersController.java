@@ -56,7 +56,8 @@ public class TaskMembersController extends AbstractDaoController {
                 .map(tm -> {
                     try {
                         long userId = tm.getUserId();
-                        return String.format("<li id=%s>%s</li>", tm.getUserId(), userDao.getUserById(userId).getName());
+                        return String.format("<li id=%s>%s</li>",
+                                tm.getUserId(), userDao.getUserById(userId).getName());
                     } catch (SQLException e) {
                         e.printStackTrace();
                         return "Internal Server Error - 500";
