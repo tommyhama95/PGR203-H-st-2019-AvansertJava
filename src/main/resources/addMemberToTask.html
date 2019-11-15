@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add use to Task | Kristiania Project</title>
+    <title>Add user to Task | Kristiania Project</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Choose a member to add to this task</h2>
 
-    <form method="POST" action="/api/taskMember">
+    <form method="POST" action="/api/taskMembers">
         <label><select id="members" name="member" placeholder="Choose Member"></select></label>
         <label>Task ID: <input class="readonly" id="taskId" type="text" name="taskid" readonly> </label>
+        <label>Project ID: <input class="readonly" id="projectId" type="text" name="projectid" readonly> </label>
         <button action="submit">Add Member</button>
     </form>
     <div>
@@ -25,6 +26,7 @@
 
         document.getElementById("back").setAttribute("href", "task.html?projectid=" + projectId +"&taskid=" + taskId);
         document.getElementById("taskId").value = taskId;
+        document.getElementById("projectId").value = projectId;
 
         fetch("/api/addMemberToTask?projectid="+ projectId +"&taskid=" + taskId)
             .then(function (response) {

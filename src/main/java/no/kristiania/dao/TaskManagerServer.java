@@ -43,7 +43,7 @@ public class TaskManagerServer {
         server.addController("/api/projectMembers", new ProjectMembersController(projectMemberDao, userDao));
         server.addController("/api/taskMembers", new TaskMembersController(taskMemberDao, userDao));
         server.addController("/api/userSelect", new UserSelectController(userDao));
-        server.addController("/api/addMemberToTask", new TaskMemberSelectController(taskMemberDao, userDao));
+        server.addController("/api/addMemberToTask", new TaskMemberSelectController(taskMemberDao, userDao, projectMemberDao));
         server.addController("/api/filterTasks", new FilterTaskController(taskMemberDao, taskDao));
     }
 

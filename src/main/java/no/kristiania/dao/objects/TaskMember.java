@@ -46,8 +46,8 @@ public class TaskMember {
     public String toString() {
         return "TaskMember{" +
                 "taskId=" + taskId +
-                ", userId=" + userId +
                 ", projectId=" + projectId +
+                ", userId=" + userId +
                 '}';
     }
 

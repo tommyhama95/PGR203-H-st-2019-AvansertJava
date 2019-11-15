@@ -15,7 +15,7 @@ public class TaskMemberDao extends AbstractDao<TaskMember> {
     }
 
     public long insert(TaskMember taskMember) throws SQLException {
-       return insert(taskMember, "INSERT INTO task_members (task_id, user_id, project_id) VALUES (?, ?, ?)");
+       return insert(taskMember, "INSERT INTO task_members (task_id, project_id, user_id) VALUES (?, ?, ?)");
     }
 
     public List<TaskMember> listAll() throws SQLException {
