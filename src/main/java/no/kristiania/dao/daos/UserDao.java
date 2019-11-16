@@ -43,4 +43,7 @@ public class UserDao extends AbstractDao<User> {
         return listAllWithStatement(new long[]{id}, "SELECT * FROM users WHERE id = (?)").get(0);
     }
 
+    public void updateUserValues(String name, String email, long userId) throws SQLException {
+        updateAllValuesWithStatement(name, email, userId, "UPDATE users SET name = (?), email = (?) WHERE id = (?)");
+    }
 }

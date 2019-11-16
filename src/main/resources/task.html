@@ -8,6 +8,10 @@
 <body>
 <h1>Task view</h1>
 
+
+    <h3>Task:</h3>
+    <div id="taskName"></div>
+
     <h3>Status:</h3>
     <p id="status"></p>
 
@@ -47,6 +51,13 @@
             return response.text();
         }).then(function (text) {
         document.getElementById("status").innerHTML = text;
+    })
+
+    fetch("/api/setTaskName?projectid=" + projectId + "&taskid=" + taskId)
+    .then(function (response) {
+        return response.text();
+    }).then(function (text) {
+        document.getElementById("taskName").innerHTML = text;
     })
 </script>
 </html>

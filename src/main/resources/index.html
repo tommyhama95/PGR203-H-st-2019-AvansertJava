@@ -33,7 +33,6 @@
         document.getElementById("projectList").innerHTML = text;
     });
 
-    //TODO: List users and button to create new users
     fetch("/api/users")
         .then(function (response) {
             return response.text();

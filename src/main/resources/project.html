@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1>Project view</h1>
+    <div id="projectName"></div>
+    <p>Click on project name to rename it</p>
     <hr>
     <div>
         <div>
@@ -49,5 +51,12 @@
         }).then(function(text) {
         document.getElementById("projectTasks").innerHTML = text;
     });
+
+    fetch("/api/setProjectName?projectid=" + projectId)
+    .then(function (response) {
+        return response.text();
+    }).then(function (text) {
+        document.getElementById("projectName").innerHTML = text;
+    })
 </script>
 </html>

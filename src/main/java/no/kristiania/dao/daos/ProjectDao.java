@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProjectDao extends AbstractDao<Project> {
@@ -35,5 +36,13 @@ public class ProjectDao extends AbstractDao<Project> {
     //This method returns all values in a certain column
     public List<Project> listAll() throws SQLException {
       return listAll("SELECT * FROM projects");
+    }
+
+    public void updateProjectName(String name, long projectId) throws SQLException {
+        updateValueWithStatement(name, projectId, "UPDATE projects SET name = (?) WHERE id = (?)");
+    }
+
+    public List<Project> getProjectFromId(long projectId) throws SQLException {
+        return listAllWithStatement(new long[] {projectId}, "SELECT * FROM projects WHERE id = (?)");
     }
 }

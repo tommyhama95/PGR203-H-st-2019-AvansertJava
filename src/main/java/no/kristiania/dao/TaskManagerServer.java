@@ -45,6 +45,9 @@ public class TaskManagerServer {
         server.addController("/api/userSelect", new UserSelectController(userDao));
         server.addController("/api/addMemberToTask", new TaskMemberSelectController(taskMemberDao, userDao, projectMemberDao));
         server.addController("/api/filterTasks", new FilterTaskController(taskMemberDao, taskDao));
+        server.addController("/api/setTaskName", new TaskNameController(taskDao));
+        server.addController("/api/setProjectName", new ProjectNameController(projectDao));
+        server.addController("/api/setUserValue", new UserValueController(userDao));
     }
 
     public static void main(String[] args) throws IOException {

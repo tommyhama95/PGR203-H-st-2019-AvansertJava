@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskDao extends AbstractDao<Task>{
@@ -49,4 +50,9 @@ public class TaskDao extends AbstractDao<Task>{
     public void updateTaskStatus(String newStatus, long taskId) throws SQLException{
         updateValueWithStatement(newStatus, taskId,"UPDATE tasks SET status = (?) WHERE id = (?)");
     }
+
+    public void updateTaskName(String taskName, long taskId) throws SQLException {
+        updateValueWithStatement(taskName, taskId, "UPDATE tasks SET name = (?) WHERE id = (?)");
+    }
+
 }
