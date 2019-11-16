@@ -17,7 +17,6 @@ public class TaskMembersController extends AbstractDaoController {
 
     private TaskMemberDao taskMemberDao;
     private UserDao userDao;
-    private long taskId;
 
     public TaskMembersController(TaskMemberDao taskMemberDao, UserDao userDao) {
         this.userDao = userDao;
@@ -44,9 +43,12 @@ public class TaskMembersController extends AbstractDaoController {
                     clientErrorResponse(out, "User is already part of this task!", 409);
                 } else {
                     taskMemberDao.insert(taskMember);
+                    serverRedirectResponse(query, out,
+                            "http://localhost:8080/task.html?projectid=" + projectId + "&taskid=" + taskId);
+                    return;
                 }
             }
-            serverDaoResponse(query, out);
+            serverResponse(query, out);
         } catch (SQLException e) {
             serverErrorResponse(out,e);
         }
@@ -55,6 +57,7 @@ public class TaskMembersController extends AbstractDaoController {
     public String getBody() throws SQLException {
         String urlQuery = super.getUrlQuery();
         Map<String, String> query = HttpMessage.parseQueryString(urlQuery);
+        long taskId;
         if(query.size() != 0){
             taskId = Long.parseLong(query.get("taskid"));
         } else {

@@ -28,8 +28,10 @@ public class ProjectsController extends AbstractDaoController {
                 Project project = new Project();
                 project.setName(URLDecoder.decode(query.get("projectName"), StandardCharsets.UTF_8));
                 project.setId(projectDao.insert(project));
+                serverRedirectResponse(query, out, "http://localhost:8080/index.html");
+                return;
             }
-            serverDaoResponse(query, out);
+            serverResponse(query, out);
         } catch (SQLException e) {
             serverErrorResponse(out, e);
         }
