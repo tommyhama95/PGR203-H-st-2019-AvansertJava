@@ -15,6 +15,7 @@ public class UserValueController extends AbstractDaoController {
     private final UserDao userDao;
     private String name;
     private String email;
+    private final String undefined = "[Undefined]";
 
     public UserValueController(UserDao userDao) {
         this.userDao = userDao;
@@ -31,7 +32,8 @@ public class UserValueController extends AbstractDaoController {
                 String userId = query.get("userid");
                 name = query.get("userName");
                 email = query.get("userEmail");
-                checkForValues(name, email);
+                name = checkValue(name);
+                email = checkValue(email);
                 userDao.updateUserValues(name, email, Long.parseLong(userId));
                 serverRedirectResponse(query, out,
                         "http://localhost:8080/index.html");
@@ -43,14 +45,6 @@ public class UserValueController extends AbstractDaoController {
         }
     }
 
-    private void checkForValues(String name, String email) {
-        if(name.equals("")){
-            this.name = "Missing user name!";
-        }
-        if(email.equals("")){
-            this.email = "Missing user mail!";
-        }
-    }
 
     protected String getBody() throws SQLException {
         return null;
