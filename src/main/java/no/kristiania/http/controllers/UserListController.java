@@ -42,7 +42,8 @@ public class UserListController extends AbstractDaoController {
 
     public String getBody() throws SQLException {
         return userDao.listAll().stream()
-                .map(u -> String.format("<li id='%s'>%s #%s <br> E-Mail: %s</li><br>", u.getId(), u.getName(), u.getId(), u.getEmail()))
+                .map(u -> String.format("<li id='%s'><a href='alterUser.html?userid=%s&userName=%s&userEmail=%s'>%s #%s </a><br> E-Mail: %s</li><br>",
+                        u.getId(), u.getId(), u.getName(), u.getEmail(), u.getName(), u.getId(), u.getEmail()))
                 .collect(Collectors.joining(""));
     }
 
