@@ -29,21 +29,20 @@ abstract class AbstractDaoController implements HttpController {
 
     void serverResponse(Map<String, String> query, OutputStream out) throws SQLException, IOException {
         int status = Integer.parseInt(query.getOrDefault("status","200"));
-        String contentType = query.getOrDefault("content-type","text/plain");
+        String contentType = query.getOrDefault("content-type","text/html");
         String responseBody = query.getOrDefault("body", getBody());
         int contentLength = responseBody.length();
         out.write(("HTTP/1.1 " + status + " " + HttpStatusCodes.statusCodeList.getOrDefault(status,"OK\r\n")).getBytes());
         out.write(("Content-type: " + contentType + "\r\n").getBytes());
         out.write(("Content-length: " + contentLength + "\r\n").getBytes());
         out.write(("Connection: close\r\n").getBytes());
-        out.write(("Location: index.html").getBytes());
         out.write(("\r\n").getBytes());
         out.write((responseBody).getBytes());
     }
 
     protected void serverRedirectResponse(Map<String, String> query, OutputStream out, String location) throws IOException {
         int status = Integer.parseInt(query.getOrDefault("status","302"));
-        String contentType = query.getOrDefault("content-type","text/plain");
+        String contentType = query.getOrDefault("content-type","text/html");
         out.write(("HTTP/1.1 " + status + " " + HttpStatusCodes.statusCodeList.getOrDefault(status,"FOUND\r\n")).getBytes());
         out.write(("Content-type: " + contentType + "\r\n").getBytes());
         out.write(("Location: "+ location +"\r\n").getBytes());
