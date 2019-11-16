@@ -29,6 +29,11 @@ Her kan dere inkludere et diagram av datamodellen og av de viktigste klassene i 
 Beskrivelse av hvordan en habil ny utvikler som ser prosjektet for første gang bør forholde seg til koden deres.
 
 ## Egenevaluering
+We feel that we've had a very good teamwork in this exam all the way trough. 
+We have only been working when we have been together in physical meet ups and mostly debugged when alone at certain
+points in the process. 
+
+Has been a really fun and interesting exam!
 
 ### Hva vi lærte underveis
 

@@ -120,14 +120,14 @@ body {
 ## Vedlegg: Sjekkliste for innlevering
 
 * [ ] Dere har registrert link til GitHub repository i Wiseflow
-* [ ] Koden er sjekket inn på github.com/Westerdals-repository
+* [x] Koden er sjekket inn på github.com/Westerdals-repository
 * [ ] GitHub repository er private, men delt med gruppen dere gjør hverandrevurdering på
 * [ ] Dere har mottatt minst 2 positive og 2 korrektive GitHub issues i github repository fra en annen gruppe
-* [ ] Dere har committed kode med begge prosjektdeltagernes GitHub konto (alternativt: README beskriver arbeidsform)
+* [x] Dere har committed kode med begge prosjektdeltagernes GitHub konto (alternativt: README beskriver arbeidsform)
 
 ### README.md
 
-* [ ] `README.md` inneholder en korrekt link til Travis CI
+* [x] `README.md` inneholder en korrekt link til Travis CI
 * [ ] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det 
 * [ ] `README.md` beskriver eventuell ekstra leveranse utover minimum
 * [ ] `README.md` inneholder link til en diagram som viser datamodellen
