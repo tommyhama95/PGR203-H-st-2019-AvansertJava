@@ -24,8 +24,13 @@ This project was made as a pair-programming exam by: Krister Emanuelsen (Seventh
 
 ## Designbeskrivelse
 
-![Design](./Docs/Objects.png)
-Beskrivelse av hvordan en habil ny utvikler som ser prosjektet for første gang bør forholde seg til koden deres.
+#### Datamodel
+![Design](./Docs/Datamodell.png)
+
+#### HTTPServer Diagram
+![Design](./Docs/HTTP.png)
+
+
 
 ## Egenevaluering
 We feel that we've had a very good teamwork in this exam all the way trough. 
