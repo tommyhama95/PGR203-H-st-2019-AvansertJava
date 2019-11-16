@@ -12,13 +12,15 @@
 
 <br>
 <div>
-    <a href="index.html">Return to front page</a>
+    <a id="back">Return to project</a>
 </div>
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('projectid');
     const userId = urlParams.get('userid');
+
+    document.getElementById("back").setAttribute("href","project.html?projectid="+projectId);
 
     fetch("/api/filterTasks?projectid=" + projectId+"&userid=" + userId)
         .then(function(response) {

@@ -21,7 +21,7 @@ public class UserControllerTest {
         User user2 = daoTestInstance.sampleUser();
 
         assertThat(controller.getBody())
-                .contains(String.format("<li id='%s'>%s</li>", user1.getId(), user1.getName()))
-                .contains(String.format("<li id='%s'>%s</li>", user2.getId(), user2.getName()));
+                .contains(String.format("<li id='%s'>%s #%s <br> E-Mail: %s</li><br>", user1.getId(), user1.getName(), user1.getId(), user1.getEmail()))
+                .contains(String.format("<li id='%s'>%s #%s <br> E-Mail: %s</li><br>", user2.getId(), user2.getName(), user2.getId(), user2.getEmail()));
     }
 }

@@ -63,3 +63,11 @@ button:active{
 .readonly:hover{
     cursor: default;
 }
+
+#back {
+    color: #cc3333 !important;
+}
+
+.add {
+    color: #33cc33 !important;
+}
