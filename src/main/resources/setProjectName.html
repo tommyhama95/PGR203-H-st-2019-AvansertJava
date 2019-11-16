@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alter Project Name | Kristiania Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h3>Change Project Name</h3>
+
+    <form method="POST" action="/api/setProjectName">
+        <label>
+            Project name:<input type="text" id="name" name="projectName">
+        </label>
+        <label><input type="text" id="project" name="projectid" class="readonly" readonly></label>
+        <button action="submit">Save new name</button>
+    </form>
+    <br>
+    <p class="warning">PS: When renamed, your project will be at the bottom of the list at main page :)</p>
+
+    <div>
+        <a id="back">Back to Main Page</a>
+    </div>
+
+</body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get("projectid");
+
+        document.getElementById("project").value = projectId;
+        document.getElementById("back").setAttribute("href", "index.html");
+
+    </script>
+</html>
