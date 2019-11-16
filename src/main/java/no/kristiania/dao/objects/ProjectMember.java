@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class ProjectMember {
 
-
     private long projectId;
     private long userId;
 
@@ -15,21 +14,19 @@ public class ProjectMember {
         this.userId = userId;
     }
 
-    public void setProjectId(long projectID) {
-        this.projectId = projectID;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
     public long getProjectId() {
         return projectId;
     }
 
-    public void setUserId(long userID) {
-        this.userId = userID;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
     public long getUserId() {
         return userId;
     }
-
-    //Show how Project_user object is returned in String form
 
     @Override
     public String toString() {

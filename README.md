@@ -24,8 +24,7 @@ This project was made as a pair-programming exam by: Krister Emanuelsen (Seventh
 
 ## Designbeskrivelse
 
-Her kan dere inkludere et diagram av datamodellen og av de viktigste klassene i programmet.
-
+![Design](./Docs/Objects.png)
 Beskrivelse av hvordan en habil ny utvikler som ser prosjektet for første gang bør forholde seg til koden deres.
 
 ## Egenevaluering
