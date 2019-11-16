@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class TaskStatusController extends AbstractDaoController {
     private final TaskDao taskDao;
+    private String status;
 
     public TaskStatusController(TaskDao taskDao) {
         this.taskDao = taskDao;
@@ -28,7 +29,9 @@ public class TaskStatusController extends AbstractDaoController {
                 setUrlQuery(HttpMessage.getQueryString(body));
                 String taskId = query.get("taskid");
                 String projectId = query.get("projectid");
-                taskDao.updateTaskStatus(query.get("taskStatus"), Long.parseLong(taskId));
+                status = query.get("taskStatus");
+                status = checkValue(status);
+                taskDao.updateTaskStatus(status, Long.parseLong(taskId));
                 serverRedirectResponse(query, out,
                         "http://localhost:8080/task.html?projectid=" + projectId + "&taskid=" + taskId);
                 return;
@@ -38,6 +41,7 @@ public class TaskStatusController extends AbstractDaoController {
             serverErrorResponse(out,e);
         }
     }
+
 
     public String getBody() throws SQLException {
         String urlQuery = super.getUrlQuery();

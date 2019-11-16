@@ -30,8 +30,12 @@ public class TaskController extends AbstractDaoController {
                 String projectId = query.get("projectid");
                 setUrlQuery(projectId);
                 Task task = new Task();
-                task.setName(query.get("taskName"));
-                task.setStatus(query.get("taskStatus"));
+                String name = query.get("taskName");
+                String status = query.get("taskStatus");
+                name = checkValue(name);
+                status = checkValue(status);
+                task.setName(name);
+                task.setStatus(status);
                 task.setProjectId(Long.parseLong(projectId));
                 task.setId(taskDao.insert(task));
                 serverRedirectResponse(query, out,
