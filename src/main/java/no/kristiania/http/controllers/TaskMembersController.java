@@ -39,8 +39,9 @@ public class TaskMembersController extends AbstractDaoController {
                 taskMember.setTaskId(Long.parseLong(taskId));
                 taskMember.setUserId(Long.parseLong(userId.substring(userId.indexOf('#')+1).trim()));
                 taskMember.setProjectId(Long.parseLong(projectId));
-                if(taskMemberDao.listMembersOf(taskMember.getUserId()).contains(taskMember)){
+                if(taskMemberDao.listMembersOf(Long.parseLong(taskId)).contains(taskMember)){
                     clientErrorResponse(out, "User is already part of this task!", 409);
+                    return;
                 } else {
                     taskMemberDao.insert(taskMember);
                     serverRedirectResponse(query, out,
