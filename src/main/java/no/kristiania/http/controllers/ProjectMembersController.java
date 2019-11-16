@@ -40,9 +40,12 @@ public class ProjectMembersController extends AbstractDaoController {
                     clientErrorResponse(out, "User is already part of this project!", 409);
                 } else {
                     projectMemberDao.insert(projectMember);
+                    serverRedirectResponse(query, out,
+                            "http://localhost:8080/project.html?projectid=" + projectId);
+                    return;
                 }
             }
-            serverDaoResponse(query, out);
+            serverResponse(query, out);
         } catch (SQLException e) {
             serverErrorResponse(out,e);
         }

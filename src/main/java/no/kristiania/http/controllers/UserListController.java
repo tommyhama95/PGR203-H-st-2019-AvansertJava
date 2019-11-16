@@ -30,8 +30,10 @@ public class UserListController extends AbstractDaoController {
                 user.setName(query.get("userName"));
                 user.setEmail(query.get("userEmail"));
                 user.setId(this.userDao.insert(user));
+                serverRedirectResponse(query, out, "http://localhost:8080/index.html");
+                return;
             }
-            serverDaoResponse(query, out);
+            serverResponse(query, out);
         } catch (SQLException e) {
             serverErrorResponse(out,e);
         }

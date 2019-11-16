@@ -27,14 +27,18 @@ public class TaskController extends AbstractDaoController {
             if(requestAction.equals("POST")){
                 body = URLDecoder.decode(body,StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(body);
-                setUrlQuery(query.get("projectid"));
+                String projectId = query.get("projectid");
+                setUrlQuery(projectId);
                 Task task = new Task();
                 task.setName(query.get("taskName"));
                 task.setStatus(query.get("taskStatus"));
-                task.setProjectId(Long.parseLong(query.get("projectid")));
+                task.setProjectId(Long.parseLong(projectId));
                 task.setId(taskDao.insert(task));
+                serverRedirectResponse(query, out,
+                        "http://localhost:8080/project.html?projectid=" + projectId);
+                return;
             }
-            serverDaoResponse(query, out);
+            serverResponse(query, out);
         } catch (SQLException e) {
             serverErrorResponse(out, e);
         }
