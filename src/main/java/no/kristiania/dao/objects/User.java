@@ -7,11 +7,12 @@ public class User {
     private String email;
     private long id;
 
-
     public User() {}
+
     public User(String name) {
         this.name = name;
     }
+
     public User(String name, String email) {
         this(name);
         this.email = email;

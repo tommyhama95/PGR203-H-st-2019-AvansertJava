@@ -4,13 +4,11 @@ import java.util.Objects;
 
 public class TaskMember {
 
-
     private long taskId;
     private long userId;
     private long projectId;
 
-    public TaskMember() {
-    }
+    public TaskMember() {}
 
     public TaskMember(long taskId, long projectId, long userId) {
         this.taskId = taskId;
@@ -18,28 +16,26 @@ public class TaskMember {
         this.userId = userId;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setTaskId(long taskId) {
+        this.taskId = taskId;
     }
 
     public long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(long taskId) {
-        this.taskId = taskId;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
     public long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
+    public void setUserId(long userId) { this.userId = userId; }
+
+    public long getUserId() {
+        return userId;
     }
 
     @Override
