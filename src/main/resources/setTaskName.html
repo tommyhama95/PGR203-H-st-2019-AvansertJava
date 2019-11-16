@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alter Task Name | Kristiania Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h3>Alter task name</h3>
+
+    <form method="POST" action="/api/setTaskName">
+        <label>
+            Task name:<input id="name" type="text" placeholder="New task name" name="taskName" >
+        </label>
+        <label>
+            <input id="task" type="text" name="taskid" readonly class="readonly">
+        </label>
+        <label>
+            <input id="project" type="text" name="projectid" readonly class="readonly">
+        </label>
+        <button action="submit">Save new name</button>
+
+    </form>
+
+    <div>
+        <a id="back">Return to task</a>
+    </div>
+
+</body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get("taskid");
+        const projectId = urlParams.get("projectid");
+
+        document.getElementById("task").value = taskId;
+        document.getElementById("project").value = projectId;
+        document.getElementById("back").setAttribute("href", "task.html?projectid=" + projectId + "&taskid=" + taskId);
+
+    </script>
+
+</html>
