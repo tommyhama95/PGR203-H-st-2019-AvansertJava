@@ -27,7 +27,7 @@ abstract class AbstractDaoController implements HttpController {
         }
     }
 
-    void serverResponse(Map<String, String> query, OutputStream out) throws SQLException, IOException {
+    protected void serverResponse(Map<String, String> query, OutputStream out) throws SQLException, IOException {
         int status = Integer.parseInt(query.getOrDefault("status","200"));
         String contentType = query.getOrDefault("content-type","text/html");
         String responseBody = query.getOrDefault("body", getBody());
@@ -50,7 +50,7 @@ abstract class AbstractDaoController implements HttpController {
         out.write(("\r\n").getBytes());
     }
 
-    void serverErrorResponse(OutputStream out, SQLException e) throws IOException {
+    protected void serverErrorResponse(OutputStream out, SQLException e) throws IOException {
         int statusCode = 500;
         String responseBody = e.toString();
         out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
@@ -59,7 +59,7 @@ abstract class AbstractDaoController implements HttpController {
         out.write((responseBody).getBytes());
     }
 
-    void clientErrorResponse(OutputStream out, String responseBody, int statusCode) throws IOException {
+    protected void clientErrorResponse(OutputStream out, String responseBody, int statusCode) throws IOException {
         responseBody += ("\nStatus: " + statusCode + " - " + HttpStatusCodes.statusCodeList.get(statusCode));
         out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
         respondWithHeaders(out, responseBody);

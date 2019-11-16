@@ -38,6 +38,7 @@ public class ProjectMembersController extends AbstractDaoController {
                 projectMember.setUserId(Long.parseLong(userId.substring(userId.indexOf('#')+1).trim()));
                 if(projectMemberDao.listMembersOf(Long.parseLong(projectId)).contains(projectMember)){
                     clientErrorResponse(out, "User is already part of this project!", 409);
+                    return;
                 } else {
                     projectMemberDao.insert(projectMember);
                     serverRedirectResponse(query, out,
