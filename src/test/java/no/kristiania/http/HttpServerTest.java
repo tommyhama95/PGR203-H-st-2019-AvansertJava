@@ -57,7 +57,7 @@ public class HttpServerTest {
         client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         client.setBody(formBody);
         HttpResponse response = client.executeRequest("POST");
-        assertThat(response.getHeaderValue("Content-Type")).isEqualTo("text/html");
+        assertThat(response.getHeaderValue("Content-Type")).isEqualTo("text/html; charset=utf-8");
         assertThat(response.getBody()).isEqualTo("foobar");
     }
 

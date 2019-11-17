@@ -18,7 +18,6 @@ abstract class AbstractDaoController implements HttpController {
         setUrlQuery(requestTarget.substring(requestTarget.indexOf('?') + 1));
         try {
             if (requestAction.equals("POST")) {
-                body = URLDecoder.decode(body, StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(HttpMessage.getQueryString(body));
             }
             serverResponse(query, out);
@@ -31,20 +30,20 @@ abstract class AbstractDaoController implements HttpController {
         int status = Integer.parseInt(query.getOrDefault("status", "200"));
         String contentType = query.getOrDefault("content-type", "text/html");
         String responseBody = query.getOrDefault("body", getBody());
-        int contentLength = responseBody.length();
+        int contentLength = (responseBody.getBytes(StandardCharsets.UTF_8).length); //Handle UTF-8 Encoded characters
         out.write(("HTTP/1.1 " + status + " " + HttpStatusCodes.statusCodeList.getOrDefault(status, "OK\r\n")).getBytes());
-        out.write(("Content-type: " + contentType + "\r\n").getBytes());
-        out.write(("Content-length: " + contentLength + "\r\n").getBytes());
+        out.write(("Content-Type: " + contentType + "\r\n").getBytes());
+        out.write(("Content-Length: " + contentLength + "\r\n").getBytes());
         out.write(("Connection: close\r\n").getBytes());
         out.write(("\r\n").getBytes());
-        out.write((responseBody).getBytes());
+        out.write((URLDecoder.decode(responseBody,StandardCharsets.UTF_8)).getBytes());
     }
 
     protected void serverRedirectResponse(Map<String, String> query, OutputStream out, String location) throws IOException {
         int status = Integer.parseInt(query.getOrDefault("status", "302"));
         String contentType = query.getOrDefault("content-type", "text/html");
         out.write(("HTTP/1.1 " + status + " " + HttpStatusCodes.statusCodeList.getOrDefault(status, "FOUND\r\n")).getBytes());
-        out.write(("Content-type: " + contentType + "\r\n").getBytes());
+        out.write(("Content-Type: " + contentType + "\r\n").getBytes());
         out.write(("Location: " + location + "\r\n").getBytes());
         out.write(("Connection: close\r\n").getBytes());
         out.write(("\r\n").getBytes());
