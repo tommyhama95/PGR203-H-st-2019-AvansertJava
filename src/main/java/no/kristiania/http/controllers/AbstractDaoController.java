@@ -13,6 +13,7 @@ import java.util.Map;
 abstract class AbstractDaoController implements HttpController {
     private String urlQuery;
 
+    //Overridden in most subclasses - Performs responding to the client via outputstream
     @Override
     public void handle(String requestAction, String requestTarget, Map<String, String> query, String body, OutputStream out) throws IOException {
         setUrlQuery(requestTarget.substring(requestTarget.indexOf('?') + 1));
@@ -26,6 +27,7 @@ abstract class AbstractDaoController implements HttpController {
         }
     }
 
+    //Default response method
     protected void serverResponse(Map<String, String> query, OutputStream out) throws SQLException, IOException {
         int status = Integer.parseInt(query.getOrDefault("status", "200"));
         String contentType = query.getOrDefault("content-type", "text/html");
@@ -39,6 +41,7 @@ abstract class AbstractDaoController implements HttpController {
         out.write((URLDecoder.decode(responseBody,StandardCharsets.UTF_8)).getBytes());
     }
 
+    //Redirect method sent along when POST requests are made. Requires accurate location
     protected void serverRedirectResponse(Map<String, String> query, OutputStream out, String location) throws IOException {
         int status = Integer.parseInt(query.getOrDefault("status", "302"));
         String contentType = query.getOrDefault("content-type", "text/html");
@@ -49,6 +52,7 @@ abstract class AbstractDaoController implements HttpController {
         out.write(("\r\n").getBytes());
     }
 
+    //Respods with error in case an SQLexception happens
     protected void serverErrorResponse(OutputStream out, SQLException e) throws IOException {
         int statusCode = 500;
         String responseBody = e.toString();
@@ -58,6 +62,7 @@ abstract class AbstractDaoController implements HttpController {
         out.write((responseBody).getBytes());
     }
 
+    //Respons with error in case the client tries to do something that doesn't make sense
     protected void clientErrorResponse(OutputStream out, String responseBody, int statusCode) throws IOException {
         responseBody += ("\nStatus: " + statusCode + " - " + HttpStatusCodes.statusCodeList.get(statusCode));
         out.write(("HTTP/1.1 " + statusCode + " " + HttpStatusCodes.statusCodeList.get(statusCode) + "\r\n").getBytes());
@@ -73,10 +78,7 @@ abstract class AbstractDaoController implements HttpController {
         out.write(("Connection: close\r\n").getBytes());
     }
 
-    protected String getUrlQuery() {
-        return this.urlQuery;
-    }
-
+    //Failsafe to make sure values in database are not blank
     protected String checkValue(String value){
         if(value.equals("") || value.equals(" ") || value.equals("\n")){
             value = "[Undefined]";
@@ -85,11 +87,16 @@ abstract class AbstractDaoController implements HttpController {
             return value;
         }
     }
+    //Gets and sets the URL Query
+    protected String getUrlQuery() {
+        return this.urlQuery;
+    }
 
     protected void setUrlQuery(String urlQuery) {
         this.urlQuery = urlQuery;
     }
 
+    //All controllers implement some variation of GetBody
     protected abstract String getBody() throws SQLException;
 
 }

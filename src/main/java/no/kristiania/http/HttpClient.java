@@ -24,10 +24,12 @@ public class HttpClient {
         setRequestHeader("Connection", "close");
     }
 
+    //Default to GET methods
     public HttpResponse executeRequest() throws IOException {
         return executeRequest("GET");
     }
 
+    //Option to start a server with a different method (POST)
     public HttpResponse executeRequest(final String httpMethod) throws IOException {
         Socket socket = new Socket(host, port);
 
@@ -39,6 +41,7 @@ public class HttpClient {
                 .map(e -> e.getKey() + ": " + e.getValue())
                 .collect(Collectors.joining("\r\n"));
 
+        //Send the request
         OutputStream out = socket.getOutputStream();
         out.write((httpMethod + " " + requestTarget +" HTTP/1.1\r\n").getBytes());
         out.write((headerString + "\r\n").getBytes());
@@ -48,10 +51,11 @@ public class HttpClient {
         }
         out.flush();
 
+        //Wait for response
         return clientResponse = new HttpResponse(socket);
     }
 
-    //Get From server response
+    //Get from server response
     public int getStatusCode() {
         return clientResponse.getStatusCode();
     }

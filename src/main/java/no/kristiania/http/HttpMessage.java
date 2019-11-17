@@ -16,6 +16,7 @@ public abstract class HttpMessage {
         return requestTarget;
     }
 
+    //Returns a map of all headers and values of a queryString. Headers are keys
     public static Map<String, String> parseQueryString(String queryString) {
         Map<String, String> parameters = new HashMap<>();
         String[] properties = queryString.split("&");
@@ -30,8 +31,7 @@ public abstract class HttpMessage {
         return parameters;
     }
 
-    public abstract void parse() throws IOException;
-
+    //Reads the stream line-by-line
     protected String read(Socket socket) throws IOException {
         StringBuilder message = new StringBuilder();
         String line;
@@ -42,6 +42,7 @@ public abstract class HttpMessage {
         return message.toString();
     }
 
+    //Reads one line of the stream
     static String readLine(Socket socket) throws IOException {
         StringBuilder line = new StringBuilder();
         int c;
@@ -59,6 +60,7 @@ public abstract class HttpMessage {
         return line.toString();
     }
 
+    //Reads body based on content length
     static String readBody(Map<String, String> headers, Socket socket) throws IOException {
         if(headers.containsKey("Content-Length")) {
             StringBuilder body = new StringBuilder();
@@ -71,4 +73,5 @@ public abstract class HttpMessage {
         }
     }
 
+    public abstract void parse() throws IOException;
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class HttpResponse extends  HttpMessage{
     private String message;
-    private String httpMethod;
     private String requestTarget;
     private Map<String, String> headers = new HashMap<>();
     private String body;
@@ -31,7 +30,7 @@ public class HttpResponse extends  HttpMessage{
     @Override
     public void parse() {
         String[] messageLines = message.split("\r\n");
-        httpMethod = messageLines[0].split(" ")[0];
+        String httpMethod = messageLines[0].split(" ")[0];
         statusCode = Integer.parseInt(messageLines[0].split(" ")[1]);
 
         int i;
@@ -60,26 +59,6 @@ public class HttpResponse extends  HttpMessage{
         return statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getHttpMethod() {
-        return httpMethod;
-    }
-
-    public void setHttpMethod(String httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
     public String getRequestTarget() {
         return requestTarget;
     }
@@ -90,10 +69,6 @@ public class HttpResponse extends  HttpMessage{
 
     public String getHeaderValue(String key) {
         return headers.get(key);
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
     }
 
     public String getBody() {

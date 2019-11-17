@@ -36,28 +36,12 @@ public class HttpRequest extends HttpMessage {
         this.body = HttpMessage.readBody(headers, socket);
     }
 
-    public String getHttpMethod() {
-        return httpMethod;
-    }
-
-    public void setHttpMethod(String httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
     public String getRequestTarget() {
         return requestTarget;
     }
 
     public void setRequestTarget(String requestTarget) {
         this.requestTarget = requestTarget;
-    }
-
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
     }
 
     public String getBody() {
@@ -67,13 +51,4 @@ public class HttpRequest extends HttpMessage {
     public void setBody(String body) {
         this.body = body;
     }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
 }

@@ -15,7 +15,7 @@ import java.util.Map;
 public class HttpServer {
     private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
-    private final int localport;
+    private final int localPort;
     private final ServerSocket serverSocket;
     private String fileLocation;
     private HttpController defaultController = new FileHttpController(this);
@@ -23,22 +23,25 @@ public class HttpServer {
 
     public HttpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        this.localport = serverSocket.getLocalPort();
+        this.localPort = serverSocket.getLocalPort();
         this.fileLocation = "src/main/resources";
 
         controllers.put("/echo", new EchoHttpController());
     }
 
+    //Starts a version of the server that cannot communicate with the database (user TaskManagerServer for that)
     public static void main(String[] args) throws IOException {
         HttpServer server = new HttpServer(8080);
         server.start();
     }
 
+    //Server is a-go
     public void start() throws IOException {
         run();
         logger.info("Started Server on http://localhost:{}",getLocalPort());
     }
 
+    //Server is a-going
     private void run() throws IOException {
         while(true) {
             Socket socket = serverSocket.accept();
@@ -65,7 +68,7 @@ public class HttpServer {
 
 
     public int getLocalPort() {
-        return localport;
+        return localPort;
     }
 
     public String getFileLocation() {
