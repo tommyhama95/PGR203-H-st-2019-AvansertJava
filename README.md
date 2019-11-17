@@ -4,6 +4,8 @@
 
 Alternativ Travis Link: https://travis-ci.com/Westerdals/pgr203-2019-eksamen-SeventhDisaster
 
+Link to github repo: https://github.com/Westerdals/pgr203-2019-eksamen-SeventhDisaster
+
 This project was made as a pair-programming exam by: Krister Emanuelsen (SeventhDisaster) and Tommy Hamarsnes (tommyhama95) 
 ## Hvordan kjøre dette programmet
 
@@ -14,8 +16,9 @@ This project was made as a pair-programming exam by: Krister Emanuelsen (Seventh
     * `dataSource.url = jdbc:postgresql://localhost:5432/` + og navnet på din database.
     * `dataSource.username = ` brukernavn til database-eier.
     * `dataSource.password = ` passord til brukeren.
-3. Etter du har kjørt `mvn package` kan du kjøre serveren fra target undermappen ved å benytte: `java -jar target/task-manager-1.0-SNAPSHOT.jar`
+3. Etter du har kjørt `mvn package` kan du kjøre serveren fra target undermappen ved å benytte: `java -Dfile.encoding=UTF-8 -jar target/task-manager-1.0-SNAPSHOT.jar`
     - Dersom dette ikke går, pass på at navnet på jar filen stemmer innenfor /target mappen.
+    - Grunnen til at du må ha med `-Dfile.encoding=UTF-8` er for at Norske karakterer skal håndteres korrekt i jar runtime.
 
 ### Funksjonalitet
 
@@ -67,4 +70,4 @@ Datamodellen våres føler vi er god med relevante biter som hører til der de b
 https://github.com/Westerdals/pgr203-2019-eksamen-SeventhDisaster/issues
 
 ## Evaluering gitt til annen gruppe
-
+https://github.com/Westerdals/pgr203-2019-eksamen-iaffs/issues
