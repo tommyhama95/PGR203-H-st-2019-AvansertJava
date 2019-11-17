@@ -18,7 +18,6 @@ public class TaskMemberControllerTest {
     void shouldReturnTaskMembersFromDatabase() throws SQLException {
         DaoTest daoTestInstance = new DaoTest();
         JdbcDataSource dataSource = daoTestInstance.createDataSource();
-
         TaskMemberDao taskMemberDao = new TaskMemberDao(dataSource);
         TaskDao taskDao = new TaskDao(dataSource);
         ProjectMemberDao projectMemberDao = new ProjectMemberDao(dataSource);

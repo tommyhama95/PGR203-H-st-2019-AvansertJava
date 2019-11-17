@@ -12,9 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TaskControllerTest {
     @Test
-    void shouldReturnTasksFromDatabase() throws SQLException, IOException {
+    void shouldReturnTasksFromDatabase() throws SQLException {
         DaoTest daoTestInstance = new DaoTest();
         TaskDao dao = new TaskDao(new DaoTest().createDataSource());
+
         daoTestInstance.setUp();
 
         long projectId = daoTestInstance.sampleProject().getId();

@@ -16,11 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TaskStatusControllerTest {
 
     @Test
-    void shouldreturnChangedTaskStatus() throws SQLException {
+    void shouldReturnChangedTaskStatus() throws SQLException {
         DaoTest daoTestInstance = new DaoTest();
         JdbcDataSource dataSource = daoTestInstance.createDataSource();
-
-        ProjectDao projectDao = new ProjectDao(dataSource);
         TaskDao taskDao = new TaskDao(dataSource);
 
         daoTestInstance.setUp();
@@ -30,7 +28,6 @@ public class TaskStatusControllerTest {
 
         taskDao.insert(task);
 
-        TaskController taskController = new TaskController(taskDao);
         TaskStatusController tsController = new TaskStatusController(taskDao);
         tsController.setUrlQuery("taskStatus=NewStatus& taskid=1");
 

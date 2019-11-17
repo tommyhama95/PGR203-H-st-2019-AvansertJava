@@ -15,69 +15,72 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DaoTest {
 
     Random random = new Random();
-    private ProjectDao pDao;
-    private UserDao uDao;
-    private ProjectMemberDao pmDao;
-    private TaskDao tDao;
-    private TaskMemberDao tmDao;
+    private ProjectDao projectDao;
+    private UserDao userDao;
+    private ProjectMemberDao projectMemberDao;
+    private TaskDao taskDao;
+    private TaskMemberDao taskMemberDao;
+    private long projectId;
+    private long userId;
+    private long taskId;
 
     @BeforeEach
     void setUp() {
         JdbcDataSource dataSource = createDataSource();
-        pDao = new ProjectDao(dataSource);
-        uDao = new UserDao(dataSource);
-        pmDao = new ProjectMemberDao(dataSource);
-        tDao = new TaskDao(dataSource);
-        tmDao = new TaskMemberDao(dataSource);
+        projectDao = new ProjectDao(dataSource);
+        userDao = new UserDao(dataSource);
+        projectMemberDao = new ProjectMemberDao(dataSource);
+        taskDao = new TaskDao(dataSource);
+        taskMemberDao = new TaskMemberDao(dataSource);
     }
 
     @Test
     void shouldListOutProjects() throws SQLException {
         Project project = sampleProject(); // Generates and inserts a sample project
-        assertThat(pDao.listAll()).contains(project);
-        assertThat(pDao.listAll().get(0)).isEqualToComparingFieldByField(project);
+        assertThat(projectDao.listAll()).contains(project);
+        assertThat(projectDao.listAll().get(0)).isEqualToComparingFieldByField(project);
     }
 
     @Test
     void shouldListOutUsers() throws SQLException {
         User user = sampleUser(); // Generates and inserts a sample user
-        assertThat(uDao.listAll()).contains(user);
-        assertThat(uDao.listAll().get(0)).isEqualToComparingFieldByField(user);
+        assertThat(userDao.listAll()).contains(user);
+        assertThat(userDao.listAll().get(0)).isEqualToComparingFieldByField(user);
     }
 
     @Test
     void shouldListProjectMembers() throws SQLException {
-        long pID = pDao.insert(new Project("Do Thing"));
-        long uID = uDao.insert(new User("TestUser", "Test@testing.no"));
+        projectId = projectDao.insert(new Project("Do Thing"));
+        userId = userDao.insert(new User("TestUser", "Test@testing.no"));
 
         ProjectMember projectMember = new ProjectMember();
-        projectMember.setProjectId(pID);
-        projectMember.setUserId(uID);
-        pmDao.insert(projectMember);
+        projectMember.setProjectId(projectId);
+        projectMember.setUserId(userId);
+        projectMemberDao.insert(projectMember);
 
-        assertThat(pmDao.listAll()).contains(projectMember);
-        assertThat(pmDao.listAll().get(0)).isEqualToComparingFieldByField(projectMember);
+        assertThat(projectMemberDao.listAll()).contains(projectMember);
+        assertThat(projectMemberDao.listAll().get(0)).isEqualToComparingFieldByField(projectMember);
     }
 
     @Test
     void shouldListOutTasks() throws SQLException {
         Task task = sampleTask(sampleProject().getId()); // Generates and inserts a sample task
-        assertThat(tDao.listAll()).contains(task);
-        assertThat(tDao.listAll().get(0)).isEqualToComparingFieldByField(task);
+        assertThat(taskDao.listAll()).contains(task);
+        assertThat(taskDao.listAll().get(0)).isEqualToComparingFieldByField(task);
     }
 
     @Test
     void shouldListAllTaskMembers() throws SQLException {
-        long uID = uDao.insert(new User("Olav", "Something@test.nk"));
-        long pID = pDao.insert(new Project("Finish java"));
-        pmDao.insert(new ProjectMember(uID, pID));
-        long tID = tDao.insert(new Task("Finish Task", "In progress", pID));
+        userId = userDao.insert(new User("Olav", "Something@test.nk"));
+        projectId = projectDao.insert(new Project("Finish java"));
+        projectMemberDao.insert(new ProjectMember(userId, projectId));
+        taskId = taskDao.insert(new Task("Finish Task", "In progress", projectId));
 
-        TaskMember taskMember = new TaskMember(tID, pID, uID);
-        tmDao.insert(taskMember);
+        TaskMember taskMember = new TaskMember(taskId, projectId, userId);
+        taskMemberDao.insert(taskMember);
 
-        assertThat(tmDao.listAll()).contains(taskMember);
-        assertThat(tmDao.listAll().get(0)).isEqualToComparingFieldByField(taskMember);
+        assertThat(taskMemberDao.listAll()).contains(taskMember);
+        assertThat(taskMemberDao.listAll().get(0)).isEqualToComparingFieldByField(taskMember);
     }
 
 
@@ -98,7 +101,7 @@ public class DaoTest {
     public Project sampleProject() throws SQLException {
         Project project = new Project();
         project.setName(selectRandom(new String[]{"Project Sample 1","Project Sample 2","Project Sample 3","Project Sample 4"}));
-        project.setId(pDao.insert(project));
+        project.setId(projectDao.insert(project));
         return project;
     }
 
@@ -106,7 +109,7 @@ public class DaoTest {
         User user = new User();
         user.setName(selectRandom(new String[]{"Sansa","Soup","Lemonmaking","MUFFIN"}));
         user.setEmail(selectRandom(new String[]{"Sansa@nope.no", "Soup-can@gmail.eh", "Lemon@making.it","Muffin@choco.late"}));
-        user.setId(uDao.insert(user));
+        user.setId(userDao.insert(user));
         return user;
     }
 
@@ -115,7 +118,7 @@ public class DaoTest {
         task.setName(selectRandom(new String[]{"Ask Johannes", "Somehting", "Drink water"}));
         task.setStatus(selectRandom(new String[]{"To-Do", "In Progress", "Done"}));
         task.setProjectId(projectId);
-        task.setId(tDao.insert(task));
+        task.setId(taskDao.insert(task));
         return task;
     }
 }

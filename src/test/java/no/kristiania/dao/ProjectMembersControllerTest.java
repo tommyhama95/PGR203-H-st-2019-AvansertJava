@@ -9,7 +9,6 @@ import no.kristiania.http.controllers.ProjectMembersController;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,11 +21,9 @@ public class ProjectMembersControllerTest {
         ProjectMemberDao pmDao = new ProjectMemberDao(dataSource);
         UserDao uDao = new UserDao(dataSource);
 
-
         daoTestInstance.setUp();
 
         Project project1 = daoTestInstance.sampleProject();
-
         User user1 = daoTestInstance.sampleUser();
 
         long projectId = project1.getId();

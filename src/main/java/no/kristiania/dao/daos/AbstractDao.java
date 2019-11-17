@@ -53,6 +53,7 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    //Updates specified object corresponding with database
     public void updateValueWithStatement(String newValue, long idValue, String sql) throws SQLException {
         try(Connection connection = datasource.getConnection()){
             try(PreparedStatement statement = connection.prepareStatement(sql)){
@@ -63,6 +64,7 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    //Updates specified object with more than one value
     public void updateAllValuesWithStatement(String firstValue, String secondValue, long idValue, String sql) throws SQLException {
         try(Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -73,8 +75,6 @@ public abstract class AbstractDao<T> {
             }
         }
     }
-
-    protected abstract void insertObject(T obj, PreparedStatement statement) throws SQLException;
 
     //This method returns all values in a certain column
     public List<T> listAll(String sql) throws SQLException {
@@ -91,6 +91,9 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    //Creates object in database
+    protected abstract void insertObject(T obj, PreparedStatement statement) throws SQLException;
 
+    //Reads and returns objects from database
     protected abstract T readObject(ResultSet rs) throws SQLException;
 }

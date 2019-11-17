@@ -14,38 +14,33 @@ public class ProjectMemberDao extends AbstractDao<ProjectMember>{
         super(datasource);
     }
 
-    //Calls abstract method for inserting new object for postgres database
-    public void insert(ProjectMember pu) throws SQLException{
-        insert(pu, "INSERT INTO project_members (project_id, user_id) VALUES (?, ?)");
+    //Inserts new projectmember with id from project and user
+    public void insert(ProjectMember projectMember) throws SQLException{
+        insert(projectMember, "INSERT INTO project_members (project_id, user_id) VALUES (?, ?)");
     }
 
-    //Calls abstract method for listing out table values
+    //List out all members in database
     public List<ProjectMember> listAll() throws SQLException{
         return listAll("SELECT * FROM project_members");
     }
 
-    //Calls method in same class to make the ResultSet of this query
+    //List out members from specific project
     public List<ProjectMember> listMembersOf(long projectId) throws SQLException{
         return listAllWithStatement(new long[]{projectId},  "SELECT * FROM project_members WHERE project_id = ?");
     }
 
-    //Calls method in same class to make the ResultSet of this query
-    public List<ProjectMember> listProjectsWith(long userId) throws SQLException {
-        return listAllWithStatement(new long[]{userId}, "SELECT * FROM project_members WHERE user_id = ?");
-    }
-
     @Override
-    protected void insertObject(ProjectMember obj, PreparedStatement statement) throws SQLException {
-        statement.setLong(1, obj.getProjectId());
-        statement.setLong(2, obj.getUserId());
+    protected void insertObject(ProjectMember projectMember, PreparedStatement statement) throws SQLException {
+        statement.setLong(1, projectMember.getProjectId());
+        statement.setLong(2, projectMember.getUserId());
     }
 
     @Override
     protected ProjectMember readObject(ResultSet rs) throws SQLException {
-        ProjectMember pu = new ProjectMember();
-        pu.setProjectId(rs.getLong("project_id"));
-        pu.setUserId(rs.getLong("user_id"));
-        return pu;
+        ProjectMember projectMember = new ProjectMember();
+        projectMember.setProjectId(rs.getLong("project_id"));
+        projectMember.setUserId(rs.getLong("user_id"));
+        return projectMember;
     }
 }
 

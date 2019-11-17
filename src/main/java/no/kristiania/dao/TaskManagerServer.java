@@ -37,17 +37,21 @@ public class TaskManagerServer {
         server = new HttpServer(port);
         server.setFileLocation("src/main/resources");
         server.addController("/api/projects", new ProjectsController(projectDao));
+        server.addController("/api/setProjectName", new ProjectNameController(projectDao));
+
         server.addController("/api/tasks", new TaskController(taskDao));
         server.addController("/api/taskStatus", new TaskStatusController(taskDao));
+        server.addController("/api/setTaskName", new TaskNameController(taskDao));
+
+        server.addController("/api/setUserValue", new UserValueController(userDao));
         server.addController("/api/users", new UserListController(userDao));
-        server.addController("/api/projectMembers", new ProjectMembersController(projectMemberDao, userDao));
-        server.addController("/api/taskMembers", new TaskMembersController(taskMemberDao, userDao));
         server.addController("/api/userSelect", new UserSelectController(userDao));
+
+        server.addController("/api/projectMembers", new ProjectMembersController(projectMemberDao, userDao));
+
+        server.addController("/api/taskMembers", new TaskMembersController(taskMemberDao, userDao));
         server.addController("/api/addMemberToTask", new TaskMemberSelectController(taskMemberDao, userDao, projectMemberDao));
         server.addController("/api/filterTasks", new FilterTaskController(taskMemberDao, taskDao));
-        server.addController("/api/setTaskName", new TaskNameController(taskDao));
-        server.addController("/api/setProjectName", new ProjectNameController(projectDao));
-        server.addController("/api/setUserValue", new UserValueController(userDao));
     }
 
     public static void main(String[] args) throws IOException {

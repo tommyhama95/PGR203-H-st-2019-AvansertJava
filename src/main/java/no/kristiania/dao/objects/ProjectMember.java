@@ -3,7 +3,6 @@ package no.kristiania.dao.objects;
 import java.util.Objects;
 
 public class ProjectMember {
-
     private long projectId;
     private long userId;
 

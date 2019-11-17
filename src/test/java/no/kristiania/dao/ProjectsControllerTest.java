@@ -14,6 +14,7 @@ public class ProjectsControllerTest {
     void shouldReturnProjectsFromDatabase() throws SQLException {
         DaoTest daoTestInstance = new DaoTest();
         ProjectDao dao = new ProjectDao(new DaoTest().createDataSource());
+
         daoTestInstance.setUp();
 
         ProjectsController controller = new ProjectsController(dao);

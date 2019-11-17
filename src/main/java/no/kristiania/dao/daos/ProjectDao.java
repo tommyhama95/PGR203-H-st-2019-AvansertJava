@@ -6,13 +6,32 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProjectDao extends AbstractDao<Project> {
 
     public ProjectDao(DataSource datasource) {
         super(datasource);
+    }
+
+    //Inserts new project to database
+    public long insert(Project name) throws SQLException{
+        return insert(name, "INSERT INTO projects (name) VALUES (?)");
+    }
+
+    //List out all project from database
+    public List<Project> listAll() throws SQLException {
+      return listAll("SELECT * FROM projects");
+    }
+
+    //List out specific project from id
+    public List<Project> getProjectFromId(long projectId) throws SQLException {
+        return listAllWithStatement(new long[] {projectId}, "SELECT * FROM projects WHERE id = (?)");
+    }
+
+    //Update new Project name to database
+    public void updateProjectName(String name, long projectId) throws SQLException {
+        updateValueWithStatement(name, projectId, "UPDATE projects SET name = (?) WHERE id = (?)");
     }
 
     @Override
@@ -28,21 +47,4 @@ public class ProjectDao extends AbstractDao<Project> {
         return project;
     }
 
-    //Inserts a value into a column
-    public long insert(Project name) throws SQLException{
-        return insert(name, "INSERT INTO projects (name) VALUES (?)");
-    }
-
-    //This method returns all values in a certain column
-    public List<Project> listAll() throws SQLException {
-      return listAll("SELECT * FROM projects");
-    }
-
-    public void updateProjectName(String name, long projectId) throws SQLException {
-        updateValueWithStatement(name, projectId, "UPDATE projects SET name = (?) WHERE id = (?)");
-    }
-
-    public List<Project> getProjectFromId(long projectId) throws SQLException {
-        return listAllWithStatement(new long[] {projectId}, "SELECT * FROM projects WHERE id = (?)");
-    }
 }

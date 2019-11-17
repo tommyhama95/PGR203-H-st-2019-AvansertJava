@@ -17,6 +17,7 @@ public class Project {
     public String getName() {
         return name;
     }
+
     public void setId(long id) {
         this.id = id;
     }

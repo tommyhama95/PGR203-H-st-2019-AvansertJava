@@ -14,6 +14,7 @@ public class UserControllerTest {
     void shouldReturnUsersFromDatabase() throws SQLException {
         DaoTest daoTestInstance = new DaoTest();
         UserDao dao = new UserDao(new DaoTest().createDataSource());
+
         daoTestInstance.setUp();
 
         UserListController controller = new UserListController(dao);

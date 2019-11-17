@@ -19,7 +19,6 @@ public class Task {
     public void setName(String name) {
         this.name = name;
     }
-
     public String getName() {
         return name;
     }
@@ -27,7 +26,6 @@ public class Task {
     public void setId(long id) {
         this.id = id;
     }
-
     public long getId() {
         return id;
     }
@@ -35,7 +33,6 @@ public class Task {
     public void setStatus(String status) {
         this.status = status;
     }
-
     public String getStatus() {
         return status;
     }
@@ -43,7 +40,6 @@ public class Task {
     public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
-
     public long getProjectId() {
         return projectId;
     }

@@ -14,6 +14,26 @@ public class UserDao extends AbstractDao<User> {
         super(datasource);
     }
 
+    //Inserts new user to database
+    public long insert(User user) throws SQLException{
+        return insert(user, "INSERT INTO users (name, email) VALUES (?, ?)");
+    }
+
+    //List out all users
+    public List<User> listAll() throws SQLException {
+        return listAll("SELECT * FROM users");
+    }
+
+    //List out user
+    public User getUserById(long id) throws SQLException {
+        return listAllWithStatement(new long[]{id}, "SELECT * FROM users WHERE id = (?)").get(0);
+    }
+
+    //Update user values
+    public void updateUserValues(String name, String email, long userId) throws SQLException {
+        updateAllValuesWithStatement(name, email, userId, "UPDATE users SET name = (?), email = (?) WHERE id = (?)");
+    }
+
     @Override
     protected void insertObject(User user, PreparedStatement statement) throws SQLException {
         statement.setString(1, user.getName());
@@ -29,21 +49,4 @@ public class UserDao extends AbstractDao<User> {
         return user;
     }
 
-    //Inserts a value into a column
-    public long insert(User user) throws SQLException{
-        return insert(user, "INSERT INTO users (name, email) VALUES (?, ?)");
-    }
-
-    //This method returns all values in a certain column
-    public List<User> listAll() throws SQLException {
-        return listAll("SELECT * FROM users");
-    }
-
-    public User getUserById(long id) throws SQLException {
-        return listAllWithStatement(new long[]{id}, "SELECT * FROM users WHERE id = (?)").get(0);
-    }
-
-    public void updateUserValues(String name, String email, long userId) throws SQLException {
-        updateAllValuesWithStatement(name, email, userId, "UPDATE users SET name = (?), email = (?) WHERE id = (?)");
-    }
 }
