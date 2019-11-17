@@ -27,8 +27,12 @@ public class UserListController extends AbstractDaoController {
                 body = URLDecoder.decode(body, StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(body);
                 User user = new User();
-                user.setName(query.get("userName"));
-                user.setEmail(query.get("userEmail"));
+                String name = query.get("userName");
+                String email = query.get("userEmail");
+                name = checkValue(name);
+                email = checkValue(email);
+                user.setName(name);
+                user.setEmail(email);
                 user.setId(this.userDao.insert(user));
                 serverRedirectResponse(query, out, "http://localhost:8080/index.html");
                 return;

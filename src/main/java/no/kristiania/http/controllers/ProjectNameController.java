@@ -28,6 +28,7 @@ public class ProjectNameController extends AbstractDaoController{
                 query = HttpMessage.parseQueryString(body);
                 setUrlQuery(HttpMessage.getQueryString(body));
                 String name = query.get("projectName");
+                name = checkValue(name);
                 String projectId = query.get("projectid");
                 projectDao.updateProjectName(name, Long.parseLong(projectId));
                 serverRedirectResponse(query, out,
