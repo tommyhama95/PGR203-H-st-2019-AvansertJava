@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HttpClient {
-    private String host;
-    private int port;
-    private String requestTarget;
+    private final String host;
+    private final int port;
+    private final String requestTarget;
     private HttpResponse clientResponse;
     private String body;
-    private Map<String, String> headers = new HashMap<>();
+    private final Map<String, String> headers = new HashMap<>();
 
 
     public HttpClient(String host, int port, String requestTarget) {

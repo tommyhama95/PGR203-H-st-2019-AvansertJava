@@ -5,13 +5,14 @@ import no.kristiania.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TaskStatusController extends AbstractDaoController {
     private final TaskDao taskDao;
-    private String status;
 
     public TaskStatusController(TaskDao taskDao) {
         this.taskDao = taskDao;
@@ -26,7 +27,7 @@ public class TaskStatusController extends AbstractDaoController {
                 setUrlQuery(HttpMessage.getQueryString(body));
                 String taskId = query.get("taskid");
                 String projectId = query.get("projectid");
-                status = query.get("taskStatus");
+                String status = URLDecoder.decode(query.get("taskStatus"), StandardCharsets.UTF_8);
                 status = checkValue(status);
                 taskDao.updateTaskStatus(status, Long.parseLong(taskId));
                 serverRedirectResponse(query, out,

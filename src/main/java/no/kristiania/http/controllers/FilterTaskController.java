@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class FilterTaskController extends AbstractDaoController{
 
-    private TaskMemberDao taskMemberDao;
-    private TaskDao taskDao;
+    private final TaskMemberDao taskMemberDao;
+    private final TaskDao taskDao;
 
     public FilterTaskController(TaskMemberDao taskMemberDao, TaskDao taskDao) {
 

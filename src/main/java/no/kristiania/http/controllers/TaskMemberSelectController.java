@@ -1,7 +1,6 @@
 package no.kristiania.http.controllers;
 
 import no.kristiania.dao.daos.ProjectMemberDao;
-import no.kristiania.dao.daos.TaskMemberDao;
 import no.kristiania.dao.daos.UserDao;
 import no.kristiania.http.HttpMessage;
 
@@ -11,12 +10,10 @@ import java.util.stream.Collectors;
 
 public class TaskMemberSelectController extends AbstractDaoController {
 
-    private TaskMemberDao tmDao;
-    private UserDao uDao;
-    private ProjectMemberDao projectMemberDao;
+    private final UserDao uDao;
+    private final ProjectMemberDao projectMemberDao;
 
-    public TaskMemberSelectController(TaskMemberDao tmDao, UserDao uDao, ProjectMemberDao projectMemberDao) {
-        this.tmDao = tmDao;
+    public TaskMemberSelectController(UserDao uDao, ProjectMemberDao projectMemberDao) {
         this.uDao = uDao;
         this.projectMemberDao = projectMemberDao;
     }

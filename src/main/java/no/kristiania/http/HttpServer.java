@@ -18,8 +18,8 @@ public class HttpServer {
     private final int localPort;
     private final ServerSocket serverSocket;
     private String fileLocation;
-    private HttpController defaultController = new FileHttpController(this);
-    private Map<String, HttpController> controllers = new HashMap<>();
+    private final HttpController defaultController = new FileHttpController(this);
+    private final Map<String, HttpController> controllers = new HashMap<>();
 
     public HttpServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);

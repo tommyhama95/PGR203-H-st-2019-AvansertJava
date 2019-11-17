@@ -5,15 +5,14 @@ import no.kristiania.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 
 public class UserValueController extends AbstractDaoController {
 
     private final UserDao userDao;
-    private String name;
-    private String email;
-    private final String undefined = "[Undefined]";
 
     public UserValueController(UserDao userDao) {
         this.userDao = userDao;
@@ -27,8 +26,8 @@ public class UserValueController extends AbstractDaoController {
                 query = HttpMessage.parseQueryString(body);
                 setUrlQuery(HttpMessage.getQueryString(body));
                 String userId = query.get("userid");
-                name = query.get("userName");
-                email = query.get("userEmail");
+                String name = URLDecoder.decode(query.get("userName"), StandardCharsets.UTF_8);
+                String email = URLDecoder.decode(query.get("userEmail"), StandardCharsets.UTF_8);
                 name = checkValue(name);
                 email = checkValue(email);
                 userDao.updateUserValues(name, email, Long.parseLong(userId));
@@ -43,7 +42,7 @@ public class UserValueController extends AbstractDaoController {
     }
 
 
-    protected String getBody() throws SQLException {
+    protected String getBody() {
         return null;
     }
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpStatusCodes {
-    public static Map<Integer,String> statusCodeList = new HashMap<>();
+    public static final Map<Integer,String> statusCodeList = new HashMap<>();
 
     static {
         statusCodeList.put(100, "Continue");

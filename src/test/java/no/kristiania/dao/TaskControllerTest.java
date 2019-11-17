@@ -5,7 +5,6 @@ import no.kristiania.dao.objects.Task;
 import no.kristiania.http.controllers.TaskController;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;

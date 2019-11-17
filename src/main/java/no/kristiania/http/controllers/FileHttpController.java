@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Map;
 
 public class FileHttpController implements HttpController {
-    private HttpServer httpServer;
+    private final HttpServer httpServer;
 
     public FileHttpController(HttpServer httpServer) {
         this.httpServer = httpServer;

@@ -6,10 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest extends HttpMessage {
-    private Socket socket;
-    private String httpMethod;
-    private String requestTarget;
-    private Map<String, String> headers = new HashMap<>();
+    private final Socket socket;
+    private final Map<String, String> headers = new HashMap<>();
     private String body;
     private String message;
 
@@ -18,11 +16,10 @@ public class HttpRequest extends HttpMessage {
         this.message = super.read(socket);
     }
 
-    @Override
     public void parse() throws IOException {
         String[] messageLines = message.split("\r\n");
-        httpMethod = messageLines[0].split(" ")[0];
-        requestTarget = messageLines[0].split(" ")[1];
+        String httpMethod = messageLines[0].split(" ")[0];
+        String requestTarget = messageLines[0].split(" ")[1];
 
         int i;
         int colonPos;
@@ -36,19 +33,8 @@ public class HttpRequest extends HttpMessage {
         this.body = HttpMessage.readBody(headers, socket);
     }
 
-    public String getRequestTarget() {
-        return requestTarget;
-    }
-
-    public void setRequestTarget(String requestTarget) {
-        this.requestTarget = requestTarget;
-    }
-
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
 }

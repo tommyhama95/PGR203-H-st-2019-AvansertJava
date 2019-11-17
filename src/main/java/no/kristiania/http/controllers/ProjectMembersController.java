@@ -7,13 +7,15 @@ import no.kristiania.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectMembersController extends AbstractDaoController {
-    private ProjectMemberDao projectMemberDao;
-    private UserDao userDao;
+    private final ProjectMemberDao projectMemberDao;
+    private final UserDao userDao;
 
     public ProjectMembersController(ProjectMemberDao projectMemberDao, UserDao userDao) {
         this.projectMemberDao = projectMemberDao;
@@ -29,7 +31,7 @@ public class ProjectMembersController extends AbstractDaoController {
                 setUrlQuery(query.get("projectid"));
 
                 String projectId = query.get("projectid");
-                String userId = query.get("user");
+                String userId = URLDecoder.decode(query.get("user"), StandardCharsets.UTF_8);
                 ProjectMember projectMember = new ProjectMember();
                 projectMember.setProjectId(Long.parseLong(query.get("projectid")));
                 projectMember.setUserId(Long.parseLong(userId.substring(userId.indexOf('#')+1).trim()));

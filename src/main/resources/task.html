@@ -51,7 +51,7 @@
             return response.text();
         }).then(function (text) {
         document.getElementById("status").innerHTML = text;
-    })
+    });
 
     fetch("/api/setTaskName?projectid=" + projectId + "&taskid=" + taskId)
     .then(function (response) {

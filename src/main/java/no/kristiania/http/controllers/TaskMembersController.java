@@ -7,14 +7,16 @@ import no.kristiania.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TaskMembersController extends AbstractDaoController {
 
-    private TaskMemberDao taskMemberDao;
-    private UserDao userDao;
+    private final TaskMemberDao taskMemberDao;
+    private final UserDao userDao;
 
     public TaskMembersController(TaskMemberDao taskMemberDao, UserDao userDao) {
         this.userDao = userDao;
@@ -30,7 +32,7 @@ public class TaskMembersController extends AbstractDaoController {
                 setUrlQuery(query.get("taskid"));
 
                 String taskId = query.get("taskid");
-                String userId = query.get("member");
+                String userId = URLDecoder.decode(query.get("member"), StandardCharsets.UTF_8);
                 String projectId = query.get("projectid");
                 TaskMember taskMember =  new TaskMember();
                 taskMember.setTaskId(Long.parseLong(taskId));

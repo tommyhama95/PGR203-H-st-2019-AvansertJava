@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DaoTest {
 
-    Random random = new Random();
+    final Random random = new Random();
     private ProjectDao projectDao;
     private UserDao userDao;
     private ProjectMemberDao projectMemberDao;
@@ -22,7 +22,6 @@ public class DaoTest {
     private TaskMemberDao taskMemberDao;
     private long projectId;
     private long userId;
-    private long taskId;
 
     @BeforeEach
     void setUp() {
@@ -74,7 +73,7 @@ public class DaoTest {
         userId = userDao.insert(new User("Olav", "Something@test.nk"));
         projectId = projectDao.insert(new Project("Finish java"));
         projectMemberDao.insert(new ProjectMember(userId, projectId));
-        taskId = taskDao.insert(new Task("Finish Task", "In progress", projectId));
+        long taskId = taskDao.insert(new Task("Finish Task", "In progress", projectId));
 
         TaskMember taskMember = new TaskMember(taskId, projectId, userId);
         taskMemberDao.insert(taskMember);

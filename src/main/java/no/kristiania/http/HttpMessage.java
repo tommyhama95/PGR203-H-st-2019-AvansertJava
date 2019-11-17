@@ -73,5 +73,4 @@ public abstract class HttpMessage {
         }
     }
 
-    public abstract void parse() throws IOException;
 }

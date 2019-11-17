@@ -1,10 +1,8 @@
 package no.kristiania.dao;
 
-import no.kristiania.dao.daos.ProjectDao;
 import no.kristiania.dao.daos.TaskDao;
 import no.kristiania.dao.objects.Project;
 import no.kristiania.dao.objects.Task;
-import no.kristiania.http.controllers.TaskController;
 import no.kristiania.http.controllers.TaskStatusController;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
