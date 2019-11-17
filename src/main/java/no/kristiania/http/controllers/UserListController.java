@@ -6,6 +6,8 @@ import no.kristiania.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,8 +26,8 @@ public class UserListController extends AbstractDaoController {
             if(requestAction.equals("POST")){
                 query = HttpMessage.parseQueryString(body);
                 User user = new User();
-                String name = query.get("userName");
-                String email = query.get("userEmail");
+                String name = URLDecoder.decode(query.get("userName"), StandardCharsets.UTF_8);
+                String email = URLDecoder.decode(query.get("userEmail"), StandardCharsets.UTF_8);
                 name = checkValue(name);
                 email = checkValue(email);
                 user.setName(name);

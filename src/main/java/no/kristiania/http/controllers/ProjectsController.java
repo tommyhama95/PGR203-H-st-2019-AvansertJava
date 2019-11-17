@@ -6,6 +6,8 @@ import no.kristiania.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +25,7 @@ public class ProjectsController extends AbstractDaoController {
             if(requestAction.equals("POST")){
                 query = HttpMessage.parseQueryString(body);
                 Project project = new Project();
-                String name = query.get("projectName");
+                String name = URLDecoder.decode(query.get("projectName"), StandardCharsets.UTF_8);
                 name = checkValue(name);
                 project.setName(name);
                 project.setId(projectDao.insert(project));
