@@ -26,7 +26,9 @@ public class ProjectsController extends AbstractDaoController {
                 body = URLDecoder.decode(body,StandardCharsets.UTF_8);
                 query = HttpMessage.parseQueryString(body);
                 Project project = new Project();
-                project.setName(URLDecoder.decode(query.get("projectName"), StandardCharsets.UTF_8));
+                String name = query.get("projectName");
+                name = checkValue(name);
+                project.setName(name);
                 project.setId(projectDao.insert(project));
                 serverRedirectResponse(query, out, "http://localhost:8080/index.html");
                 return;

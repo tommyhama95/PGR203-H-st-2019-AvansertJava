@@ -30,6 +30,7 @@ public class TaskNameController extends AbstractDaoController {
                 String taskId = query.get("taskid");
                 String projectId = query.get("projectid");
                 String taskName = query.get("taskName");
+                taskName = checkValue(taskName);
                 taskDao.updateTaskName((taskName), Long.parseLong(taskId));
                 serverRedirectResponse(query, out,
                     "http://localhost:8080/task.html?projectid=" + projectId + "&taskid=" + taskId);
