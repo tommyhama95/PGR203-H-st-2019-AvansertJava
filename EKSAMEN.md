@@ -128,20 +128,20 @@ body {
 ### README.md
 
 * [x] `README.md` inneholder en korrekt link til Travis CI
-* [ ] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det 
-* [ ] `README.md` beskriver eventuell ekstra leveranse utover minimum
-* [ ] `README.md` inneholder link til en diagram som viser datamodellen
+* [x] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det 
+* [x] `README.md` beskriver eventuell ekstra leveranse utover minimum
+* [x] `README.md` inneholder link til en diagram som viser datamodellen
 * [ ] Dere har gitt minst 2 positive og 2 korrektive GitHub issues til en annen gruppe og inkluderer link til disse fra README.md
 
 ### Koden
 
-* [ ] `mvn package` bygger en executable jar-fil
-* [ ] Koden inneholder et godt sett med tester
-* [ ] `java -jar target/...jar` (etter `mvn package`) lar bruker legge til å liste ut data fra databasen
-* [ ] Programmet leser `dataSource.url`, `dataSource.username` og `dataSource.password` fra `task-manager.properties` for å connecte til databasen
-* [ ] Programmet bruker Flywaydb for å sette opp databaseskjema
-* [ ] Server skriver nyttige loggmeldinger, inkludert informasjon om hvilken URL den kjører på ved oppstart
-* [ ] `.gitignore` inneholder nødvendige filer
+* [x] `mvn package` bygger en executable jar-fil
+* [x] Koden inneholder et godt sett med tester
+* [x] `java -jar target/...jar` (etter `mvn package`) lar bruker legge til å liste ut data fra databasen
+* [x] Programmet leser `dataSource.url`, `dataSource.username` og `dataSource.password` fra `task-manager.properties` for å connecte til databasen
+* [x] Programmet bruker Flywaydb for å sette opp databaseskjema
+* [x] Server skriver nyttige loggmeldinger, inkludert informasjon om hvilken URL den kjører på ved oppstart
+* [x] `.gitignore` inneholder nødvendige filer
 
 ### Funksjonalitet
 
@@ -153,9 +153,9 @@ body {
 ## Vedlegg: Mulighet for ekstrapoeng
 
 * [x] Avansert datamodell (mer enn 3 tabeller)
-* [x] Avansert funksjonalitet (~~redigering av prosjektmedlemmer~~, statuskategorier, prosjekter)
+* [x] Avansert funksjonalitet (redigering av prosjektmedlemmer, statuskategorier, prosjekter)
 * [ ] ~~Implementasjon av cookies for å konstruere sesjoner~~?
-* [ ] UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
+* [x] UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
 * [x] Rammeverk rundt Http-håndtering (en god HttpMessage class med HttpRequest og HttpResponse subtyper) som gjenspeiler RFC7230
 * [x] Korrekt håndtering av norske tegn i HTTP
 * [x] God bruk av DAO-pattern
